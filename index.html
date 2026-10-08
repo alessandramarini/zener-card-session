@@ -13,15 +13,15 @@
     <style>
         :root {
             /* Palette Super Professional (Laboratorio/Intelligence) */
-            --bg-app: #e2e8f0;          /* Sfondo app grigio neutro tecnico */
-            --bg-paper: #ffffff;        /* Sfondo carta bianco puro */
-            --text-main: #0f172a;       /* Ardesia scurissimo per il testo */
-            --text-muted: #64748b;      /* Ardesia medio per etichette */
-            --border-light: #cbd5e1;    /* Bordi chiari */
-            --border-dark: #475569;     /* Bordi scuri per accenti tecnici */
-            --brand-primary: #1e293b;   /* Colore primario scuro */
-            --brand-accent: #2563eb;    /* Blu tecnico (cobalto) per interazioni */
-            --brand-danger: #dc2626;    /* Rosso emergenza/allerta */
+            --bg-app: #e2e8f0;          
+            --bg-paper: #ffffff;        
+            --text-main: #0f172a;       
+            --text-muted: #64748b;      
+            --border-light: #cbd5e1;    
+            --border-dark: #475569;     
+            --brand-primary: #1e293b;   
+            --brand-accent: #2563eb;    
+            --brand-danger: #dc2626;    
             
             --font-sans: 'Inter', sans-serif;
             --font-serif: 'Playfair Display', serif;
@@ -39,12 +39,9 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Effetto per scorrimento fluido */
-        html { scroll-behavior: smooth; }
-
-        /* Scroller personalizzato per look tecnico */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-app); }
         ::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 4px; }
@@ -105,7 +102,7 @@
             box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
         }
         .zener-card.selected { 
-            border-color: var(--brand-accent); background: #f0fdfa; /* Leggero accento tecnico */
+            border-color: var(--brand-accent); background: #f0fdfa; 
             transform: scale(1.02) translateY(-2px);
             box-shadow: 0 0 0 1px var(--brand-accent), 0 10px 25px -5px rgba(37, 99, 235, 0.2);
         }
@@ -145,98 +142,11 @@
         }
         #app-container.active { display: block; }
 
+        /* Toolbar / Pannello di Controllo Intuitivo */
         #toolbar {
             position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(15, 23, 42, 0.95); /* Toolbar Scura Tecnica */
+            background: #0f172a; 
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid #334155; z-index: 50; 
-            padding: 0.5rem 1rem;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
-            flex-wrap: wrap; gap: 0.5rem;
-        }
-
-        .btn { 
-            padding: 0.4rem 0.8rem; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-            border-radius: 4px; cursor: pointer; transition: all 0.2s; 
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; 
-            border: 1px solid transparent; user-select: none; height: 32px;
-        }
-        .btn-outline { background: transparent; border-color: #475569; color: #f8fafc; }
-        .btn-outline:hover { background: #334155; border-color: #94a3b8; }
-        
-        /* Fix per il menu a tendina Audio: sfondo scuro e testo bianco */
-        #audio-preset option, #audio-preset optgroup {
-            background-color: #0f172a; /* Ardesia Scura */
-            color: #f8fafc; /* Bianco */
-        }
-        
-        /* Controlli Audio Specifici per Toolbar scura */
-        .audio-controls { background: #1e293b; border: 1px solid #334155; padding: 0.2rem; border-radius: 6px; display: flex; align-items: center; gap: 0.25rem; }
-        .audio-select { background: #0f172a; color: #f8fafc; border: 1px solid #475569; font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; outline: none; height: 28px;}
-        
-        .btn-primary { background: var(--brand-accent); color: white; }
-        .btn-primary:hover { background: #1d4ed8; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
-        .btn-danger { background: transparent; border-color: var(--brand-danger); color: var(--brand-danger); }
-        .btn-danger:hover { background: var(--brand-danger); color: white; }
-        
-        /* Timer stile cruscotto */
-        .timer-display { background: #000; color: #10b981; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; padding: 0 0.5rem; border-radius: 4px; border: 1px solid #334155; height: 28px; display: flex; align-items: center; justify-content: center; width: 75px; letter-spacing: 1px;}
-        .btn-danger { background: white; border-color: var(--accent-red); color: var(--accent-red); }
-        .btn-danger:hover { background: var(--accent-red); color: white; }
-
-        .a4-page {
-            background: var(--bg-paper); 
-            width: 100%; max-width: 210mm; 
-            min-height: 297mm;
-            margin: 0 auto 30px auto; padding: 15mm;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-            position: relative; box-sizing: border-box;
-            display: flex; flex-direction: column;
-        }
-        
-        .page-content { flex: 1; display: flex; flex-direction: column; width: 100%; }
-        
-        .print-footer { 
-            margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
-            font-size: 0.65rem; line-height: 1rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; border-top: 1px solid var(--border-light); letter-spacing: 0.05em;
-        }
-
-        @media (max-width: 768px) {
-            #toolbar { padding: 0.5rem; justify-content: center; }
-            .toolbar-group { width: 100%; justify-content: center; gap: 0.5rem; }
-            #app-container { padding-top: 140px; }
-            .mobile-hide { display: none !important; }
-            
-            .a4-page { 
-                padding: 1.5rem; min-height: auto; border-radius: 0; 
-                margin-bottom: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-                border-left: none; border-right: none;
-            }
-        }
-
-        .doc-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em;}
-        .section-header { 
-            font-weight: 700; font-size: 0.75rem; text-transform: uppercase; font-family: var(--font-mono);
-            color: var(--text-main); border-bottom: 2px solid var(--text-main); 
-            padding-bottom: 4px; margin: 2rem 0 1rem 0; letter-spacing: 0.05em; 
-        }
-        
-        /* Form Inputs Altamente Professionali */
-        .input-group { position: relative; margin-bottom: 1rem; }
-        .input-label { display: block; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.05em;}
-        
-        input[type="text"], textarea {
-            width: 100%; background: #f8fafc; border: 1px solid var(--border-light); 
-            color: var(--text-main); font-family: var(--font-mono); font-size: 0.9rem;
-            padding: 8px 10px; transition: all 0.2s; resize: none;
-        .tool-btn.active { background: white; color: var(--text-main); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
-
-        /* Stili avanzati per il nuovo Pannello di Controllo (Toolbar) e Tooltips */
-        #toolbar {
-            position: fixed; top: 0; left: 0; right: 0;
-            background: #0f172a; /* Ardesia Scura Super Professionale */
             border-bottom: 1px solid #334155; z-index: 100; 
             padding: 0.5rem 1rem;
             display: flex; justify-content: space-between; align-items: center;
@@ -282,14 +192,108 @@
             }
         }
 
-        #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
+        #audio-preset option, #audio-preset optgroup { background-color: #0f172a; color: #f8fafc; }
+        
+        .timer-display { background: #000; color: #10b981; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; padding: 0 0.5rem; border-radius: 4px; border: 1px solid #334155; height: 28px; display: flex; align-items: center; justify-content: center; width: 75px; letter-spacing: 1px;}
 
-        /* Stili per la Matrice di Verifica dell'ultima pagina */
+        .a4-page {
+            background: var(--bg-paper); 
+            width: 100%; max-width: 210mm; 
+            min-height: 297mm;
+            margin: 0 auto 30px auto; padding: 15mm;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            position: relative; box-sizing: border-box;
+            display: flex; flex-direction: column;
+        }
+        
+        .page-content { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        
+        .print-footer { 
+            margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
+            font-size: 0.65rem; line-height: 1rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; border-top: 1px solid var(--border-light); letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 768px) {
+            #toolbar { padding: 0.5rem; justify-content: center; }
+            #app-container { padding-top: 140px; }
+            .mobile-hide { display: none !important; }
+            .a4-page { 
+                padding: 1.5rem; min-height: auto; border-radius: 0; 
+                margin-bottom: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+                border-left: none; border-right: none;
+            }
+        }
+
+        .doc-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em;}
+        .section-header { 
+            font-weight: 700; font-size: 0.75rem; text-transform: uppercase; font-family: var(--font-mono);
+            color: var(--text-main); border-bottom: 2px solid var(--text-main); 
+            padding-bottom: 4px; margin: 2rem 0 1rem 0; letter-spacing: 0.05em; 
+        }
+        
+        /* Form Inputs */
+        .input-group { position: relative; margin-bottom: 1rem; }
+        .input-label { display: block; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.05em;}
+        
+        input[type="text"], textarea {
+            width: 100%; background: #f8fafc; border: 1px solid var(--border-light); 
+            color: var(--text-main); font-family: var(--font-mono); font-size: 0.9rem;
+            padding: 8px 10px; transition: all 0.2s; resize: none;
+        }
+        
+        textarea { border-radius: 4px; padding: 12px; }
+        input[type="text"]:focus, textarea:focus { 
+            outline: none; border-color: var(--brand-accent); 
+            background: #ffffff; box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+        }
+
+        .chk-wrap { display: inline-flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none; }
+        .chk-wrap input { display: none; }
+        .chk-box { 
+            flex-shrink: 0; width: 18px; height: 18px; 
+            border: 2px solid var(--border-dark); border-radius: 4px; 
+            background: white; transition: all 0.2s; position: relative; margin-top: 2px;
+        }
+        .chk-wrap input:checked + .chk-box { background: var(--text-main); border-color: var(--text-main); }
+        .chk-wrap input:checked + .chk-box::after { 
+            content: ''; position: absolute; left: 5px; top: 2px; width: 5px; height: 10px; 
+            border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); 
+        }
+        .chk-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        .chk-desc { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);}
+
+        .canvas-wrapper { 
+            position: relative; border: 1px solid var(--border-light); 
+            background: #fafafa; overflow: hidden; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            min-height: 120px; 
+            background-image: 
+                linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .drawing-board { display: block; width: 100%; touch-action: none; cursor: crosshair; }
+        .canvas-tools { 
+            position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; 
+            z-index: 10; background: rgba(255,255,255,0.95); padding: 4px; 
+            border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+            backdrop-filter: blur(4px); border: 1px solid var(--border-light);
+        }
+        .tool-btn { 
+            font-size: 0.65rem; padding: 4px 8px; background: transparent; 
+            border: 1px solid transparent; border-radius: 2px; cursor: pointer; 
+            color: var(--text-muted); font-weight: 700; font-family: var(--font-mono); transition: all 0.2s;
+        }
+        .tool-btn.active { background: var(--text-main); color: white; }
+        .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
+
+        #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
         .matrix-card-wrap { user-select: none; }
         .matrix-card { transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .matrix-card:hover { transform: translateY(-3px); }
         .matrix-card.selected { transform: translateY(-3px); }
 
+        /* REGOLE DI STAMPA KDP PERFETTE - NESSUNA MASCHERA VISIBILE */
         @media print {
             @page { size: A4 portrait; margin: 0 !important; }
             body, html { 
@@ -299,11 +303,11 @@
                 color: black !important; 
             }
             
-            /* NASCONDI LA "MASCHERA DELL'APP" (Toolbar, sfondi, modali) */
+            /* Nasconde forzatamente tutto l'UI dell'App */
             #toolbar, .canvas-tools, #sys-modal, #dialog-modal, .view-screen { display: none !important; }
             #app-container { display: block !important; padding: 0 !important; margin: 0 !important; }
             
-            /* FOGLIO A4 RIGOROSO CON MARGINI KDP (20mm) */
+            /* Foglio A4 Rigoroso con margini di 20mm */
             .a4-page { 
                 box-shadow: none !important; 
                 margin: 0 !important; 
@@ -312,7 +316,7 @@
                 width: 210mm !important; 
                 height: 297mm !important; 
                 max-height: 297mm !important;
-                padding: 20mm !important; /* Margini sicuri Amazon KDP */
+                padding: 20mm !important; 
                 box-sizing: border-box !important; 
                 display: flex !important; flex-direction: column !important;
                 overflow: hidden !important;
@@ -320,13 +324,11 @@
                 position: relative !important;
             }
             
-            /* Evita la pagina bianca finale */
             .a4-page:last-of-type { 
                 page-break-after: auto !important; 
                 break-after: auto !important; 
             }
             
-            /* TRASFORMA IN UN MODULO PROFESSIONALE CARTACEO */
             input::placeholder, textarea::placeholder { color: transparent !important; }
             
             input[type="text"], textarea { 
@@ -341,16 +343,14 @@
                 resize: none !important;
             }
             
-            /* Rimuove sfondi colorati (app mask) per renderlo un form formale */
             .bg-slate-50, .bg-red-50, .bg-blue-50, .bg-blue-100, .bg-slate-100, .bg-red-50\/50, .bg-slate-50\/50 { 
                 background: transparent !important; 
                 border: 1px solid #000 !important; 
                 color: black !important; 
             }
-            .text-blue-700, .text-blue-800, .text-red-700, .text-slate-500, .text-slate-600 { color: black !important; }
-            .border-slate-200, .border-red-200, .border-red-300, .border-blue-100, .border-dashed { border-color: #000 !important; border-style: solid !important; }
+            .text-blue-700, .text-blue-800, .text-blue-900, .text-red-700, .text-red-800, .text-red-900, .text-slate-500, .text-slate-600 { color: black !important; }
+            .border-slate-200, .border-slate-300, .border-red-200, .border-red-300, .border-red-400, .border-blue-100, .border-blue-200, .border-dashed { border-color: #000 !important; border-style: solid !important; border-width: 1px !important; }
             
-            /* Checkboxes */
             .chk-box { 
                 -webkit-print-color-adjust: exact; print-color-adjust: exact; 
                 border: 1px solid #000 !important; 
@@ -360,7 +360,6 @@
             .chk-wrap input:checked + .chk-box { background: #000 !important; border-color: #000 !important; }
             .chk-wrap input:checked + .chk-box::after { border-color: white !important; }
             
-            /* Aree di Disegno (Canvas) - Risolve la sovrapposizione */
             .canvas-wrapper { 
                 border: 1px solid #000 !important; 
                 background: white !important; 
@@ -372,7 +371,6 @@
                 min-height: 120px !important; 
             }
 
-            /* Carte Matrix Pagina 5 */
             .matrix-card { border: 1px solid #000 !important; box-shadow: none !important; background: white !important;}
             .matrix-card.selected { border-width: 2px !important; background: #eaeaea !important; }
             .matrix-chk-checked { border-color: #000 !important; background: #000 !important; color: #fff !important; }
@@ -389,6 +387,7 @@
 </head>
 <body>
 
+    <!-- Schermata Iniziale -->
     <div id="view-action" class="view-screen">
         <div class="flex flex-col items-center w-full max-w-5xl mx-auto px-4">
             <h1 class="brand-title">MAKE IT MATTER</h1>
@@ -416,23 +415,22 @@
         </div>
     </div>
 
+    <!-- Applicazione Principale -->
     <div id="app-container">
-        <!-- Nuovo Pannello di Controllo (Toolbar) Intuitivo e Professionale -->
+        <!-- Pannello di Controllo Intuitivo (Scompare in stampa) -->
         <div id="toolbar">
-            <!-- GRUPPO 1: Navigazione -->
             <div class="flex items-center gap-1 md:gap-2">
-                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="goBackToHome()" data-tooltip="Esci e Torna alla Home: Clicca qui per fermare tutto e tornare alla schermata principale senza perdere i dati.">
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="goBackToHome()" data-tooltip="Esci e Torna alla Home: Clicca qui per fermare tutto e tornare alla schermata principale.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 </button>
-                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="openModal('manual')" data-tooltip="Istruzioni: Clicca qui se sei confuso e vuoi leggere come funziona l'applicazione in modo semplice.">
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="openModal('manual')" data-tooltip="Istruzioni: Leggi come funziona l'applicazione.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
                 <div class="h-6 w-px bg-slate-700 mx-1 md:mx-2"></div>
             </div>
 
-            <!-- GRUPPO 2: Motore Audio (Hemi-Sync) -->
             <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700 shadow-inner">
-                <div class="has-tooltip flex items-center" data-tooltip="Scegli il Suono: Seleziona dalla lista il suono speciale che aiuterà il tuo cervello a rilassarsi e concentrarsi sul bersaglio.">
+                <div class="has-tooltip flex items-center" data-tooltip="Scegli Frequenza: Seleziona il suono speciale che aiuterà il tuo cervello a rilassarsi e concentrarsi sul bersaglio.">
                     <svg class="w-4 h-4 text-slate-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
                     <select id="audio-preset" class="bg-transparent text-white font-mono text-xs md:text-sm px-2 py-1 outline-none cursor-pointer w-[110px] md:w-auto">
                         <optgroup label="Frequenze Base">
@@ -450,44 +448,44 @@
                     </select>
                 </div>
                 
-                <button id="btn-play-audio" class="btn-tool text-green-400 hover:text-green-300 hover:bg-green-400/10 has-tooltip mx-1" onclick="playSelectedAudio()" data-tooltip="Inizia Suono: Clicca questo pulsante Play per far partire il suono speciale nelle cuffie.">
+                <button id="btn-play-audio" class="btn-tool text-green-400 hover:text-green-300 hover:bg-green-400/10 has-tooltip mx-1" onclick="playSelectedAudio()" data-tooltip="Inizia Suono: Clicca questo pulsante Play per far partire il suono Binaurale nelle cuffie.">
                     <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
                 </button>
-                <button class="btn-tool text-slate-400 hover:text-white has-tooltip mr-1" onclick="stopAudio()" data-tooltip="Ferma Suono: Clicca questo quadratino per spegnere tutti i suoni se ti danno fastidio.">
+                <button class="btn-tool text-slate-400 hover:text-white has-tooltip mr-1" onclick="stopAudio()" data-tooltip="Ferma Suono: Spegni tutti i suoni.">
                     <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
                 </button>
                 
                 <div class="h-5 w-px bg-slate-600 mx-1"></div>
                 
-                <button id="btn-waves" class="btn-tool text-blue-300 hover:text-blue-200 hover:bg-blue-400/10 has-tooltip" onclick="toggleWaves()" data-tooltip="Onde del Mare: Clicca per far partire un suono di mare che copre i rumori fastidiosi intorno a te.">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z"></path></svg>
+                <button id="btn-waves" class="btn-tool text-blue-300 hover:text-blue-200 hover:bg-blue-400/10 has-tooltip text-lg" onclick="toggleWaves()" data-tooltip="Onde del Mare: Clicca per far partire un suono di mare che copre i rumori fastidiosi intorno a te.">
+                    🌊
                 </button>
                 <span id="audio-status-indicator" class="w-2.5 h-2.5 rounded-full bg-slate-600 ml-2 mr-2 shadow-inner border border-slate-900 transition-colors duration-300"></span>
             </div>
 
-            <!-- GRUPPO 3: Strumenti e Salvataggio -->
             <div class="flex items-center gap-1 md:gap-2 ml-auto md:ml-0">
                 <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700">
                     <span id="timer-display" class="font-mono font-bold text-slate-300 px-2 text-xs md:text-sm w-12 text-center">00:00</span>
-                    <button id="timer-btn" class="btn-tool text-slate-300 hover:text-white has-tooltip" onclick="toggleTimer()" data-tooltip="Cronometro: Clicca per iniziare a contare il tempo che passa. Clicca di nuovo per tornare a zero.">
+                    <button id="timer-btn" class="btn-tool text-slate-300 hover:text-white has-tooltip" onclick="toggleTimer()" data-tooltip="Cronometro: Clicca per iniziare a contare il tempo. Clicca di nuovo per tornare a zero.">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </button>
                 </div>
 
                 <div class="h-6 w-px bg-slate-700 mx-1 mobile-hide"></div>
 
-                <button class="btn-tool text-red-400 hover:text-red-300 hover:bg-red-900/30 has-tooltip mobile-hide" onclick="clearData(true)" data-tooltip="Cancella Tutto: Clicca il cestino per buttare via i disegni e le parole, pronto per cominciare da capo.">
+                <button class="btn-tool text-red-400 hover:text-red-300 hover:bg-red-900/30 has-tooltip mobile-hide" onclick="clearData(true)" data-tooltip="Cancella Tutto: Cestina i disegni e le parole, pronto per cominciare da capo.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 </button>
 
-                <button class="btn-tool bg-white text-slate-900 hover:bg-slate-200 has-tooltip ml-1 px-3" onclick="window.print()" data-tooltip="Stampa Documento: Clicca qui per trasformare tutto il tuo lavoro in un documento PDF da salvare o stampare su carta.">
+                <button class="btn-tool bg-white text-slate-900 hover:bg-slate-200 has-tooltip ml-1 px-3" onclick="window.print()" data-tooltip="Stampa Documento: Trasforma tutto il tuo lavoro in un documento PDF pulito e senza barra dei menu.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    <span class="font-bold text-xs hidden md:inline ml-1">STAMPA</span>
+                    <span class="font-bold text-xs hidden md:inline ml-1 font-mono">STAMPA</span>
                 </button>
             </div>
         </div>
 
         <main class="w-full">
+            <!-- Pagina 1: Log di Avvio -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -577,6 +575,7 @@
                 </div>
             </div>
 
+            <!-- Pagina 2: Canvas e Percezioni -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
@@ -588,7 +587,6 @@
                     </header>
 
                     <h2 class="section-header shrink-0">Stage 1: Ideogram / Gestalt</h2>
-                    <!-- Il flex-1 permette al canvas di adattarsi allo spazio senza sbordare dal foglio -->
                     <div class="canvas-wrapper flex-1 min-h-[120px] mb-4 shrink-0">
                         <div class="absolute top-2 left-2 text-[9px] font-mono text-slate-400 pointer-events-none tracking-widest">INITIAL SKETCH / ENERGY LINES</div>
                         <div class="canvas-tools">
@@ -626,6 +624,7 @@
                 </div>
             </div>
 
+            <!-- Pagina 3: Rivelazione -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -671,6 +670,7 @@
                 </div>
             </div>
 
+            <!-- Pagina 4: Blind Protocol -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
@@ -707,6 +707,7 @@
                 </div>
             </div>
 
+            <!-- Pagina 5: Matrice Anomalous Cognition -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -756,6 +757,7 @@
         </main>
     </div>
 
+    <!-- Modali di Sistema -->
     <div id="dialog-modal" class="hidden fixed inset-0 z-[250] bg-slate-900/60 backdrop-blur-md flex justify-center items-center p-4">
         <div class="bg-white rounded shadow-2xl w-full max-w-sm overflow-hidden border border-slate-300">
             <div class="bg-slate-50 border-b border-slate-200 p-3">
@@ -814,7 +816,7 @@
                 if(landingContainer) landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
                 if(guessContainer) guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
                 
-                // Pagina 5: Carte e Caselle Interattive sia per Schermo che per Stampa
+                // Pagina 5: Carte e Caselle Interattive
                 if(matrixPerceivedContainer) {
                     matrixPerceivedContainer.innerHTML += `
                         <div class="matrix-card-wrap flex flex-col items-center gap-3 cursor-pointer group" onclick="setMatrixSelection('perceived', '${key}')">
@@ -844,7 +846,7 @@
         }
         window.addEventListener('DOMContentLoaded', initZenerUI);
 
-        // Selezione ed interattività della Matrice di Verifica (Pagina 5)
+        // Selezione ed interattività della Matrice
         function setMatrixSelection(type, key) {
             if (type === 'perceived') {
                 matrixPerceived = (matrixPerceived === key) ? '' : key;
@@ -853,7 +855,7 @@
                 
                 // Sincronizzazione con il guess di pagina 3
                 if (matrixPerceived) {
-                    selectGuess(matrixPerceived, true); // true = skip loop
+                    selectGuess(matrixPerceived, true); 
                 } else {
                     currentGuess = '';
                     document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
@@ -912,7 +914,6 @@
             const selectedCard = document.getElementById('guess-' + key);
             if(selectedCard) selectedCard.classList.add('selected');
             
-            // Sincronizza anche sulla matrice di pagina 5
             if (!skipMatrixSync && matrixPerceived !== key) {
                 matrixPerceived = key;
                 localStorage.setItem('qcs5_matrix_perceived', matrixPerceived);
@@ -940,7 +941,6 @@
             const icon = display.querySelector('.zener-icon');
             if(icon) { icon.style.width = '60%'; icon.style.height = '60%'; }
 
-            // Sincronizza automaticamente la matrice Ground Truth su Pagina 5
             setMatrixSelection('actual', currentTarget);
 
             const resText = document.getElementById('resolution-result');
@@ -956,18 +956,15 @@
             currentTarget = keys[Math.floor(Math.random() * keys.length)];
             hasRevealed = false;
             
-            // Genera TRN (Target Reference Number)
             const trn = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
             document.getElementById('f_trn').value = trn;
             document.getElementById('verify-trn').innerText = trn;
             
-            // Reset UI Pagina 3
             const display = document.getElementById('target-reveal-display');
             display.innerHTML = '<span class="text-4xl font-serif">?</span>';
             display.classList.add('text-slate-300', 'border-dashed', 'bg-white');
             display.classList.remove('border-solid', 'border-slate-800', 'bg-slate-100');
             
-            // Reset UI Pagina 4
             const verifyDisplay = document.getElementById('verify-display');
             verifyDisplay.innerHTML = `
                 <svg class="w-10 h-10 text-slate-400 mb-4 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
@@ -981,7 +978,6 @@
             currentGuess = '';
             document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
 
-            // Reset Matrice Pagina 5
             matrixPerceived = '';
             matrixActual = '';
             localStorage.removeItem('qcs5_matrix_perceived');
@@ -1006,7 +1002,6 @@
                 svgIcon.style.height = '60px';
             }
 
-            // Sincronizza anche la riga del target effettivo nella matrice
             setMatrixSelection('actual', currentTarget);
         }
 
@@ -1157,7 +1152,12 @@
         let isAudioPlaying = false; let isWavesPlaying = false;
         
         async function initAudio() {
+            // Forza il resume del contesto audio (necessario su molti browser)
+            if (Tone.context.state !== 'running') {
+                await Tone.context.resume();
+            }
             await Tone.start();
+            
             stereoMerger = new Tone.Merge().toDestination();
             synthLeft = new Tone.Oscillator({ type: "sine" }).connect(stereoMerger, 0, 0);
             synthRight = new Tone.Oscillator({ type: "sine" }).connect(stereoMerger, 0, 1);
@@ -1174,11 +1174,13 @@
 
         async function playSelectedAudio() {
             try {
+                if (Tone.context.state !== 'running') {
+                    await Tone.context.resume();
+                }
                 await Tone.start();
                 if (!synthLeft) await initAudio();
                 
                 const preset = document.getElementById('audio-preset').value;
-                const btnPlay = document.getElementById('btn-play-audio');
                 const indicator = document.getElementById('audio-status-indicator');
                 
                 let diffFreq = 0; let isAutopilot = false; let targetFreq = 0; let rampTime = 0;
@@ -1202,12 +1204,15 @@
                 }
                 
                 if(!isAudioPlaying) {
-                    synthLeft.volume.rampTo(-20, 2); synthRight.volume.rampTo(-20, 2);
+                    synthLeft.volume.rampTo(-15, 2); synthRight.volume.rampTo(-15, 2);
                     isAudioPlaying = true;
                     indicator.classList.replace('bg-slate-600', 'bg-green-500'); 
-                    indicator.classList.add('shadow-[0_0_8px_#22c55e]'); // Aggiunge alone luminoso acceso
+                    indicator.classList.add('shadow-[0_0_8px_#22c55e]');
                 }
-            } catch (e) { showAlert("Tocca un punto qualsiasi dello schermo prima di attivare l'audio per permettere al browser di avviarlo.", "Audio Non Autorizzato"); }
+            } catch (e) { 
+                console.error(e);
+                showAlert("Per favore, fai clic su un punto qualsiasi dello schermo prima di attivare l'audio per permettere al browser di sbloccare il suono.", "Audio Bloccato"); 
+            }
         }
 
         function stopAudio() {
@@ -1218,11 +1223,14 @@
             isAudioPlaying = false;
             const indicator = document.getElementById('audio-status-indicator');
             indicator.classList.replace('bg-green-500', 'bg-slate-600'); 
-            indicator.classList.remove('shadow-[0_0_8px_#22c55e]'); // Rimuove alone luminoso
+            indicator.classList.remove('shadow-[0_0_8px_#22c55e]');
         }
 
         async function toggleWaves() {
             try {
+                if (Tone.context.state !== 'running') {
+                    await Tone.context.resume();
+                }
                 await Tone.start();
                 if (!waveNoise) await initAudio();
                 const btnWaves = document.getElementById('btn-waves');
@@ -1234,7 +1242,10 @@
                     waveNoise.volume.rampTo(0, 2); isWavesPlaying = true;
                     btnWaves.classList.add('bg-blue-400/20');
                 }
-            } catch (e) { showAlert("Tocca un punto qualsiasi dello schermo per abilitare l'audio.", "Sistema"); }
+            } catch (e) { 
+                console.error(e);
+                showAlert("Fai clic su un punto qualsiasi dello schermo prima per sbloccare l'audio.", "Sistema Audio"); 
+            }
         }
 
         // --- Canvas Drawing Logic ---
@@ -1389,6 +1400,13 @@
                 generateTarget();
                 resizeAllCanvases();
             }
+            
+            // Forza uno sblocco rapido del contesto audio al primo click sulla finestra
+            document.body.addEventListener('click', async () => {
+                if (Tone.context.state !== 'running') {
+                    await Tone.context.resume();
+                }
+            }, { once: true });
         });
     </script>
 </body>
