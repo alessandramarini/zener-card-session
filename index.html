@@ -224,59 +224,59 @@
             width: 100%; background: #f8fafc; border: 1px solid var(--border-light); 
             color: var(--text-main); font-family: var(--font-mono); font-size: 0.9rem;
             padding: 8px 10px; transition: all 0.2s; resize: none;
-            border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
-        }
-        textarea { padding: 12px; line-height: 1.5; }
-        input[type="text"]:focus, textarea:focus { 
-            outline: none; border-color: var(--brand-accent); background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        /* Look per i campi in sola lettura (come il TRN) */
-        input[readonly] { background: transparent; border-color: transparent; border-bottom: 2px solid var(--text-main); border-radius: 0; padding: 4px 0; box-shadow: none; font-size: 1.25rem; font-weight: 700; color: var(--brand-accent); }
+        .tool-btn.active { background: white; color: var(--text-main); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
 
-        .chk-wrap { display: inline-flex; align-items: flex-start; gap: 10px; cursor: pointer; user-select: none; }
-        .chk-wrap input { display: none; }
-        .chk-box { 
-            flex-shrink: 0; width: 20px; height: 20px; 
-            border: 2px solid var(--border-dark); border-radius: 3px; 
-            background: white; transition: all 0.2s; position: relative; margin-top: 1px;
+        /* Stili avanzati per il nuovo Pannello di Controllo (Toolbar) e Tooltips */
+        #toolbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: #0f172a; /* Ardesia Scura Super Professionale */
+            border-bottom: 1px solid #334155; z-index: 100; 
+            padding: 0.5rem 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5); 
+            flex-wrap: wrap; gap: 0.5rem;
         }
-        .chk-wrap input:checked + .chk-box { background: var(--text-main); border-color: var(--text-main); }
-        .chk-wrap input:checked + .chk-box::after { 
-            content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 11px; 
-            border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); 
-        }
-        .chk-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
-        .chk-desc { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; display: block; }
 
-        .canvas-wrapper { 
-            position: relative; border: 1px solid var(--border-dark); 
-            border-radius: 4px; overflow: hidden; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-            min-height: 150px; 
-            /* Sfondo a griglia millimetrata tecnica */
-            background-color: #ffffff;
-            background-image: 
-                linear-gradient(#f1f5f9 1px, transparent 1px),
-                linear-gradient(90deg, #f1f5f9 1px, transparent 1px);
-            background-size: 20px 20px;
+        .btn-tool {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.4rem; padding: 0.4rem 0.5rem; border-radius: 6px;
+            transition: all 0.2s ease; cursor: pointer; border: none;
+            background: transparent; color: #94a3b8;
         }
-        .drawing-board { display: block; width: 100%; touch-action: none; cursor: crosshair; }
-        .canvas-tools { 
-            position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; 
-            z-index: 10; background: rgba(255,255,255,0.95); padding: 4px; 
-            border-radius: 4px; border: 1px solid var(--border-light);
-            backdrop-filter: blur(4px);
-        }
-        .tool-btn { 
-            font-size: 0.65rem; font-family: var(--font-mono); padding: 4px 8px; background: transparent; 
-            border: 1px solid transparent; border-radius: 3px; cursor: pointer; 
-            color: var(--text-muted); font-weight: 700; transition: all 0.2s; text-transform: uppercase;
-        }
-        .tool-btn.active { background: var(--text-main); color: white; }
-        .tool-btn:hover:not(.active) { background: #f1f5f9; color: var(--text-main); }
+        .btn-tool:hover { background: rgba(255,255,255,0.1); color: white; }
+        .btn-tool svg { width: 1.25rem; height: 1.25rem; }
 
-        #sys-modal, #dialog-modal { backdrop-filter: blur(8px); }
+        @media (hover: hover) {
+            .has-tooltip { position: relative; }
+            .has-tooltip::after {
+                content: attr(data-tooltip);
+                position: absolute; top: 120%; left: 50%;
+                transform: translateX(-50%) translateY(5px);
+                background: #1e293b; color: #f8fafc;
+                padding: 10px 14px; border-radius: 8px;
+                font-size: 0.75rem; font-family: var(--font-sans);
+                font-weight: 500; line-height: 1.4; white-space: normal;
+                width: max-content; max-width: 220px; text-align: center;
+                opacity: 0; visibility: hidden;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 9999; pointer-events: none;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            }
+            .has-tooltip::before {
+                content: ''; position: absolute; top: 120%; left: 50%;
+                transform: translateX(-50%) translateY(-5px);
+                border-width: 6px; border-style: solid;
+                border-color: transparent transparent #1e293b transparent;
+                opacity: 0; visibility: hidden; transition: all 0.2s;
+                z-index: 9999; pointer-events: none;
+            }
+            .has-tooltip:hover::after, .has-tooltip:hover::before {
+                opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
 
         /* Stili per la Matrice di Verifica dell'ultima pagina */
         .matrix-card-wrap { user-select: none; }
@@ -286,7 +286,7 @@
 
         @media print {
             @page { size: A4 portrait; margin: 0 !important; }
-            body, html { background: white !important; padding: 0 !important; margin: 0 !important; font-size: 11pt !important; }
+            body, html { background: white !important; padding: 0 !important; margin: 0 !important; font-size: 12pt !important; }
             #toolbar, .canvas-tools, #sys-modal, #dialog-modal, .view-screen { display: none !important; }
             #app-container { display: block !important; padding: 0 !important; }
             
@@ -353,42 +353,73 @@
     </div>
 
     <div id="app-container">
+        <!-- Nuovo Pannello di Controllo (Toolbar) Intuitivo e Professionale -->
         <div id="toolbar">
-            <div class="toolbar-group flex items-center gap-2">
-                <span class="font-sans font-bold text-lg text-white mr-2 tracking-tighter">MIM.</span>
-                <button class="btn btn-outline" onclick="goBackToHome()" title="Abort Session">ABORT</button>
-                <button class="btn btn-outline" onclick="openModal('manual')" title="Protocol Manual">MANUAL</button>
+            <!-- GRUPPO 1: Navigazione -->
+            <div class="flex items-center gap-1 md:gap-2">
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="goBackToHome()" data-tooltip="Esci e Torna alla Home: Clicca qui per fermare tutto e tornare alla schermata principale senza perdere i dati.">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                </button>
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="openModal('manual')" data-tooltip="Istruzioni: Clicca qui se sei confuso e vuoi leggere come funziona l'applicazione in modo semplice.">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+                <div class="h-6 w-px bg-slate-700 mx-1 md:mx-2"></div>
             </div>
 
-            <div class="toolbar-group audio-controls">
-                <span class="text-[9px] font-bold text-slate-400 px-2 mobile-hide tracking-widest font-mono">HEMI-SYNC</span>
-                <select id="audio-preset" class="audio-select">
-                    <optgroup label="Frequencies">
-                        <option value="delta">Delta (2.5Hz)</option>
-                        <option value="theta">Theta (5Hz)</option>
-                        <option value="alpha">Alpha (10Hz)</option>
-                        <option value="beta">Beta (20Hz)</option>
-                        <option value="gamma">Gamma (40Hz)</option>
-                    </optgroup>
-                    <optgroup label="Autopilot Vector">
-                        <option value="f10">Focus 10 (Awake)</option>
-                        <option value="f12">Focus 12 (Expanded)</option>
-                        <option value="f15">Focus 15 (Void)</option>
-                    </optgroup>
-                </select>
-                <button class="btn btn-primary" id="btn-play-audio" onclick="playSelectedAudio()">INIT</button>
-                <button class="btn btn-outline border-transparent text-slate-300" onclick="stopAudio()" title="Halt Audio">HALT</button>
-                <span id="audio-status-indicator" class="w-2 h-2 rounded-full bg-slate-600 mx-1"></span>
-                <div class="w-px h-4 bg-slate-600 mx-1"></div>
-                <button class="btn btn-outline border-transparent text-slate-300 hover:text-white" id="btn-waves" onclick="toggleWaves()" title="White Noise / Ocean">WVS</button>
+            <!-- GRUPPO 2: Motore Audio (Hemi-Sync) -->
+            <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700 shadow-inner">
+                <div class="has-tooltip flex items-center" data-tooltip="Scegli il Suono: Seleziona dalla lista il suono speciale che aiuterà il tuo cervello a rilassarsi e concentrarsi sul bersaglio.">
+                    <svg class="w-4 h-4 text-slate-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
+                    <select id="audio-preset" class="bg-transparent text-white font-mono text-xs md:text-sm px-2 py-1 outline-none cursor-pointer w-[110px] md:w-auto">
+                        <optgroup label="Frequenze Base">
+                            <option value="delta">Delta (Sonno Profondo)</option>
+                            <option value="theta">Theta (Rilassamento)</option>
+                            <option value="alpha">Alpha (Concentrazione)</option>
+                            <option value="beta">Beta (Veglia)</option>
+                            <option value="gamma">Gamma (Alta Energia)</option>
+                        </optgroup>
+                        <optgroup label="Pilota Automatico">
+                            <option value="f10">Focus 10 (Corpo Addormentato)</option>
+                            <option value="f12">Focus 12 (Mente Espansa)</option>
+                            <option value="f15">Focus 15 (Vuoto Totale)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <button id="btn-play-audio" class="btn-tool text-green-400 hover:text-green-300 hover:bg-green-400/10 has-tooltip mx-1" onclick="playSelectedAudio()" data-tooltip="Inizia Suono: Clicca questo pulsante Play per far partire il suono speciale nelle cuffie.">
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                </button>
+                <button class="btn-tool text-slate-400 hover:text-white has-tooltip mr-1" onclick="stopAudio()" data-tooltip="Ferma Suono: Clicca questo quadratino per spegnere tutti i suoni se ti danno fastidio.">
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
+                </button>
+                
+                <div class="h-5 w-px bg-slate-600 mx-1"></div>
+                
+                <button id="btn-waves" class="btn-tool text-blue-300 hover:text-blue-200 hover:bg-blue-400/10 has-tooltip" onclick="toggleWaves()" data-tooltip="Onde del Mare: Clicca per far partire un suono di mare che copre i rumori fastidiosi intorno a te.">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z"></path></svg>
+                </button>
+                <span id="audio-status-indicator" class="w-2.5 h-2.5 rounded-full bg-slate-600 ml-2 mr-2 shadow-inner border border-slate-900 transition-colors duration-300"></span>
             </div>
 
-            <div class="toolbar-group flex items-center gap-2">
-                <div class="timer-display" id="timer-display">00:00</div>
-                <button class="btn btn-outline" onclick="toggleTimer()" id="timer-btn">TMR</button>
-                <div class="h-5 w-px bg-slate-600 mx-1 mobile-hide"></div>
-                <button class="btn btn-danger mobile-hide" onclick="clearData(true)">ERASE</button>
-                <button class="btn btn-primary" style="background-color: white; color: #0f172a;" onclick="window.print()">PRINT DOC</button>
+            <!-- GRUPPO 3: Strumenti e Salvataggio -->
+            <div class="flex items-center gap-1 md:gap-2 ml-auto md:ml-0">
+                <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700">
+                    <span id="timer-display" class="font-mono font-bold text-slate-300 px-2 text-xs md:text-sm w-12 text-center">00:00</span>
+                    <button id="timer-btn" class="btn-tool text-slate-300 hover:text-white has-tooltip" onclick="toggleTimer()" data-tooltip="Cronometro: Clicca per iniziare a contare il tempo che passa. Clicca di nuovo per tornare a zero.">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </button>
+                </div>
+
+                <div class="h-6 w-px bg-slate-700 mx-1 mobile-hide"></div>
+
+                <button class="btn-tool text-red-400 hover:text-red-300 hover:bg-red-900/30 has-tooltip mobile-hide" onclick="clearData(true)" data-tooltip="Cancella Tutto: Clicca il cestino per buttare via i disegni e le parole, pronto per cominciare da capo.">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+
+                <button class="btn-tool bg-white text-slate-900 hover:bg-slate-200 has-tooltip ml-1 px-3" onclick="window.print()" data-tooltip="Stampa Documento: Clicca qui per trasformare tutto il tuo lavoro in un documento PDF da salvare o stampare su carta.">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span class="font-bold text-xs hidden md:inline ml-1">STAMPA</span>
+                </button>
             </div>
         </div>
 
@@ -1049,13 +1080,11 @@
                 isTimerRunning = false;
                 seconds = 0;
                 document.getElementById('timer-display').innerText = "00:00";
-                btn.innerText = "TMR"; 
-                btn.classList.remove('btn-danger'); btn.classList.add('btn-outline');
+                btn.classList.remove('text-red-400', 'bg-red-400/10');
             } else {
                 timerInterval = setInterval(() => { seconds++; updateTimerDisplay(); }, 1000);
                 isTimerRunning = true; 
-                btn.innerText = "RST"; 
-                btn.classList.remove('btn-outline'); btn.classList.add('btn-danger');
+                btn.classList.add('text-red-400', 'bg-red-400/10');
             }
         }
 
@@ -1111,10 +1140,10 @@
                 if(!isAudioPlaying) {
                     synthLeft.volume.rampTo(-20, 2); synthRight.volume.rampTo(-20, 2);
                     isAudioPlaying = true;
-                    indicator.classList.replace('bg-slate-600', 'bg-green-500'); indicator.classList.add('animate-pulse');
-                    btnPlay.classList.replace('btn-primary', 'btn-outline'); btnPlay.innerText = "ACTV";
+                    indicator.classList.replace('bg-slate-600', 'bg-green-500'); 
+                    indicator.classList.add('shadow-[0_0_8px_#22c55e]'); // Aggiunge alone luminoso acceso
                 }
-            } catch (e) { showAlert("Tap anywhere on the screen first to enable the audio engine.", "AUDIO ENGINE HALTED"); }
+            } catch (e) { showAlert("Tocca un punto qualsiasi dello schermo prima di attivare l'audio per permettere al browser di avviarlo.", "Audio Non Autorizzato"); }
         }
 
         function stopAudio() {
@@ -1123,10 +1152,9 @@
                 synthRight.volume.rampTo(-Infinity, 1);
             }
             isAudioPlaying = false;
-            const btnPlay = document.getElementById('btn-play-audio');
             const indicator = document.getElementById('audio-status-indicator');
-            indicator.classList.replace('bg-green-500', 'bg-slate-600'); indicator.classList.remove('animate-pulse');
-            btnPlay.classList.replace('btn-outline', 'btn-primary'); btnPlay.innerText = "INIT";
+            indicator.classList.replace('bg-green-500', 'bg-slate-600'); 
+            indicator.classList.remove('shadow-[0_0_8px_#22c55e]'); // Rimuove alone luminoso
         }
 
         async function toggleWaves() {
@@ -1137,12 +1165,12 @@
                 
                 if (isWavesPlaying) {
                     waveNoise.volume.rampTo(-Infinity, 1); isWavesPlaying = false;
-                    btnWaves.classList.remove('text-white');
+                    btnWaves.classList.remove('bg-blue-400/20');
                 } else {
                     waveNoise.volume.rampTo(0, 2); isWavesPlaying = true;
-                    btnWaves.classList.add('text-white');
+                    btnWaves.classList.add('bg-blue-400/20');
                 }
-            } catch (e) { showAlert("Tap anywhere to enable audio.", "SYSTEM ERROR"); }
+            } catch (e) { showAlert("Tocca un punto qualsiasi dello schermo per abilitare l'audio.", "Sistema"); }
         }
 
         // --- Canvas Drawing Logic ---
