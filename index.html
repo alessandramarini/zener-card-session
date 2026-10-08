@@ -163,12 +163,21 @@
         
         .page-content { flex: 1; display: flex; flex-direction: column; }
         .print-footer { 
-            margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; 
-            font-size: 0.7rem; color: var(--border-dark); font-family: var(--font-mono); 
-            text-transform: uppercase; border-top: 1px solid var(--border-light);
+            margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
+            font-size: 0.75rem; line-height: 1rem; color: #94a3b8; font-family: monospace; text-transform: uppercase;
         }
 
-        /* Mobile specific adjustments */
+        /* Fix per l'overflow della pagina */
+        .a4-page {
+            background: var(--paper-bg); width: 100%; max-width: 210mm; 
+            min-height: 297mm; height: auto; /* Permette alla pagina di allungarsi se necessario */
+            margin: 0 auto 30px auto; padding: 15mm;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            position: relative; box-sizing: border-box;
+            display: flex; flex-direction: column;
+            overflow: visible;
+        }
+
         @media (max-width: 768px) {
             #toolbar { padding: 0.5rem; justify-content: center; }
             .toolbar-group { width: 100%; justify-content: center; gap: 0.5rem; }
@@ -368,22 +377,22 @@
             <div class="a4-page">
                 <div class="page-content">
                     <div class="print-avoid-break">
-                        <header class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-slate-800 pb-3 mb-6 print:mb-2 print:pb-1">
-                            <div class="mb-3 md:mb-0">
-                                <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Explorer Log // Zener Practice</div>
-                                <h1 class="doc-title">Target Resonance Protocol</h1>
-                            </div>
-                            <div class="w-full md:w-auto text-left md:text-right flex flex-row md:flex-col justify-between md:justify-end items-center md:items-end">
-                                <div class="font-mono text-[10px] text-slate-500 tracking-wider flex items-center">
-                                    FILE REF: <input type="text" id="f_ref" class="w-24 ml-2 border-b border-slate-400 bg-transparent text-center focus:bg-slate-50 outline-none">
-                                </div>
-                                <div class="font-mono text-[10px] text-slate-500 mt-0 md:mt-2">PAGE 1 / 3</div>
-                            </div>
+                        <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4">
+                            <div><h1 class="doc-title">Controlled Remote Viewing</h1></div>
+                            <div class="text-right text-xs text-slate-500 mt-1">PAGE 2 / 4</div>
                         </header>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 print:mb-2 print:gap-2">
-                            <div><span class="input-label">Date</span><input type="text" id="f_date" placeholder="YYYY-MM-DD"></div>
-                            <div><span class="input-label">Start Time</span><input type="text" id="f_start" placeholder="00:00"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div><span class="input-label">Target Reference Number (TRN)</span><input type="text" id="f_trn" class="text-xl tracking-widest font-mono font-bold text-blue-700" placeholder="ZENER-PRAC" readonly></div>
+                            <div><span class="input-label">Target Decryption (Post-Session)</span><input type="text" id="f_target_desc" class="text-lg"></div>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header mt-3 mb-2">Stage 1: Ideogram / Gestalt</h2>
+                        <!-- Ridotta l'altezza per evitare lo sbordamento (h-40 invece di h-48) -->
+                        <div class="canvas-wrapper h-40 mb-4">
+                            <div class="absolute top-2 left-2 text-xs font-mono text-slate-400 pointer-events-none">INITIAL SKETCH / ENERGY LINES</div>
                             <div><span class="input-label">End Time</span><input type="text" id="f_end" placeholder="00:00"></div>
                             <div><span class="input-label">Duration</span><input type="text" id="f_dur" placeholder="0h 0m"></div>
                             
@@ -409,10 +418,10 @@
                     </div>
 
                     <div class="print-avoid-break">
-                        <h2 class="section-header">Induction Parameters</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 print:mb-2 print:gap-2">
-                            <div><span class="input-label">Audio Source</span><input type="text" id="f_src" placeholder="Gateway / Built-in / None"></div>
-                            <div><span class="input-label">Hardware</span><input type="text" id="f_hp" placeholder="Headphones model"></div>
+                        <h2 class="section-header mt-3 mb-2">Stage 3: Analytical Dimensional Sketch</h2>
+                        <!-- Ridotta l'altezza per evitare lo sbordamento (h-48 invece di h-56) -->
+                        <div class="canvas-wrapper h-48">
+                            <div class="absolute top-2 left-2 text-xs font-mono text-slate-400 pointer-events-none">ARCHITECTURAL/BIOLOGICAL MAPPING</div>
                         </div>
                         
                         <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 flex flex-col md:flex-row justify-between gap-3 mb-6 print:mb-2">
@@ -481,12 +490,12 @@
             <div class="a4-page">
                 <div class="page-content">
                     <div class="print-avoid-break">
-                        <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6">
-                            <div><h1 class="doc-title">Controlled Remote Viewing</h1></div>
-                            <div class="text-right text-xs text-slate-500 font-mono mt-1 mobile-hide">PAGE 2 / 3</div>
+                        <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4">
+                            <div><h1 class="doc-title">Target Resolution</h1></div>
+                            <div class="text-right text-xs text-slate-500 mt-1">PAGE 3 / 4</div>
                         </header>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <h2 class="section-header mt-3 mb-2">Stage 4: Final Guess & Reveal</h2>
                             <div><span class="input-label">Target Reference Number (TRN)</span><input type="text" id="f_trn" class="text-xl tracking-widest font-mono font-bold text-blue-700" placeholder="ZENER-PRAC"></div>
                             <div><span class="input-label">Target Decryption (Post-Session)</span><input type="text" id="f_target_desc" class="text-lg"></div>
                         </div>
@@ -586,6 +595,78 @@
                     <span>Subjective Exploration Log</span><span>FORM-QCS-03</span>
                 </div>
             </div>
+
+            <!-- NUOVA PAGINA: Verifica a Priori -->
+            <div class="a4-page print-avoid-break">
+                <div class="page-content">
+                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8">
+                        <div>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">System Verification Protocol</div>
+                            <h1 class="doc-title text-slate-700">A Priori Target Ledger</h1>
+                        </div>
+                        <div class="text-right text-xs text-slate-500 mt-1">APPENDIX</div>
+                    </header>
+
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-sm text-slate-700 leading-relaxed">
+                        <p><strong>Total Control Protocol:</strong> This section guarantees the veracity of the generated target. The target is cryptographically tied to the TRN the exact moment you start the session. You can decrypt it here at any time to verify the system is not generating the target after your guess.</p>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center flex-1">
+                        <div class="text-xs font-bold text-slate-500 tracking-widest uppercase mb-2">Session TRN Code</div>
+                        <div id="verify-trn" class="text-3xl md:text-4xl font-mono font-bold text-blue-800 tracking-[0.2em] bg-white py-4 px-8 rounded-xl border border-slate-200 shadow-sm mb-12">
+                            XXXX-XXXX
+                        </div>
+
+                        <button id="btn-verify-early" class="action-card w-full max-w-sm group relative overflow-hidden" onclick="revealVerificationEarly()">
+                            <div id="verify-display" class="flex flex-col items-center relative z-10">
+                                <svg class="w-12 h-12 text-slate-400 mb-3 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <span class="font-bold text-slate-700 uppercase tracking-wide">Decrypt Original Target</span>
+                                <span class="text-xs text-slate-500 mt-2 font-mono">Warning: Spoils the session</span>
+                            </div>
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="print-footer">
+                    <span>Verification Ledger</span><span>FORM-QCS-04</span>
+                </div>
+            </div>
+
+            <!-- NUOVA PAGINA: Foglio di Risoluzione Cartaceo (Pineal Gland) -->
+            <div class="a4-page">
+                <div class="page-content">
+                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8">
+                        <div>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Physical Archive Protocol</div>
+                            <h1 class="doc-title text-slate-700">Pineal Resolution Log</h1>
+                        </div>
+                        <div class="text-right text-xs text-slate-500 mt-1">APPENDIX B</div>
+                    </header>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-8 text-sm text-slate-700 leading-relaxed print:bg-transparent print:border-none print:p-0">
+                        <p><strong>Physical Target Verification:</strong> Use this section exclusively for physical record-keeping. Manually check the actual target generated by the system, and compare it with the target perceived through non-local consciousness (Pineal Gland activation / Remote Viewing).</p>
+                    </div>
+
+                    <div class="mb-12 print:mb-8">
+                        <h2 class="section-header">1. Perceived Target (Pineal Gland / Remote Viewing)</h2>
+                        <div class="flex flex-wrap gap-4 mt-6 justify-around" id="print-row-perceived">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <div class="mb-12 print:mb-8">
+                        <h2 class="section-header">2. Actual Target (System Generated)</h2>
+                        <div class="flex flex-wrap gap-4 mt-6 justify-around" id="print-row-actual">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="print-footer">
+                    <span>Physical Resolution Log</span><span>FORM-QCS-05</span>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -630,13 +711,29 @@
         function initZenerUI() {
             const landingContainer = document.getElementById('zener-landing-display');
             const guessContainer = document.getElementById('guess-selection-area');
+            const printPerceived = document.getElementById('print-row-perceived');
+            const printActual = document.getElementById('print-row-actual');
             
-            landingContainer.innerHTML = '';
-            guessContainer.innerHTML = '';
+            if(landingContainer) landingContainer.innerHTML = '';
+            if(guessContainer) guessContainer.innerHTML = '';
+            if(printPerceived) printPerceived.innerHTML = '';
+            if(printActual) printActual.innerHTML = '';
 
             for (const [key, svg] of Object.entries(zenerCards)) {
-                landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
-                guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
+                if(landingContainer) landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
+                if(guessContainer) guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
+                
+                // Layout per la versione stampabile con casella di spunta
+                const printCardHtml = `
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="w-[60px] h-[90px] md:w-[80px] md:h-[120px] border-2 border-slate-200 rounded-xl flex justify-center items-center bg-white shadow-sm print:border-slate-800 print:shadow-none">
+                            ${svg}
+                        </div>
+                        <div class="w-6 h-6 border-2 border-slate-300 rounded-md bg-white print:border-slate-800"></div>
+                    </div>
+                `;
+                if(printPerceived) printPerceived.innerHTML += printCardHtml;
+                if(printActual) printActual.innerHTML += printCardHtml;
             }
         }
         window.addEventListener('DOMContentLoaded', initZenerUI);
@@ -675,20 +772,52 @@
         function generateTarget() {
             const keys = Object.keys(zenerCards);
             currentTarget = keys[Math.floor(Math.random() * keys.length)];
-            hasRevealed = false;
             
-            // Reset Reveal UI
+            // Genera e assegna il TRN
+            const trn = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
+            document.getElementById('f_trn').value = trn;
+            document.getElementById('verify-trn').innerText = trn;
+            
+            // Reset Reveal UI (Pagina 3)
             const display = document.getElementById('target-reveal-display');
             display.innerHTML = '<span class="text-5xl font-serif">?</span>';
-            display.classList.add('text-slate-300', 'border-dashed', 'bg-white');
-            display.classList.remove('border-solid', 'border-blue-600', 'bg-blue-50');
+            display.classList.add('text-slate-300', 'border-dashed');
+            display.classList.remove('border-solid', 'border-slate-800');
+            
+            // Reset Reveal UI (Pagina 4 - Verifica)
+            const verifyDisplay = document.getElementById('verify-display');
+            verifyDisplay.innerHTML = `
+                <svg class="w-12 h-12 text-slate-400 mb-3 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <span class="font-bold text-slate-700 uppercase tracking-wide">Decrypt Original Target</span>
+                <span class="text-xs text-slate-500 mt-2 font-mono">Warning: Spoils the session</span>
+            `;
+            const btnVerify = document.getElementById('btn-verify-early');
+            btnVerify.classList.remove('border-red-300', 'bg-red-50');
             
             document.getElementById('resolution-result').innerHTML = '';
             currentGuess = '';
             document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
+        }
+
+        function revealVerificationEarly() {
+            if (!currentTarget) return;
             
-            // Generate a fake TRN just for flavor
-            document.getElementById('f_trn').value = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
+            const btnVerify = document.getElementById('btn-verify-early');
+            const verifyDisplay = document.getElementById('verify-display');
+            
+            // Mostra la carta di verifica
+            verifyDisplay.innerHTML = zenerCards[currentTarget] + '<span class="text-xs font-bold text-red-600 mt-4 uppercase tracking-widest">Decrypted</span>';
+            
+            // Cambia lo stile del pulsante per indicare che è stato svelato
+            btnVerify.classList.add('border-red-300', 'bg-red-50');
+            
+            // Per comodità visiva, ingrandisce l'icona zener nella pagina di verifica
+            const svgIcon = verifyDisplay.querySelector('.zener-icon');
+            if(svgIcon) {
+                svgIcon.classList.remove('w-32', 'h-32');
+                svgIcon.style.width = '80px';
+                svgIcon.style.height = '80px';
+            }
         }
 
         // --- Core App Logic ---
