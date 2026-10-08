@@ -12,7 +12,7 @@
     
     <style>
         :root {
-            /* Palette Super Professional (Laboratorio/Intelligence) */
+            /* Super Professional Palette (Laboratory/Intelligence) */
             --bg-app: #e2e8f0;          
             --bg-paper: #ffffff;        
             --text-main: #0f172a;       
@@ -142,7 +142,7 @@
         }
         #app-container.active { display: block; }
 
-        /* Toolbar / Pannello di Controllo Intuitivo */
+        /* Toolbar / Intuitive Control Panel */
         #toolbar {
             position: fixed; top: 0; left: 0; right: 0;
             background: #0f172a; 
@@ -293,7 +293,7 @@
         .matrix-card:hover { transform: translateY(-3px); }
         .matrix-card.selected { transform: translateY(-3px); }
 
-        /* REGOLE DI STAMPA KDP PERFETTE - NESSUNA MASCHERA VISIBILE */
+        /* PERFECT KDP PRINT RULES - NO VISIBLE MASKS */
         @media print {
             @page { size: A4 portrait; margin: 0 !important; }
             body, html { 
@@ -303,11 +303,11 @@
                 color: black !important; 
             }
             
-            /* Nasconde forzatamente tutto l'UI dell'App */
+            /* Forcibly hides all App UI */
             #toolbar, .canvas-tools, #sys-modal, #dialog-modal, .view-screen { display: none !important; }
             #app-container { display: block !important; padding: 0 !important; margin: 0 !important; }
             
-            /* Foglio A4 Rigoroso con margini di 20mm */
+            /* Strict A4 Sheet with 20mm margins */
             .a4-page { 
                 box-shadow: none !important; 
                 margin: 0 !important; 
@@ -387,7 +387,7 @@
 </head>
 <body>
 
-    <!-- Schermata Iniziale -->
+    <!-- Initial Screen -->
     <div id="view-action" class="view-screen">
         <div class="flex flex-col items-center w-full max-w-5xl mx-auto px-4">
             <h1 class="brand-title">MAKE IT MATTER</h1>
@@ -415,49 +415,49 @@
         </div>
     </div>
 
-    <!-- Applicazione Principale -->
+    <!-- Main Application -->
     <div id="app-container">
-        <!-- Pannello di Controllo Intuitivo (Scompare in stampa) -->
+        <!-- Intuitive Control Panel (Hidden on print) -->
         <div id="toolbar">
             <div class="flex items-center gap-1 md:gap-2">
-                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="goBackToHome()" data-tooltip="Esci e Torna alla Home: Clicca qui per fermare tutto e tornare alla schermata principale.">
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="goBackToHome()" data-tooltip="Exit to Home: Click here to stop everything and return to the main screen.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 </button>
-                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="openModal('manual')" data-tooltip="Istruzioni: Leggi come funziona l'applicazione.">
+                <button class="btn-tool has-tooltip text-slate-300 hover:text-white" onclick="openModal('manual')" data-tooltip="Instructions: Read how the application works.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
                 <div class="h-6 w-px bg-slate-700 mx-1 md:mx-2"></div>
             </div>
 
             <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700 shadow-inner">
-                <div class="has-tooltip flex items-center" data-tooltip="Scegli Frequenza: Seleziona il suono speciale che aiuterà il tuo cervello a rilassarsi e concentrarsi sul bersaglio.">
+                <div class="has-tooltip flex items-center" data-tooltip="Choose Frequency: Select the special sound that will help your brain relax and focus on the target.">
                     <svg class="w-4 h-4 text-slate-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
                     <select id="audio-preset" class="bg-transparent text-white font-mono text-xs md:text-sm px-2 py-1 outline-none cursor-pointer w-[110px] md:w-auto">
-                        <optgroup label="Frequenze Base">
-                            <option value="delta">Delta (Sonno Profondo)</option>
-                            <option value="theta">Theta (Rilassamento)</option>
-                            <option value="alpha">Alpha (Concentrazione)</option>
-                            <option value="beta">Beta (Veglia)</option>
-                            <option value="gamma">Gamma (Alta Energia)</option>
+                        <optgroup label="Base Frequencies">
+                            <option value="delta">Delta (Deep Sleep)</option>
+                            <option value="theta">Theta (Relaxation)</option>
+                            <option value="alpha">Alpha (Focus)</option>
+                            <option value="beta">Beta (Awake)</option>
+                            <option value="gamma">Gamma (High Energy)</option>
                         </optgroup>
-                        <optgroup label="Pilota Automatico">
-                            <option value="f10">Focus 10 (Corpo Addormentato)</option>
-                            <option value="f12">Focus 12 (Mente Espansa)</option>
-                            <option value="f15">Focus 15 (Vuoto Totale)</option>
+                        <optgroup label="Autopilot">
+                            <option value="f10">Focus 10 (Body Asleep)</option>
+                            <option value="f12">Focus 12 (Expanded Mind)</option>
+                            <option value="f15">Focus 15 (Total Void)</option>
                         </optgroup>
                     </select>
                 </div>
                 
-                <button id="btn-play-audio" class="btn-tool text-green-400 hover:text-green-300 hover:bg-green-400/10 has-tooltip mx-1" onclick="playSelectedAudio()" data-tooltip="Inizia Suono: Clicca questo pulsante Play per far partire il suono Binaurale nelle cuffie.">
+                <button id="btn-play-audio" class="btn-tool text-green-400 hover:text-green-300 hover:bg-green-400/10 has-tooltip mx-1" onclick="playSelectedAudio()" data-tooltip="Start Sound: Click this Play button to start the Binaural sound in your headphones.">
                     <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
                 </button>
-                <button class="btn-tool text-slate-400 hover:text-white has-tooltip mr-1" onclick="stopAudio()" data-tooltip="Ferma Suono: Spegni tutti i suoni.">
+                <button class="btn-tool text-slate-400 hover:text-white has-tooltip mr-1" onclick="stopAudio()" data-tooltip="Stop Sound: Turn off all sounds.">
                     <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
                 </button>
                 
                 <div class="h-5 w-px bg-slate-600 mx-1"></div>
                 
-                <button id="btn-waves" class="btn-tool text-blue-300 hover:text-blue-200 hover:bg-blue-400/10 has-tooltip text-lg" onclick="toggleWaves()" data-tooltip="Onde del Mare: Clicca per far partire un suono di mare che copre i rumori fastidiosi intorno a te.">
+                <button id="btn-waves" class="btn-tool text-blue-300 hover:text-blue-200 hover:bg-blue-400/10 has-tooltip text-lg" onclick="toggleWaves()" data-tooltip="Ocean Waves: Click to start an ocean sound that covers annoying noises around you.">
                     🌊
                 </button>
                 <span id="audio-status-indicator" class="w-2.5 h-2.5 rounded-full bg-slate-600 ml-2 mr-2 shadow-inner border border-slate-900 transition-colors duration-300"></span>
@@ -466,26 +466,26 @@
             <div class="flex items-center gap-1 md:gap-2 ml-auto md:ml-0">
                 <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700">
                     <span id="timer-display" class="font-mono font-bold text-slate-300 px-2 text-xs md:text-sm w-12 text-center">00:00</span>
-                    <button id="timer-btn" class="btn-tool text-slate-300 hover:text-white has-tooltip" onclick="toggleTimer()" data-tooltip="Cronometro: Clicca per iniziare a contare il tempo. Clicca di nuovo per tornare a zero.">
+                    <button id="timer-btn" class="btn-tool text-slate-300 hover:text-white has-tooltip" onclick="toggleTimer()" data-tooltip="Timer: Click to start counting time. Click again to reset to zero.">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </button>
                 </div>
 
                 <div class="h-6 w-px bg-slate-700 mx-1 mobile-hide"></div>
 
-                <button class="btn-tool text-red-400 hover:text-red-300 hover:bg-red-900/30 has-tooltip mobile-hide" onclick="clearData(true)" data-tooltip="Cancella Tutto: Cestina i disegni e le parole, pronto per cominciare da capo.">
+                <button class="btn-tool text-red-400 hover:text-red-300 hover:bg-red-900/30 has-tooltip mobile-hide" onclick="clearData(true)" data-tooltip="Clear All: Trash drawings and words, ready to start over.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                 </button>
 
-                <button class="btn-tool bg-white text-slate-900 hover:bg-slate-200 has-tooltip ml-1 px-3" onclick="window.print()" data-tooltip="Stampa Documento: Trasforma tutto il tuo lavoro in un documento PDF pulito e senza barra dei menu.">
+                <button class="btn-tool bg-white text-slate-900 hover:bg-slate-200 has-tooltip ml-1 px-3" onclick="window.print()" data-tooltip="Print Document: Turn all your work into a clean PDF document without the menu bar.">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    <span class="font-bold text-xs hidden md:inline ml-1 font-mono">STAMPA</span>
+                    <span class="font-bold text-xs hidden md:inline ml-1 font-mono">PRINT</span>
                 </button>
             </div>
         </div>
 
         <main class="w-full">
-            <!-- Pagina 1: Log di Avvio -->
+            <!-- Page 1: Initialization Log -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -575,7 +575,7 @@
                 </div>
             </div>
 
-            <!-- Pagina 2: Canvas e Percezioni -->
+            <!-- Page 2: Canvas and Perceptions -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
@@ -624,7 +624,7 @@
                 </div>
             </div>
 
-            <!-- Pagina 3: Rivelazione -->
+            <!-- Page 3: Reveal -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -646,7 +646,7 @@
                     <div class="border border-slate-300 rounded-lg p-6 md:p-8 shadow-sm mb-6 relative overflow-hidden shrink-0">
                         <span class="input-label mb-4 text-slate-800">2. Execute Target Decryption</span>
                         <div class="flex flex-col md:flex-row items-center gap-6">
-                            <button class="btn btn-primary py-4 px-8 text-lg w-full md:w-1/3 font-sans font-bold rounded" style="height: auto;" onclick="revealTarget()">DECRYPT TARGET</button>
+                            <button class="btn btn-primary py-4 px-8 text-lg w-full md:w-1/3 font-sans font-bold rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors" style="height: auto;" onclick="revealTarget()">DECRYPT TARGET</button>
                             
                             <div class="flex-1 flex flex-row items-center justify-between bg-slate-50 border border-slate-200 rounded p-4 w-full h-full">
                                 <div class="font-mono font-bold text-slate-500 text-sm mr-4 uppercase tracking-widest">Ground Truth:</div>
@@ -670,7 +670,7 @@
                 </div>
             </div>
 
-            <!-- Pagina 4: Blind Protocol -->
+            <!-- Page 4: Blind Protocol -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
@@ -692,7 +692,7 @@
                             XXXX-XXXX
                         </div>
 
-                        <button id="btn-verify-early" class="action-card w-full max-w-sm group relative overflow-hidden border-2 border-dashed border-slate-300" onclick="revealVerificationEarly()">
+                        <button id="btn-verify-early" class="action-card w-full max-w-sm group relative overflow-hidden border-2 border-dashed border-slate-300 bg-white" onclick="revealVerificationEarly()">
                             <div id="verify-display" class="flex flex-col items-center relative z-10">
                                 <svg class="w-10 h-10 text-slate-400 mb-4 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                 <span class="font-bold font-mono text-sm text-slate-800 uppercase tracking-widest">Authenticate Original TRN Target</span>
@@ -707,7 +707,7 @@
                 </div>
             </div>
 
-            <!-- Pagina 5: Matrice Anomalous Cognition -->
+            <!-- Page 5: Anomalous Cognition Matrix -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -757,7 +757,7 @@
         </main>
     </div>
 
-    <!-- Modali di Sistema -->
+    <!-- System Modals -->
     <div id="dialog-modal" class="hidden fixed inset-0 z-[250] bg-slate-900/60 backdrop-blur-md flex justify-center items-center p-4">
         <div class="bg-white rounded shadow-2xl w-full max-w-sm overflow-hidden border border-slate-300">
             <div class="bg-slate-50 border-b border-slate-200 p-3">
@@ -766,8 +766,8 @@
             <div class="p-6 text-center">
                 <p id="dialog-message" class="text-sm text-slate-700 mb-6 leading-relaxed font-sans">...</p>
                 <div class="flex justify-center gap-3">
-                    <button id="dialog-cancel" class="btn btn-outline border-slate-300 text-slate-600 hover:bg-slate-50 hidden w-full">CANCEL</button>
-                    <button id="dialog-confirm" class="btn btn-primary w-full">ACKNOWLEDGE</button>
+                    <button id="dialog-cancel" class="btn btn-outline border border-slate-300 text-slate-600 hover:bg-slate-50 hidden w-full py-2 rounded font-bold">CANCEL</button>
+                    <button id="dialog-confirm" class="btn btn-primary w-full bg-blue-600 text-white hover:bg-blue-700 py-2 rounded font-bold">ACKNOWLEDGE</button>
                 </div>
             </div>
         </div>
@@ -784,7 +784,7 @@
     </div>
 
     <script>
-        // --- Definizione Carte Zener ---
+        // Zener Cards Definition
         const zenerCards = {
             'circle': `<svg class="zener-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>`,
             'cross': `<svg class="zener-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>`,
@@ -800,7 +800,7 @@
         let matrixPerceived = '';
         let matrixActual = '';
 
-        // Inizializzazione Interfaccia Zener
+        // Zener Interface Initialization
         function initZenerUI() {
             const landingContainer = document.getElementById('zener-landing-display');
             const guessContainer = document.getElementById('guess-selection-area');
@@ -816,7 +816,7 @@
                 if(landingContainer) landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
                 if(guessContainer) guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
                 
-                // Pagina 5: Carte e Caselle Interattive
+                // Page 5: Interactive Cards and Checkboxes
                 if(matrixPerceivedContainer) {
                     matrixPerceivedContainer.innerHTML += `
                         <div class="matrix-card-wrap flex flex-col items-center gap-3 cursor-pointer group" onclick="setMatrixSelection('perceived', '${key}')">
@@ -846,14 +846,14 @@
         }
         window.addEventListener('DOMContentLoaded', initZenerUI);
 
-        // Selezione ed interattività della Matrice
+        // Matrix Selection and Interactivity
         function setMatrixSelection(type, key) {
             if (type === 'perceived') {
                 matrixPerceived = (matrixPerceived === key) ? '' : key;
                 localStorage.setItem('qcs5_matrix_perceived', matrixPerceived);
                 updateMatrixUI('perceived', matrixPerceived);
                 
-                // Sincronizzazione con il guess di pagina 3
+                // Synchronization with page 3 guess
                 if (matrixPerceived) {
                     selectGuess(matrixPerceived, true); 
                 } else {
@@ -1147,12 +1147,12 @@
             }
         }
 
-        // --- Motore Audio Binaurale ---
+        // --- Binaural Audio Engine ---
         let synthLeft, synthRight, waveNoise, waveFilter, stereoMerger; 
         let isAudioPlaying = false; let isWavesPlaying = false;
         
         async function initAudio() {
-            // Forza il resume del contesto audio (necessario su molti browser)
+            // Force audio context resume (necessary on many browsers)
             if (Tone.context.state !== 'running') {
                 await Tone.context.resume();
             }
@@ -1211,7 +1211,7 @@
                 }
             } catch (e) { 
                 console.error(e);
-                showAlert("Per favore, fai clic su un punto qualsiasi dello schermo prima di attivare l'audio per permettere al browser di sbloccare il suono.", "Audio Bloccato"); 
+                showAlert("Please click anywhere on the screen before activating audio to allow the browser to unlock the sound.", "Audio Blocked"); 
             }
         }
 
@@ -1244,7 +1244,7 @@
                 }
             } catch (e) { 
                 console.error(e);
-                showAlert("Fai clic su un punto qualsiasi dello schermo prima per sbloccare l'audio.", "Sistema Audio"); 
+                showAlert("Please click anywhere on the screen first to unlock the audio.", "Audio System"); 
             }
         }
 
@@ -1401,7 +1401,7 @@
                 resizeAllCanvases();
             }
             
-            // Forza uno sblocco rapido del contesto audio al primo click sulla finestra
+            // Force a quick unlock of the audio context on the first click on the window
             document.body.addEventListener('click', async () => {
                 if (Tone.context.state !== 'running') {
                     await Tone.context.resume();
