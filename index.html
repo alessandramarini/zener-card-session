@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quantum Consciousness Protocol - Zener Practice</title>
+    <meta name="theme-color" content="#f8fafc">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-paper: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --border-dark: #94a3b8;
+            --accent-blue: #2563eb;
+            --accent-red: #ef4444;
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            width: 100%; min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .view-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            z-index: 200;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+            overflow-y: auto; padding: 2rem 1rem;
+        }
+        .view-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .brand-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            line-height: 1.1;
+        }
+        .brand-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .zener-display {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 3rem;
+            width: 100%; max-width: 600px;
+        }
+        .zener-card {
+            width: clamp(60px, 15vw, 80px); 
+            height: clamp(90px, 22.5vw, 120px);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--bg-paper);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            user-select: none;
+        }
+        .zener-card.selectable:hover { 
+            border-color: var(--accent-blue); cursor: pointer; transform: translateY(-5px); 
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.2);
+        }
+        .zener-card.selected { 
+            border-color: var(--accent-blue); background: #eff6ff; border-width: 3px; 
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+        }
+        .zener-icon { 
+            width: 50%; height: 50%; stroke: #1e293b; fill: none; 
+            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; 
+            transition: stroke 0.3s ease;
+        }
+        .zener-card.selected .zener-icon { stroke: var(--accent-blue); }
+
+        .action-grid { 
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem; 
+            width: 100%; max-width: 700px; margin: 0 auto;
+        }
+        @media (min-width: 640px) { .action-grid { grid-template-columns: 1fr 1fr; } }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            border-radius: 20px; padding: 2rem 1.5rem;
+            cursor: pointer; transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+        .action-card:hover {
+            transform: translateY(-5px); background: #ffffff;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .action-icon { margin-bottom: 1rem; color: var(--text-main); }
+        .action-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .action-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        #app-container { 
+            padding-top: 80px; padding-bottom: 40px; display: none; 
+            max-width: 100vw; overflow-x: hidden;
+        }
+        #app-container.active { display: block; }
+
+        #toolbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light); z-index: 50; 
+            padding: 0.75rem 1rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); 
+            flex-wrap: wrap; gap: 0.5rem;
+        }
+
+        .btn { 
+            padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; 
+            border-radius: 8px; cursor: pointer; transition: all 0.2s; 
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; 
+            border: 1px solid transparent; user-select: none;
+        }
+        .btn-outline { background: white; border-color: var(--border-light); color: var(--text-main); }
+        .btn-outline:hover { background: var(--bg-body); border-color: var(--border-dark); }
+        .btn-primary { background: var(--text-main); color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .btn-primary:hover { background: #334155; transform: translateY(-1px); box-shadow: 0 6px 10px -1px rgba(0,0,0,0.15); }
+        .btn-danger { background: white; border-color: var(--accent-red); color: var(--accent-red); }
+        .btn-danger:hover { background: var(--accent-red); color: white; }
+
+        .a4-page {
+            background: var(--bg-paper); 
+            width: 100%; max-width: 210mm; min-height: 297mm;
+            margin: 0 auto 2rem auto; padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            display: flex; flex-direction: column;
+            position: relative;
+        }
+        
+        .page-content { flex: 1; display: flex; flex-direction: column; }
+        .print-footer { 
+            margin-top: auto; padding-top: 1.5rem; display: flex; justify-content: space-between; 
+            font-size: 0.7rem; color: var(--border-dark); font-family: var(--font-mono); 
+            text-transform: uppercase; border-top: 1px solid var(--border-light);
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 768px) {
+            #toolbar { padding: 0.5rem; justify-content: center; }
+            .toolbar-group { width: 100%; justify-content: center; gap: 0.5rem; }
+            #app-container { padding-top: 140px; } /* Space for stacked toolbar */
+            .mobile-hide { display: none !important; }
+            .mobile-icon-only { font-size: 0; padding: 0.5rem; }
+            .mobile-icon-only::before { font-size: 1.2rem; content: attr(data-icon); }
+            
+            /* Make A4 pages full width on mobile for better UX */
+            .a4-page { 
+                padding: 1.25rem; min-height: auto; border-radius: 0; 
+                margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+                border-top: 1px solid var(--border-light);
+                border-bottom: 1px solid var(--border-light);
+            }
+        }
+
+        .doc-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 0.25rem;}
+        .section-header { 
+            font-weight: 700; font-size: 0.85rem; text-transform: uppercase; 
+            color: var(--text-main); border-bottom: 2px solid var(--text-main); 
+            padding-bottom: 4px; margin: 1.5rem 0 1rem 0; letter-spacing: 0.05em; 
+        }
+        
+        input[type="text"], textarea {
+            width: 100%; background: transparent; border: none; 
+            border-bottom: 1px dashed var(--border-dark);
+            color: var(--text-main); font-family: var(--font-sans); font-size: 1rem;
+            padding: 4px 0; transition: border-color 0.2s, background-color 0.2s; resize: none;
+            border-radius: 0;
+        }
+        textarea { border: 1px dashed var(--border-dark); border-radius: 6px; padding: 8px; background: rgba(248, 250, 252, 0.5); }
+        input[type="text"]:focus, textarea:focus { 
+            outline: none; border-color: var(--accent-blue); 
+            border-bottom-style: solid; background: rgba(37, 99, 235, 0.03); 
+        }
+        .input-label { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.02em;}
+
+        /* Custom Checkboxes */
+        .chk-wrap { display: inline-flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none; }
+        .chk-wrap input { display: none; }
+        .chk-box { 
+            flex-shrink: 0; width: 18px; height: 18px; 
+            border: 2px solid var(--border-dark); border-radius: 4px; 
+            background: white; transition: all 0.2s; position: relative; margin-top: 2px;
+        }
+        .chk-wrap input:checked + .chk-box { background: var(--accent-blue); border-color: var(--accent-blue); }
+        .chk-wrap input:checked + .chk-box::after { 
+            content: ''; position: absolute; left: 5px; top: 2px; width: 5px; height: 10px; 
+            border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); 
+        }
+        .chk-title { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+
+        .canvas-wrapper { 
+            position: relative; border: 1px solid var(--border-light); 
+            border-radius: 8px; background: #fafafa; overflow: hidden; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .drawing-board { display: block; width: 100%; touch-action: none; cursor: crosshair; }
+        .canvas-tools { 
+            position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; 
+            z-index: 10; background: rgba(255,255,255,0.9); padding: 4px; 
+            border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+            backdrop-filter: blur(4px);
+        }
+        .tool-btn { 
+            font-size: 0.75rem; padding: 4px 10px; background: transparent; 
+            border: 1px solid transparent; border-radius: 4px; cursor: pointer; 
+            color: var(--text-muted); font-weight: 600; transition: all 0.2s;
+        }
+        .tool-btn.active { background: white; color: var(--text-main); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
+
+        /* Modals and Details */
+        #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
+        details { background: white; border: 1px solid var(--border-light); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        summary { padding: 1rem 1.25rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; transition: background 0.2s; }
+        summary::-webkit-details-marker { display: none; }
+        summary:hover { background: #f1f5f9; }
+        summary::after { content: '+'; font-size: 1.25rem; font-weight: normal; color: var(--text-muted); transition: transform 0.2s; }
+        details[open] summary::after { transform: rotate(45deg); }
+        .details-content { padding: 1.25rem; border-top: 1px solid var(--border-light); font-size: 0.95rem; color: #334155; line-height: 1.6; }
+        
+        .print-avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 0 !important; }
+            body, html { background: white !important; padding: 0 !important; margin: 0 !important; font-size: 12pt !important; }
+            #toolbar, .canvas-tools, #sys-modal, #dialog-modal, .view-screen { display: none !important; }
+            #app-container { display: block !important; padding: 0 !important; }
+            
+            .a4-page { 
+                box-shadow: none !important; margin: 0 !important; border: none !important; border-radius: 0 !important;
+                page-break-after: always; break-after: page; 
+                width: 210mm !important; height: 297mm !important; max-height: 297mm !important;
+                padding: 15mm 20mm !important; 
+                box-sizing: border-box !important; display: flex !important; flex-direction: column !important;
+                overflow: hidden !important; 
+            }
+            
+            input::placeholder, textarea::placeholder { color: transparent !important; }
+            input[type="text"], textarea { border-bottom: 1px dashed #000 !important; color: black !important; background: transparent !important; }
+            .chk-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; border-color: #000 !important; }
+            .canvas-wrapper { border: 1px solid #000 !important; background: white !important; box-shadow: none !important; }
+            .chk-wrap input:checked + .chk-box { background: #000 !important; border-color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="view-action" class="view-screen">
+        <div class="flex flex-col items-center w-full max-w-5xl mx-auto px-4">
+            <h1 class="brand-title">MAKE IT MATTER</h1>
+            <p class="brand-subtitle">Quantum Zener Protocol</p>
+            
+            <!-- Standard Zener Cards Display -->
+            <div class="zener-display" id="zener-landing-display">
+                <!-- Injected via JS -->
+            </div>
+            
+            <div class="action-grid">
+                <button class="action-card group" onclick="executeAction('print')">
+                    <div class="action-icon">
+                        <svg class="w-12 h-12 opacity-80 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    </div>
+                    <h3 class="action-title">Print Empty Module</h3>
+                    <p class="action-desc">Generate a clean, unformatted A4 PDF for physical archiving and manual compilation.</p>
+                </button>
+
+                <button class="action-card group" onclick="executeAction('start')">
+                    <div class="action-icon">
+                        <svg class="w-12 h-12 opacity-80 group-hover:opacity-100 transition-opacity text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="action-title">Start Practice Session</h3>
+                    <p class="action-desc">Generate a randomized hidden target. Use the built-in Binaural audio engine and remote viewing canvas.</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-container">
+        <!-- Toolbar -->
+        <div id="toolbar">
+            <div class="toolbar-group flex items-center gap-2">
+                <span class="font-serif font-bold text-xl text-slate-800 mr-2 md:mr-4 tracking-tighter">MIM.</span>
+                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="goBackToHome()" title="Home">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                </button>
+                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="openModal('manual')" title="Manual">
+                    <span class="mobile-hide">OS Manual</span>
+                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="openModal('gateway')" title="Gateway Report">
+                    <span class="mobile-hide">Gateway Report</span>
+                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </button>
+            </div>
+
+            <div class="toolbar-group flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200">
+                <span class="text-[10px] font-bold text-slate-500 px-2 mobile-hide tracking-widest font-mono">SYNC</span>
+                <select id="audio-preset" class="bg-white border border-slate-300 text-sm font-semibold rounded px-2 py-1 outline-none w-[120px] md:w-auto shadow-sm">
+                    <optgroup label="Frequencies">
+                        <option value="delta">Delta (2.5Hz)</option>
+                        <option value="theta">Theta (5Hz)</option>
+                        <option value="alpha">Alpha (10Hz)</option>
+                        <option value="beta">Beta (20Hz)</option>
+                        <option value="gamma">Gamma (40Hz)</option>
+                    </optgroup>
+                    <optgroup label="Autopilot">
+                        <option value="f10">Focus 10 (Awake)</option>
+                        <option value="f12">Focus 12 (Expanded)</option>
+                        <option value="f15">Focus 15 (Void)</option>
+                    </optgroup>
+                </select>
+                <button class="btn btn-primary py-1 px-3 shadow-sm text-sm" id="btn-play-audio" onclick="playSelectedAudio()">Play</button>
+                <button class="btn btn-outline py-1 px-2 text-sm border-transparent" onclick="stopAudio()" title="Stop Audio">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
+                </button>
+                <span id="audio-status-indicator" class="w-2 h-2 rounded-full bg-slate-300 mx-1"></span>
+                <div class="w-px h-5 bg-slate-300 mx-1"></div>
+                <button class="btn btn-outline py-1 px-2 border-transparent hover:bg-blue-50 transition-colors" id="btn-waves" onclick="toggleWaves()" title="Ocean Waves">🌊</button>
+            </div>
+
+            <div class="toolbar-group flex items-center gap-2">
+                <div class="font-mono text-sm md:text-base font-bold w-16 md:w-20 text-center text-slate-700 bg-slate-100 rounded py-1 px-2" id="timer-display">00:00</div>
+                <button class="btn btn-outline py-1 md:py-1.5 px-2 md:px-3 text-sm" onclick="toggleTimer()" id="timer-btn">Timer</button>
+                <div class="h-6 w-px bg-slate-200 mx-1 mobile-hide"></div>
+                <button class="btn btn-danger py-1.5 px-3 mobile-hide" onclick="clearData(true)">Clear</button>
+                <button class="btn btn-primary py-1.5 px-3 shadow-md" onclick="window.print()">
+                    <span class="mobile-hide">Print / PDF</span>
+                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <main class="w-full">
+            <div class="a4-page">
+                <div class="page-content">
+                    <div class="print-avoid-break">
+                        <header class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-slate-800 pb-3 mb-6 print:mb-2 print:pb-1">
+                            <div class="mb-3 md:mb-0">
+                                <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Explorer Log // Zener Practice</div>
+                                <h1 class="doc-title">Target Resonance Protocol</h1>
+                            </div>
+                            <div class="w-full md:w-auto text-left md:text-right flex flex-row md:flex-col justify-between md:justify-end items-center md:items-end">
+                                <div class="font-mono text-[10px] text-slate-500 tracking-wider flex items-center">
+                                    FILE REF: <input type="text" id="f_ref" class="w-24 ml-2 border-b border-slate-400 bg-transparent text-center focus:bg-slate-50 outline-none">
+                                </div>
+                                <div class="font-mono text-[10px] text-slate-500 mt-0 md:mt-2">PAGE 1 / 3</div>
+                            </div>
+                        </header>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 print:mb-2 print:gap-2">
+                            <div><span class="input-label">Date</span><input type="text" id="f_date" placeholder="YYYY-MM-DD"></div>
+                            <div><span class="input-label">Start Time</span><input type="text" id="f_start" placeholder="00:00"></div>
+                            <div><span class="input-label">End Time</span><input type="text" id="f_end" placeholder="00:00"></div>
+                            <div><span class="input-label">Duration</span><input type="text" id="f_dur" placeholder="0h 0m"></div>
+                            
+                            <div class="md:col-span-2 lg:col-span-4"><span class="input-label">Location / Coordinates</span><input type="text" id="f_loc" placeholder="City / Lat Long"></div>
+                            
+                            <div class="md:col-span-2">
+                                <span class="input-label">Physical Posture</span>
+                                <div class="flex flex-wrap gap-4 mt-2 items-center">
+                                    <label class="chk-wrap"><input type="checkbox" id="c_pos_supine"><span class="chk-box"></span><span class="chk-title">Supine</span></label>
+                                    <label class="chk-wrap"><input type="checkbox" id="c_pos_seated"><span class="chk-box"></span><span class="chk-title">Seated</span></label>
+                                    <div class="flex-1 min-w-[120px]"><input type="text" id="f_pos_other" class="w-full text-sm font-sans" placeholder="Other..."></div>
+                                </div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <span class="input-label">Baseline State</span>
+                                <div class="flex flex-wrap gap-4 mt-2 items-center">
+                                    <label class="chk-wrap"><input type="checkbox" id="c_mood_calm"><span class="chk-box"></span><span class="chk-title">Calm</span></label>
+                                    <label class="chk-wrap"><input type="checkbox" id="c_mood_tired"><span class="chk-box"></span><span class="chk-title">Tired</span></label>
+                                    <div class="flex-1 min-w-[120px]"><input type="text" id="f_mood_other" class="w-full text-sm font-sans" placeholder="Other..."></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header">Induction Parameters</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 print:mb-2 print:gap-2">
+                            <div><span class="input-label">Audio Source</span><input type="text" id="f_src" placeholder="Gateway / Built-in / None"></div>
+                            <div><span class="input-label">Hardware</span><input type="text" id="f_hp" placeholder="Headphones model"></div>
+                        </div>
+                        
+                        <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 flex flex-col md:flex-row justify-between gap-3 mb-6 print:mb-2">
+                            <label class="chk-wrap"><input type="checkbox" id="c_freq_delta"><span class="chk-box"></span><span class="chk-title text-sm">DELTA</span></label>
+                            <label class="chk-wrap"><input type="checkbox" id="c_freq_theta"><span class="chk-box"></span><span class="chk-title text-sm">THETA</span></label>
+                            <label class="chk-wrap"><input type="checkbox" id="c_freq_alpha"><span class="chk-box"></span><span class="chk-title text-sm">ALPHA</span></label>
+                            <label class="chk-wrap"><input type="checkbox" id="c_freq_beta"><span class="chk-box"></span><span class="chk-title text-sm">BETA</span></label>
+                            <label class="chk-wrap"><input type="checkbox" id="c_freq_gamma"><span class="chk-box"></span><span class="chk-title text-sm">GAMMA</span></label>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header">Target Vector</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6 print:mb-2 print:gap-2">
+                            <label class="chk-wrap border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors bg-white">
+                                <input type="checkbox" id="c_f10"><span class="chk-box mt-0.5"></span>
+                                <div class="flex flex-col ml-1">
+                                    <span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 10</span>
+                                    <span class="text-[10px] text-slate-500 mt-1">Mind Awake / Body Asleep</span>
+                                </div>
+                            </label>
+                            <label class="chk-wrap border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors bg-white">
+                                <input type="checkbox" id="c_f12"><span class="chk-box mt-0.5"></span>
+                                <div class="flex flex-col ml-1">
+                                    <span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 12</span>
+                                    <span class="text-[10px] text-slate-500 mt-1">Expanded Awareness</span>
+                                </div>
+                            </label>
+                            <label class="chk-wrap border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors bg-white">
+                                <input type="checkbox" id="c_f15"><span class="chk-box mt-0.5"></span>
+                                <div class="flex flex-col ml-1">
+                                    <span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 15</span>
+                                    <span class="text-[10px] text-slate-500 mt-1">No Time / Void State</span>
+                                </div>
+                            </label>
+                            <label class="chk-wrap border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors bg-white">
+                                <input type="checkbox" id="c_f21"><span class="chk-box mt-0.5"></span>
+                                <div class="flex flex-col ml-1">
+                                    <span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 21</span>
+                                    <span class="text-[10px] text-slate-500 mt-1">Edge of Time-Space</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break mt-auto">
+                        <div class="bg-red-50/50 border border-red-200 rounded-lg p-4 print:p-2.5">
+                            <p class="text-sm text-slate-800 font-semibold mb-3">Click-Out / Amnesia Anomaly Recorded?</p>
+                            <div class="flex flex-wrap items-center gap-6 mb-3">
+                                <label class="chk-wrap text-red-700"><input type="checkbox" id="c_click_no" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-300"></span><span class="chk-title text-sm font-bold tracking-wide">NEGATIVE</span></label>
+                                <label class="chk-wrap text-red-700"><input type="checkbox" id="c_click_yes" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-300"></span><span class="chk-title text-sm font-bold tracking-wide">POSITIVE</span></label>
+                                <div class="flex items-center gap-3 text-sm text-slate-600 font-mono w-full sm:w-auto">
+                                    <span>T-Start:</span> <input type="text" id="f_click_s" class="w-16 border-b border-red-300 bg-transparent text-center" placeholder="--:--">
+                                    <span>T-End:</span> <input type="text" id="f_click_e" class="w-16 border-b border-red-300 bg-transparent text-center" placeholder="--:--">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+                <div class="print-footer">
+                    <span>Subjective Exploration Log</span><span>FORM-QCS-01</span>
+                </div>
+            </div>
+
+            <div class="a4-page">
+                <div class="page-content">
+                    <div class="print-avoid-break">
+                        <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6">
+                            <div><h1 class="doc-title">Controlled Remote Viewing</h1></div>
+                            <div class="text-right text-xs text-slate-500 font-mono mt-1 mobile-hide">PAGE 2 / 3</div>
+                        </header>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div><span class="input-label">Target Reference Number (TRN)</span><input type="text" id="f_trn" class="text-xl tracking-widest font-mono font-bold text-blue-700" placeholder="ZENER-PRAC"></div>
+                            <div><span class="input-label">Target Decryption (Post-Session)</span><input type="text" id="f_target_desc" class="text-lg"></div>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header">Stage 1: Ideogram / Gestalt</h2>
+                        <div class="canvas-wrapper h-48 md:h-64 mb-6">
+                            <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">INITIAL SKETCH / ENERGY LINES</div>
+                            <div class="canvas-tools">
+                                <button class="tool-btn active" onclick="setTool('canvas-gestalt', 'pen', this)">Pen</button>
+                                <button class="tool-btn" onclick="setTool('canvas-gestalt', 'eraser', this)">Erase</button>
+                                <button class="tool-btn" onclick="undoCanvas('canvas-gestalt')">Undo</button>
+                                <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-gestalt', true)">Clear</button>
+                            </div>
+                            <canvas id="canvas-gestalt" class="drawing-board h-full w-full"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header">Stage 2: Sensory Decoding</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                            <div><span class="input-label">VISUALS (Colors, Light, Forms)</span><textarea id="t_visuals" class="h-16 w-full"></textarea></div>
+                            <div><span class="input-label">AUDITORY (Acoustics, Voices)</span><textarea id="t_auditory" class="h-16 w-full"></textarea></div>
+                            <div><span class="input-label">TACTILE/THERMAL (Textures, Temp)</span><textarea id="t_tactile" class="h-16 w-full"></textarea></div>
+                            <div><span class="input-label">OLFACTORY/GUSTATORY (Smell/Taste)</span><textarea id="t_olfactory" class="h-16 w-full"></textarea></div>
+                        </div>
+                    </div>
+
+                    <div class="print-avoid-break">
+                        <h2 class="section-header">Stage 3: Analytical Sketch</h2>
+                        <div class="canvas-wrapper h-64 md:h-80">
+                            <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">DIMENSIONAL MAPPING</div>
+                            <div class="canvas-tools">
+                                <button class="tool-btn active" onclick="setTool('canvas-analytical', 'pen', this)">Pen</button>
+                                <button class="tool-btn" onclick="setTool('canvas-analytical', 'eraser', this)">Erase</button>
+                                <button class="tool-btn" onclick="undoCanvas('canvas-analytical')">Undo</button>
+                                <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-analytical', true)">Clear</button>
+                            </div>
+                            <canvas id="canvas-analytical" class="drawing-board h-full w-full"></canvas>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="print-footer">
+                    <span>Subjective Exploration Log</span><span>FORM-QCS-02</span>
+                </div>
+            </div>
+
+            <div class="a4-page">
+                <div class="page-content">
+                    <div class="print-avoid-break">
+                        <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6">
+                            <div><h1 class="doc-title">Target Resolution</h1></div>
+                            <div class="text-right text-xs text-slate-500 font-mono mt-1 mobile-hide">PAGE 3 / 3</div>
+                        </header>
+
+                        <h2 class="section-header">Stage 4: Final Guess & Reveal</h2>
+                        <p class="text-sm text-slate-600 mb-6 print:mb-3">Based on your sensory data and ideograms, commit to a final symbol choice before decrypting the target.</p>
+                        
+                        <div class="mb-8 print:mb-4">
+                            <span class="input-label mb-3">1. Select Your Impression</span>
+                            <div class="flex flex-wrap gap-4 mt-3 justify-center md:justify-start" id="guess-selection-area">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm mb-6 relative overflow-hidden">
+                            <!-- Background decoration -->
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-10 opacity-50"></div>
+                            
+                            <span class="input-label mb-4">2. Decrypt Session Target</span>
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                <button class="btn btn-primary py-4 px-8 text-lg w-full md:w-1/3 font-bold rounded-xl" onclick="revealTarget()">REVEAL TARGET</button>
+                                
+                                <div class="flex-1 flex flex-row items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-4 w-full h-full">
+                                    <div class="font-serif font-bold text-slate-500 text-lg mr-4 uppercase tracking-widest">Target:</div>
+                                    <div id="target-reveal-display" class="w-20 h-28 border-2 border-dashed border-slate-300 rounded-lg flex justify-center items-center bg-white text-slate-300 shadow-inner transition-all duration-500">
+                                        <span class="text-5xl font-serif">?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="resolution-result" class="mt-8 text-center text-xl md:text-2xl font-bold font-mono min-h-[40px] uppercase tracking-wider">
+                                <!-- Result injected here -->
+                            </div>
+                        </div>
+                        
+                        <div class="print-avoid-break mt-6">
+                            <h2 class="section-header">Post-Session Notes</h2>
+                            <textarea id="t_post_notes" class="h-32 w-full" placeholder="Log any physical resonance, click-outs, or relevant reflections here..."></textarea>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="print-footer">
+                    <span>Subjective Exploration Log</span><span>FORM-QCS-03</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="dialog-modal" class="hidden fixed inset-0 z-[250] bg-slate-900/40 backdrop-blur-sm flex justify-center items-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all border border-slate-100">
+            <div class="p-6 text-center">
+                <h3 id="dialog-title" class="text-xl font-bold text-slate-900 mb-2 font-serif">Message</h3>
+                <p id="dialog-message" class="text-sm text-slate-600 mb-8 leading-relaxed">...</p>
+                <div class="flex justify-center gap-3">
+                    <button id="dialog-cancel" class="btn btn-outline hidden w-full">Cancel</button>
+                    <button id="dialog-confirm" class="btn btn-primary w-full">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sys-modal" class="hidden fixed inset-0 z-[150] bg-slate-900/50 flex justify-center items-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="flex justify-between items-center p-5 border-b border-slate-200 bg-slate-50">
+                <h2 id="modal-title" class="font-serif font-bold text-xl md:text-2xl text-slate-800 tracking-wide">TITLE</h2>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-800 text-3xl leading-none transition-colors">&times;</button>
+            </div>
+            <div id="modal-body" class="p-6 overflow-y-auto text-slate-700 text-sm leading-relaxed modal-content-area bg-white"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- Zener Card Definitions ---
+        const zenerCards = {
+            'circle': `<svg class="zener-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>`,
+            'cross': `<svg class="zener-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>`,
+            'waves': `<svg class="zener-icon" viewBox="0 0 24 24"><path d="M4 6c2-2 4-2 6 0s4 2 6 0 M4 12c2-2 4-2 6 0s4 2 6 0 M4 18c2-2 4-2 6 0s4 2 6 0"/></svg>`,
+            'square': `<svg class="zener-icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14"/></svg>`,
+            'star': `<svg class="zener-icon" viewBox="0 0 24 24"><polygon points="12 3 14.5 9 21 9.5 16 14 17.5 20 12 17 6.5 20 8 14 3 9.5 9.5 9"/></svg>`
+        };
+
+        let currentTarget = '';
+        let currentGuess = '';
+        let hasRevealed = false;
+
+        // Inject standard cards into landing and guess areas
+        function initZenerUI() {
+            const landingContainer = document.getElementById('zener-landing-display');
+            const guessContainer = document.getElementById('guess-selection-area');
+            
+            landingContainer.innerHTML = '';
+            guessContainer.innerHTML = '';
+
+            for (const [key, svg] of Object.entries(zenerCards)) {
+                landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
+                guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
+            }
+        }
+        window.addEventListener('DOMContentLoaded', initZenerUI);
+
+        function selectGuess(key) {
+            if(hasRevealed) return; // Prevent changing guess after reveal
+            currentGuess = key;
+            document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
+            document.getElementById('guess-' + key).classList.add('selected');
+        }
+
+        function revealTarget() {
+            if (!currentTarget) {
+                showAlert("Target system not initialized. Return Home and Start a new session.");
+                return;
+            }
+            if (currentGuess === '') {
+                showAlert("Please commit to a final impression (Select a card) before decrypting the target.");
+                return;
+            }
+            
+            hasRevealed = true;
+            const display = document.getElementById('target-reveal-display');
+            display.innerHTML = zenerCards[currentTarget];
+            display.classList.remove('text-slate-300', 'border-dashed', 'bg-white');
+            display.classList.add('border-solid', 'border-blue-600', 'bg-blue-50');
+
+            const resText = document.getElementById('resolution-result');
+            if (currentGuess === currentTarget) {
+                resText.innerHTML = '<span class="text-green-600">HIT: Resonance Confirmed</span>';
+            } else {
+                resText.innerHTML = '<span class="text-red-500">MISS: Cognitive Divergence</span>';
+            }
+        }
+
+        function generateTarget() {
+            const keys = Object.keys(zenerCards);
+            currentTarget = keys[Math.floor(Math.random() * keys.length)];
+            hasRevealed = false;
+            
+            // Reset Reveal UI
+            const display = document.getElementById('target-reveal-display');
+            display.innerHTML = '<span class="text-5xl font-serif">?</span>';
+            display.classList.add('text-slate-300', 'border-dashed', 'bg-white');
+            display.classList.remove('border-solid', 'border-blue-600', 'bg-blue-50');
+            
+            document.getElementById('resolution-result').innerHTML = '';
+            currentGuess = '';
+            document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
+            
+            // Generate a fake TRN just for flavor
+            document.getElementById('f_trn').value = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
+        }
+
+        // --- Core App Logic ---
+        function goBackToHome() {
+            document.getElementById('view-action').classList.remove('view-hidden');
+            document.getElementById('app-container').classList.remove('active');
+            stopAudio();
+            if(isWavesPlaying) toggleWaves(); 
+            window.scrollTo(0,0);
+        }
+
+        function executeAction(action) {
+            document.getElementById('view-action').classList.add('view-hidden');
+            document.getElementById('app-container').classList.add('active');
+            window.scrollTo(0,0);
+            
+            setTimeout(() => {
+                resizeAllCanvases();
+                
+                if (action === 'print') {
+                    clearData(false);
+                    document.getElementById('f_trn').value = '';
+                    setTimeout(() => window.print(), 500);
+                } else {
+                    loadData();
+                    generateTarget(); 
+                }
+            }, 300); // Wait for transition
+        }
+
+        function showConfirm(msg, onConfirm, title="System Message") {
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = msg;
+            document.getElementById('dialog-cancel').classList.remove('hidden');
+            document.getElementById('dialog-cancel').onclick = () => { document.getElementById('dialog-modal').classList.add('hidden'); };
+            document.getElementById('dialog-confirm').onclick = () => { 
+                document.getElementById('dialog-modal').classList.add('hidden'); onConfirm(); 
+            };
+            document.getElementById('dialog-modal').classList.remove('hidden');
+        }
+        
+        function showAlert(msg, title="System Message") {
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = msg;
+            document.getElementById('dialog-cancel').classList.add('hidden');
+            document.getElementById('dialog-confirm').onclick = () => { document.getElementById('dialog-modal').classList.add('hidden'); };
+            document.getElementById('dialog-modal').classList.remove('hidden');
+        }
+
+        function openModal(type) {
+            const modal = document.getElementById('sys-modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            
+            if (type === 'manual') {
+                title.innerText = "OPERATIONAL MANUAL";
+                body.innerHTML = `
+                    <p><strong>1. AUDIO SYNC:</strong> Use the top toolbar to synthesize binaural beats. Stereo headphones are mandatory. <em>Autopilot</em> mode uses frequency ramping: it starts at a waking frequency and slowly guides your brainwaves down to the target state over several minutes to avoid acoustic shock.</p>
+                    <p><strong>2. DIGITAL CANVAS (REMOTE VIEWING):</strong> The Gestalt and Dimensional Sketch areas are fully interactive. Use a finger or stylus to map targets. Sketches are optimized for high-contrast A4 printing.</p>
+                    <p><strong>3. AUTO-SAVE & PERSISTENCE:</strong> Every keystroke and sketch is continuously saved to your device's local memory.</p>
+                    <p><strong>4. ZENER TARGET:</strong> A hidden target is generated automatically when you start a session. Use your protocol to tune in, select your guess on Page 3, and reveal the result.</p>
+                `;
+            } else if (type === 'gateway') {
+                title.innerText = "THE GATEWAY PROCESS (CIA REPORT)";
+                body.innerHTML = `
+                    <p class="mb-4 text-xs font-mono text-slate-500 tracking-wide uppercase">REF: CIA-RDP96-00788R001700210016-5</p>
+                    <p class="mb-6">In 1983, US Army Intelligence commissioned an analysis of the Gateway Experience. The goal was to construct a scientifically valid framework for understanding altered states of consciousness.</p>
+                    <p>By introducing slightly different audio frequencies into the left and right ears, the brain is forced to "hear" the difference between them, creating a third phantom frequency called a <em>binaural beat</em>. This forces the normally uncoordinated left and right hemispheres of the brain to synchronize, a state known as Hemi-Sync.</p>
+                    <p>As the brain's hemispheres synchronize and consciousness frequency rises, the energy field of the mind can shift, allowing for accurate non-local data acquisition (Remote Viewing).</p>
+                `;
+            }
+            modal.classList.remove('hidden');
+        }
+        function closeModal() { document.getElementById('sys-modal').classList.add('hidden'); }
+
+        const inputs = document.querySelectorAll('input[type="text"]:not(#f_trn), textarea, input[type="checkbox"]');
+        function loadData() {
+            inputs.forEach(input => {
+                const saved = localStorage.getItem('qcs5_' + input.id);
+                if (saved !== null) {
+                    if (input.type === 'checkbox') input.checked = saved === 'true';
+                    else input.value = saved;
+                }
+            });
+            loadCanvasData('canvas-gestalt', localStorage.getItem('qcs5_img_canvas-gestalt'));
+            loadCanvasData('canvas-analytical', localStorage.getItem('qcs5_img_canvas-analytical'));
+        }
+        
+        function saveData() {
+            inputs.forEach(input => {
+                const val = input.type === 'checkbox' ? input.checked : input.value;
+                localStorage.setItem('qcs5_' + input.id, val);
+            });
+        }
+        inputs.forEach(input => input.addEventListener('input', saveData));
+
+        function clearData(ask = true) {
+            const executeClear = () => {
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox') input.checked = false;
+                    else input.value = '';
+                    localStorage.removeItem('qcs5_' + input.id);
+                });
+                clearCanvas('canvas-gestalt', false);
+                clearCanvas('canvas-analytical', false);
+                if(isTimerRunning) toggleTimer();
+                seconds = 0; updateTimerDisplay();
+                generateTarget(); // Reset the target as well
+            };
+            
+            if(ask) showConfirm("Erase all data from the interactive session? This cannot be undone.", executeClear, "Clear Data");
+            else executeClear();
+        }
+
+        function uncheckGroup(groupName, clickedEl) {
+            if(clickedEl.checked) {
+                if(groupName === 'click') {
+                    if(clickedEl.id === 'c_click_yes') document.getElementById('c_click_no').checked = false;
+                    else if(clickedEl.id === 'c_click_no') document.getElementById('c_click_yes').checked = false;
+                }
+            }
+            saveData();
+        }
+
+        let timerInterval; let seconds = 0; let isTimerRunning = false;
+        function updateTimerDisplay() {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }
+        
+        function toggleTimer() {
+            const btn = document.getElementById('timer-btn');
+            if(isTimerRunning) {
+                clearInterval(timerInterval); 
+                isTimerRunning = false;
+                seconds = 0;
+                document.getElementById('timer-display').innerText = "00:00";
+                btn.innerText = "Timer"; 
+                btn.classList.remove('btn-danger'); btn.classList.add('btn-outline');
+            } else {
+                timerInterval = setInterval(() => { seconds++; updateTimerDisplay(); }, 1000);
+                isTimerRunning = true; 
+                btn.innerText = "Reset"; 
+                btn.classList.remove('btn-outline'); btn.classList.add('btn-danger');
+            }
+        }
+
+        // --- Audio Logic ---
+        let synthLeft, synthRight, waveNoise, waveFilter, stereoMerger; 
+        let isAudioPlaying = false; let isWavesPlaying = false;
+        
+        async function initAudio() {
+            await Tone.start();
+            stereoMerger = new Tone.Merge().toDestination();
+            synthLeft = new Tone.Oscillator({ type: "sine" }).connect(stereoMerger, 0, 0);
+            synthRight = new Tone.Oscillator({ type: "sine" }).connect(stereoMerger, 0, 1);
+            
+            synthLeft.volume.value = -Infinity; 
+            synthRight.volume.value = -Infinity;
+            synthLeft.start(); synthRight.start();
+
+            waveFilter = new Tone.AutoFilter({ frequency: 0.1, min: 150, max: 400, type: "sine" }).connect(new Tone.Volume(-18).toDestination());
+            waveNoise = new Tone.Noise("brown").connect(waveFilter);
+            waveNoise.volume.value = -Infinity;
+            waveNoise.start(); waveFilter.start();
+        }
+
+        async function playSelectedAudio() {
+            try {
+                await Tone.start();
+                if (!synthLeft) await initAudio();
+                
+                const preset = document.getElementById('audio-preset').value;
+                const btnPlay = document.getElementById('btn-play-audio');
+                const indicator = document.getElementById('audio-status-indicator');
+                
+                let diffFreq = 0; let isAutopilot = false; let targetFreq = 0; let rampTime = 0;
+                switch(preset) {
+                    case 'delta': diffFreq = 2.5; break; case 'theta': diffFreq = 5; break;
+                    case 'alpha': diffFreq = 10; break; case 'beta': diffFreq = 20; break; case 'gamma': diffFreq = 40; break;
+                    case 'f10': isAutopilot = true; targetFreq = 4; rampTime = 60; break;
+                    case 'f12': isAutopilot = true; targetFreq = 2.5; rampTime = 90; break;
+                    case 'f15': isAutopilot = true; targetFreq = 1.5; rampTime = 120; break;
+                }
+                
+                const baseFreq = 110; 
+                synthLeft.frequency.value = baseFreq; 
+                
+                if (isAutopilot) {
+                    synthRight.frequency.value = baseFreq + 10; 
+                    synthRight.frequency.rampTo(baseFreq + targetFreq, rampTime);
+                    if(!isAudioPlaying) showAlert("Autopilot Initiated. Executing gradual frequency ramp down to Target Focus state. Ensure headphones are active.", "Autopilot Sync");
+                } else {
+                    synthRight.frequency.value = baseFreq + diffFreq;
+                }
+                
+                if(!isAudioPlaying) {
+                    synthLeft.volume.rampTo(-20, 2); synthRight.volume.rampTo(-20, 2);
+                    isAudioPlaying = true;
+                    indicator.classList.replace('bg-slate-300', 'bg-green-500'); indicator.classList.add('animate-pulse');
+                    btnPlay.classList.replace('btn-primary', 'btn-outline'); btnPlay.innerText = "Playing";
+                }
+            } catch (e) { showAlert("Tap anywhere on the screen first to enable the audio engine.", "Audio Engine Off"); }
+        }
+
+        function stopAudio() {
+            if(synthLeft && isAudioPlaying) { 
+                synthLeft.volume.rampTo(-Infinity, 1);
+                synthRight.volume.rampTo(-Infinity, 1);
+            }
+            isAudioPlaying = false;
+            const btnPlay = document.getElementById('btn-play-audio');
+            const indicator = document.getElementById('audio-status-indicator');
+            indicator.classList.replace('bg-green-500', 'bg-slate-300'); indicator.classList.remove('animate-pulse');
+            btnPlay.classList.replace('btn-outline', 'btn-primary'); btnPlay.innerText = "Play";
+        }
+
+        async function toggleWaves() {
+            try {
+                await Tone.start();
+                if (!waveNoise) await initAudio();
+                const btnWaves = document.getElementById('btn-waves');
+                
+                if (isWavesPlaying) {
+                    waveNoise.volume.rampTo(-Infinity, 1); isWavesPlaying = false;
+                    btnWaves.classList.remove('bg-blue-100', 'shadow-inner');
+                } else {
+                    waveNoise.volume.rampTo(0, 2); isWavesPlaying = true;
+                    btnWaves.classList.add('bg-blue-100', 'shadow-inner');
+                }
+            } catch (e) { showAlert("Tap anywhere to enable audio.", "System"); }
+        }
+
+        // --- Canvas Drawing Logic ---
+        const canvasState = {}; 
+        
+        function resizeAllCanvases() {
+            ['canvas-gestalt', 'canvas-analytical'].forEach(id => {
+                const canvas = document.getElementById(id);
+                if(!canvas || !canvasState[id]) return;
+                const rect = canvas.parentElement.getBoundingClientRect();
+                
+                if (rect.width > 0 && rect.height > 0) {
+                    if (canvas.width !== rect.width || canvas.height !== rect.height) {
+                        const tempCanvas = document.createElement('canvas');
+                        tempCanvas.width = canvas.width;
+                        tempCanvas.height = canvas.height;
+                        const tCtx = tempCanvas.getContext('2d');
+                        tCtx.drawImage(canvas, 0, 0);
+
+                        canvas.width = rect.width; 
+                        canvas.height = rect.height;
+                        
+                        const ctx = canvasState[id].ctx;
+                        ctx.lineJoin = 'round'; ctx.lineCap = 'round'; 
+                        
+                        ctx.drawImage(tempCanvas, 0, 0);
+                    }
+                }
+            });
+        }
+        
+        window.addEventListener('resize', resizeAllCanvases);
+
+        function setupCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            canvasState[canvasId] = { ctx, tool: 'pen', history: [], isDrawing: false, lastX: 0, lastY: 0 };
+            
+            const getPos = (e) => {
+                const r = canvas.getBoundingClientRect();
+                const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+                const clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - r.left, y: clientY - r.top };
+            };
+            
+            const startDraw = (e) => {
+                if (e.cancelable) e.preventDefault();
+                canvasState[canvasId].isDrawing = true;
+                const pos = getPos(e);
+                [canvasState[canvasId].lastX, canvasState[canvasId].lastY] = [pos.x, pos.y];
+            };
+            
+            const draw = (e) => {
+                if (!canvasState[canvasId].isDrawing) return;
+                if (e.cancelable) e.preventDefault();
+                const pos = getPos(e); 
+                const state = canvasState[canvasId];
+                
+                ctx.beginPath();
+                if(state.tool === 'eraser') { 
+                    ctx.globalCompositeOperation = 'destination-out'; 
+                    ctx.lineWidth = 25; 
+                } else { 
+                    ctx.globalCompositeOperation = 'source-over'; 
+                    ctx.lineWidth = 2.5; 
+                    ctx.strokeStyle = '#0f172a';
+                }
+                ctx.moveTo(state.lastX, state.lastY); 
+                ctx.lineTo(pos.x, pos.y); 
+                ctx.stroke();
+                [state.lastX, state.lastY] = [pos.x, pos.y];
+            };
+            
+            const stopDraw = () => {
+                if(canvasState[canvasId].isDrawing) {
+                    canvasState[canvasId].isDrawing = false;
+                    ctx.globalCompositeOperation = 'source-over';
+                    saveCanvasState(canvasId);
+                    localStorage.setItem('qcs5_img_' + canvasId, canvas.toDataURL());
+                }
+            };
+            
+            canvas.addEventListener('mousedown', startDraw); 
+            canvas.addEventListener('mousemove', draw); 
+            canvas.addEventListener('mouseup', stopDraw); 
+            canvas.addEventListener('mouseout', stopDraw);
+            
+            canvas.addEventListener('touchstart', startDraw, {passive: false}); 
+            canvas.addEventListener('touchmove', draw, {passive: false}); 
+            canvas.addEventListener('touchend', stopDraw);
+            canvas.addEventListener('touchcancel', stopDraw);
+        }
+        
+        function setTool(canvasId, tool, btnEl) {
+            canvasState[canvasId].tool = tool;
+            const container = document.getElementById(canvasId).parentElement;
+            container.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+        }
+        
+        function saveCanvasState(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            canvasState[canvasId].history.push(canvas.toDataURL());
+            if(canvasState[canvasId].history.length > 10) canvasState[canvasId].history.shift(); 
+        }
+        
+        function undoCanvas(canvasId) {
+            const history = canvasState[canvasId].history;
+            if(history.length > 1) {
+                history.pop(); 
+                const previous = history[history.length - 1];
+                loadCanvasData(canvasId, previous, false);
+                localStorage.setItem('qcs5_img_' + canvasId, previous);
+            } else if (history.length === 1) { 
+                clearCanvas(canvasId, false); 
+            }
+        }
+        
+        function clearCanvas(canvasId, ask=true) {
+            const executeClear = () => {
+                const canvas = document.getElementById(canvasId); 
+                const ctx = canvasState[canvasId].ctx;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                localStorage.removeItem('qcs5_img_' + canvasId);
+                canvasState[canvasId].history = []; 
+                saveCanvasState(canvasId);
+            };
+            if(!ask) executeClear();
+            else { showConfirm("Clear this sketch?", executeClear); }
+        }
+        
+        function loadCanvasData(canvasId, dataUrl, addToHistory=true) {
+            if(!dataUrl || dataUrl === 'data:,') return;
+            const canvas = document.getElementById(canvasId); 
+            const ctx = canvasState[canvasId].ctx;
+            const img = new Image();
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+                if(addToHistory) {
+                    canvasState[canvasId].history = [canvas.toDataURL()];
+                }
+            }; 
+            img.src = dataUrl;
+        }
+
+        window.addEventListener('load', () => {
+            setupCanvas('canvas-gestalt'); 
+            setupCanvas('canvas-analytical');
+            
+            // Generate a target id if viewing preview mode directly without going through start
+            if(document.getElementById('app-container').classList.contains('active')) {
+                generateTarget();
+                resizeAllCanvases();
+            }
+        });
+    </script>
+</body>
+</html>
