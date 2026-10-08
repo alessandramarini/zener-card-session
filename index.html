@@ -6,6 +6,7 @@
     <title>Quantum Consciousness Protocol - Zener Practice</title>
     <meta name="theme-color" content="#f8fafc">
     
+    <!-- External Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -153,29 +154,20 @@
 
         .a4-page {
             background: var(--bg-paper); 
-            width: 100%; max-width: 210mm; min-height: 297mm;
-            margin: 0 auto 2rem auto; padding: 2rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0,0,0,0.1);
-            border-radius: 12px;
-            display: flex; flex-direction: column;
-            position: relative;
-        }
-        
-        .page-content { flex: 1; display: flex; flex-direction: column; }
-        .print-footer { 
-            margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
-            font-size: 0.75rem; line-height: 1rem; color: #94a3b8; font-family: monospace; text-transform: uppercase;
-        }
-
-        /* Layout A4 Flessibile e perfetto per tutti gli schermi */
-        .a4-page {
-            background: var(--bg-paper); width: 100%; max-width: 210mm; 
+            width: 100%; max-width: 210mm; 
             min-height: 297mm;
             margin: 0 auto 30px auto; padding: 15mm;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
             position: relative; box-sizing: border-box;
             display: flex; flex-direction: column;
-            overflow: hidden; /* Evita lo sbordamento visivo */
+            overflow: hidden; /* Prevent visual overflow */
+        }
+        
+        .page-content { flex: 1; display: flex; flex-direction: column; width: 100%; }
+        
+        .print-footer { 
+            margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
+            font-size: 0.75rem; line-height: 1rem; color: #94a3b8; font-family: monospace; text-transform: uppercase;
         }
 
         @media (max-width: 768px) {
@@ -186,7 +178,7 @@
             .mobile-icon-only { font-size: 0; padding: 0.5rem; }
             .mobile-icon-only::before { font-size: 1.2rem; content: attr(data-icon); }
             
-            /* Make A4 pages full width on mobile for better UX */
+            /* Make A4 pages full width and fluid on mobile for better UX */
             .a4-page { 
                 padding: 1.25rem; min-height: auto; border-radius: 0; 
                 margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
@@ -216,7 +208,6 @@
         }
         .input-label { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.02em;}
 
-        /* Custom Checkboxes */
         .chk-wrap { display: inline-flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none; }
         .chk-wrap input { display: none; }
         .chk-box { 
@@ -235,6 +226,8 @@
             position: relative; border: 1px solid var(--border-light); 
             border-radius: 8px; background: #fafafa; overflow: hidden; 
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            /* Important for Flexbox to allow shrinking in A4 context */
+            min-height: 120px; 
         }
         .drawing-board { display: block; width: 100%; touch-action: none; cursor: crosshair; }
         .canvas-tools { 
@@ -251,15 +244,7 @@
         .tool-btn.active { background: white; color: var(--text-main); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
 
-        /* Modals and Details */
         #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
-        details { background: white; border: 1px solid var(--border-light); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        summary { padding: 1rem 1.25rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; transition: background 0.2s; }
-        summary::-webkit-details-marker { display: none; }
-        summary:hover { background: #f1f5f9; }
-        summary::after { content: '+'; font-size: 1.25rem; font-weight: normal; color: var(--text-muted); transition: transform 0.2s; }
-        details[open] summary::after { transform: rotate(45deg); }
-        .details-content { padding: 1.25rem; border-top: 1px solid var(--border-light); font-size: 0.95rem; color: #334155; line-height: 1.6; }
         
         .print-avoid-break { page-break-inside: avoid; break-inside: avoid; }
 
@@ -273,13 +258,13 @@
                 box-shadow: none !important; margin: 0 !important; border: none !important; border-radius: 0 !important;
                 page-break-after: always; break-after: page; 
                 width: 210mm !important; 
-                height: 297mm !important; max-height: 297mm !important; /* Forza altezza esatta */
-                padding: 12mm 15mm !important; /* Margini di stampa sicuri */
+                height: 297mm !important; max-height: 297mm !important; /* Force exact height */
+                padding: 12mm 15mm !important; /* Safe print margins */
                 box-sizing: border-box !important; display: flex !important; flex-direction: column !important;
-                overflow: hidden !important; /* Taglia via qualsiasi pixel extra che crea pagine bianche */
+                overflow: hidden !important; /* Cut off any extra pixel preventing blank pages */
             }
             
-            /* RISOLUZIONE PAGINA BIANCA: Rimuove l'interruzione di pagina sull'ultimo foglio */
+            /* BLANK PAGE FIX: Remove page break from the absolute last page */
             .a4-page:last-of-type { 
                 page-break-after: auto !important; 
                 break-after: auto !important; 
@@ -337,10 +322,6 @@
                     <span class="mobile-hide">OS Manual</span>
                     <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </button>
-                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="openModal('gateway')" title="Gateway Report">
-                    <span class="mobile-hide">Gateway Report</span>
-                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </button>
             </div>
 
             <div class="toolbar-group flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200">
@@ -381,7 +362,6 @@
         </div>
 
         <main class="w-full">
-            <!-- PAGINA 1: SETUP DELLA SESSIONE -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
@@ -468,7 +448,6 @@
                 </div>
             </div>
 
-            <!-- PAGINA 2: REMOTE VIEWING (Garantito Nessun Overflow grazie a flex) -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
@@ -480,7 +459,7 @@
                     </header>
 
                     <h2 class="section-header shrink-0">Stage 1: Ideogram / Gestalt</h2>
-                    <!-- Flex-1 permette al contenitore di occupare l'altezza senza forzare l'overflow -->
+                    <!-- Flex-1 allows the container to fill space without overflowing the A4 boundaries -->
                     <div class="canvas-wrapper min-h-[120px] h-[25%] mb-4 shrink-0">
                         <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">INITIAL SKETCH / ENERGY LINES</div>
                         <div class="canvas-tools">
@@ -501,7 +480,7 @@
                     </div>
 
                     <h2 class="section-header shrink-0">Stage 3: Analytical Sketch</h2>
-                    <!-- Il flex-1 espande questo canvas fino a riempire esattamente lo spazio A4 residuo -->
+                    <!-- Flex-1 expands this canvas to fill exactly the remaining A4 space dynamically -->
                     <div class="canvas-wrapper flex-1 min-h-[150px]">
                         <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">DIMENSIONAL MAPPING</div>
                         <div class="canvas-tools">
@@ -519,7 +498,6 @@
                 </div>
             </div>
 
-            <!-- PAGINA 3: TARGET RESOLUTION -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
@@ -569,19 +547,18 @@
                 </div>
             </div>
 
-            <!-- PAGINA 4: Verifica a Priori -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">System Verification Protocol</div>
-                            <h1 class="doc-title text-slate-700">A Priori Target Ledger</h1>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Integrity Verification</div>
+                            <h1 class="doc-title text-slate-700">Blind Target Authentication</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 mt-1 font-mono">PAGE 4 / 5</div>
                     </header>
 
                     <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-sm text-slate-700 leading-relaxed shrink-0">
-                        <p><strong>Total Control Protocol:</strong> This section guarantees the veracity of the generated target. The target is cryptographically tied to the TRN the exact moment you start the session. You can decrypt it here at any time to verify the system is not generating the target after your guess.</p>
+                        <p><strong>Strict Blind Protocol:</strong> This section provides cryptographic proof that the target was generated before the session began. The target is permanently bound to your TRN (Target Reference Number) the exact millisecond you initiate the practice. You may decrypt the original target here at any time to independently verify that the system did not alter or generate the target after you submitted your final guess.</p>
                     </div>
 
                     <div class="flex flex-col items-center justify-center flex-1">
@@ -601,11 +578,10 @@
                 </div> 
 
                 <div class="print-footer">
-                    <span>Verification Ledger</span><span>FORM-QCS-04</span>
+                    <span>Authentication Log</span><span>FORM-QCS-04</span>
                 </div>
             </div>
 
-            <!-- PAGINA 5: Foglio di Risoluzione Cartaceo (Pineal Gland) -->
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
@@ -680,7 +656,7 @@
         let currentGuess = '';
         let hasRevealed = false;
 
-        // Inject standard cards into landing and guess areas
+        // Inject standard cards into landing, guess, and print areas
         function initZenerUI() {
             const landingContainer = document.getElementById('zener-landing-display');
             const guessContainer = document.getElementById('guess-selection-area');
@@ -696,7 +672,7 @@
                 if(landingContainer) landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
                 if(guessContainer) guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
                 
-                // Layout per la versione stampabile con casella di spunta
+                // Layout for physical printing (checkbox included)
                 const printCardHtml = `
                     <div class="flex flex-col items-center gap-4">
                         <div class="w-[60px] h-[90px] md:w-[80px] md:h-[120px] border-2 border-slate-200 rounded-xl flex justify-center items-center bg-white shadow-sm print:border-slate-800 print:shadow-none">
@@ -745,19 +721,20 @@
         function generateTarget() {
             const keys = Object.keys(zenerCards);
             currentTarget = keys[Math.floor(Math.random() * keys.length)];
+            hasRevealed = false;
             
-            // Genera e assegna il TRN
+            // Generate and assign TRN (Target Reference Number)
             const trn = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
             document.getElementById('f_trn').value = trn;
             document.getElementById('verify-trn').innerText = trn;
             
-            // Reset Reveal UI (Pagina 3)
+            // Reset Reveal UI (Page 3)
             const display = document.getElementById('target-reveal-display');
             display.innerHTML = '<span class="text-5xl font-serif">?</span>';
-            display.classList.add('text-slate-300', 'border-dashed');
-            display.classList.remove('border-solid', 'border-slate-800');
+            display.classList.add('text-slate-300', 'border-dashed', 'bg-white');
+            display.classList.remove('border-solid', 'border-blue-600', 'bg-blue-50');
             
-            // Reset Reveal UI (Pagina 4 - Verifica)
+            // Reset Blind Auth UI (Page 4)
             const verifyDisplay = document.getElementById('verify-display');
             verifyDisplay.innerHTML = `
                 <svg class="w-12 h-12 text-slate-400 mb-3 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
@@ -778,13 +755,12 @@
             const btnVerify = document.getElementById('btn-verify-early');
             const verifyDisplay = document.getElementById('verify-display');
             
-            // Mostra la carta di verifica
+            // Show verification card
             verifyDisplay.innerHTML = zenerCards[currentTarget] + '<span class="text-xs font-bold text-red-600 mt-4 uppercase tracking-widest">Decrypted</span>';
             
-            // Cambia lo stile del pulsante per indicare che è stato svelato
+            // Change button style to indicate it's been revealed
             btnVerify.classList.add('border-red-300', 'bg-red-50');
             
-            // Per comodità visiva, ingrandisce l'icona zener nella pagina di verifica
             const svgIcon = verifyDisplay.querySelector('.zener-icon');
             if(svgIcon) {
                 svgIcon.classList.remove('w-32', 'h-32');
@@ -793,7 +769,6 @@
             }
         }
 
-        // --- Core App Logic ---
         function goBackToHome() {
             document.getElementById('view-action').classList.remove('view-hidden');
             document.getElementById('app-container').classList.remove('active');
@@ -898,7 +873,7 @@
                 clearCanvas('canvas-analytical', false);
                 if(isTimerRunning) toggleTimer();
                 seconds = 0; updateTimerDisplay();
-                generateTarget(); // Reset the target as well
+                generateTarget(); 
             };
             
             if(ask) showConfirm("Erase all data from the interactive session? This cannot be undone.", executeClear, "Clear Data");
@@ -939,7 +914,6 @@
             }
         }
 
-        // --- Audio Logic ---
         let synthLeft, synthRight, waveNoise, waveFilter, stereoMerger; 
         let isAudioPlaying = false; let isWavesPlaying = false;
         
@@ -1025,7 +999,6 @@
             } catch (e) { showAlert("Tap anywhere to enable audio.", "System"); }
         }
 
-        // --- Canvas Drawing Logic ---
         const canvasState = {}; 
         
         function resizeAllCanvases() {
@@ -1173,7 +1146,7 @@
             setupCanvas('canvas-gestalt'); 
             setupCanvas('canvas-analytical');
             
-            // Generate a target id if viewing preview mode directly without going through start
+            // Automatically initialize target if page loaded directly into app view
             if(document.getElementById('app-container').classList.contains('active')) {
                 generateTarget();
                 resizeAllCanvases();
