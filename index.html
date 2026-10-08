@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quantum Consciousness Protocol - Zener Practice</title>
-    <meta name="theme-color" content="#f8fafc">
+    <title>Quantum Consciousness Protocol - SRI Zener Practice</title>
+    <meta name="theme-color" content="#0f172a">
     
-    <!-- External Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-body: #f8fafc;
-            --bg-paper: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-light: #e2e8f0;
-            --border-dark: #94a3b8;
-            --accent-blue: #2563eb;
-            --accent-red: #ef4444;
+            /* Palette Super Professional (Laboratorio/Intelligence) */
+            --bg-app: #e2e8f0;          /* Sfondo app grigio neutro tecnico */
+            --bg-paper: #ffffff;        /* Sfondo carta bianco puro */
+            --text-main: #0f172a;       /* Ardesia scurissimo per il testo */
+            --text-muted: #64748b;      /* Ardesia medio per etichette */
+            --border-light: #cbd5e1;    /* Bordi chiari */
+            --border-dark: #475569;     /* Bordi scuri per accenti tecnici */
+            --brand-primary: #1e293b;   /* Colore primario scuro */
+            --brand-accent: #2563eb;    /* Blu tecnico (cobalto) per interazioni */
+            --brand-danger: #dc2626;    /* Rosso emergenza/allerta */
+            
             --font-sans: 'Inter', sans-serif;
             --font-serif: 'Playfair Display', serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -30,7 +32,7 @@
 
         body, html {
             margin: 0; padding: 0;
-            background-color: var(--bg-body);
+            background-color: var(--bg-app);
             color: var(--text-main);
             font-family: var(--font-sans);
             width: 100%; min-height: 100vh;
@@ -39,242 +41,285 @@
             overflow-x: hidden;
         }
 
+        /* Effetto per scorrimento fluido */
+        html { scroll-behavior: smooth; }
+
+        /* Scroller personalizzato per look tecnico */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-app); }
+        ::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-main); }
+
         .view-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: radial-gradient(circle at center, #f8fafc 0%, #cbd5e1 100%);
             z-index: 200;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
             overflow-y: auto; padding: 2rem 1rem;
         }
-        .view-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .view-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(1.02); }
         
         .brand-title {
-            font-family: var(--font-serif);
-            font-size: clamp(2.2rem, 6vw, 4.5rem);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: #0f172a;
-            margin-bottom: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+            margin-bottom: 0.2rem;
             text-align: center;
-            line-height: 1.1;
+            line-height: 1;
         }
         .brand-subtitle {
             font-family: var(--font-mono);
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-            color: #475569;
+            font-size: clamp(0.75rem, 2vw, 1rem);
+            color: var(--brand-accent);
             text-transform: uppercase;
-            letter-spacing: 0.3em;
-            margin-bottom: 3rem;
+            letter-spacing: 0.25em;
+            margin-bottom: 3.5rem;
             text-align: center;
+            font-weight: 700;
         }
 
         .zener-display {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 3rem;
-            width: 100%; max-width: 600px;
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; margin-bottom: 4rem;
+            width: 100%; max-width: 700px;
         }
         .zener-card {
-            width: clamp(60px, 15vw, 80px); 
-            height: clamp(90px, 22.5vw, 120px);
+            width: clamp(65px, 15vw, 85px); 
+            height: clamp(100px, 22.5vw, 130px);
             border: 2px solid var(--border-light);
-            border-radius: 12px;
+            border-radius: 6px;
             display: flex; justify-content: center; align-items: center;
-            background: var(--bg-paper);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
             user-select: none;
+            position: relative;
+        }
+        .zener-card::after {
+            content: ''; position: absolute; inset: 0; border-radius: 4px; box-shadow: inset 0 2px 4px rgba(255,255,255,0.8); pointer-events: none;
         }
         .zener-card.selectable:hover { 
-            border-color: var(--accent-blue); cursor: pointer; transform: translateY(-5px); 
-            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.2);
+            border-color: var(--border-dark); cursor: pointer; transform: translateY(-4px); 
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
         }
         .zener-card.selected { 
-            border-color: var(--accent-blue); background: #eff6ff; border-width: 3px; 
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+            border-color: var(--brand-accent); background: #f0fdfa; /* Leggero accento tecnico */
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 0 0 1px var(--brand-accent), 0 10px 25px -5px rgba(37, 99, 235, 0.2);
         }
         .zener-icon { 
-            width: 50%; height: 50%; stroke: #1e293b; fill: none; 
-            stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; 
+            width: 45%; height: 45%; stroke: var(--text-main); fill: none; 
+            stroke-width: 3; stroke-linecap: square; stroke-linejoin: miter; 
             transition: stroke 0.3s ease;
         }
-        .zener-card.selected .zener-icon { stroke: var(--accent-blue); }
+        .zener-card.selected .zener-icon { stroke: var(--brand-accent); }
 
         .action-grid { 
             display: grid; grid-template-columns: 1fr; gap: 1.5rem; 
-            width: 100%; max-width: 700px; margin: 0 auto;
+            width: 100%; max-width: 800px; margin: 0 auto;
         }
         @media (min-width: 640px) { .action-grid { grid-template-columns: 1fr 1fr; } }
 
         .action-card {
-            background: rgba(255, 255, 255, 0.7); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5); 
-            border-radius: 20px; padding: 2rem 1.5rem;
-            cursor: pointer; transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light); 
+            border-radius: 12px; padding: 2.5rem 2rem;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
         .action-card:hover {
-            transform: translateY(-5px); background: #ffffff;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px); border-color: var(--border-dark);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .action-icon { margin-bottom: 1rem; color: var(--text-main); }
-        .action-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .action-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+        .action-icon { margin-bottom: 1.5rem; color: var(--text-main); }
+        .action-title { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.01em;}
+        .action-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
 
         #app-container { 
-            padding-top: 80px; padding-bottom: 40px; display: none; 
+            padding-top: 80px; padding-bottom: 60px; display: none; 
             max-width: 100vw; overflow-x: hidden;
         }
         #app-container.active { display: block; }
 
         #toolbar {
             position: fixed; top: 0; left: 0; right: 0;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-light); z-index: 50; 
-            padding: 0.75rem 1rem;
+            background: rgba(15, 23, 42, 0.95); /* Toolbar Scura Tecnica */
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid #334155; z-index: 50; 
+            padding: 0.5rem 1rem;
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
             flex-wrap: wrap; gap: 0.5rem;
         }
 
         .btn { 
-            padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 600; 
-            border-radius: 8px; cursor: pointer; transition: all 0.2s; 
+            padding: 0.4rem 0.8rem; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+            border-radius: 4px; cursor: pointer; transition: all 0.2s; 
             display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; 
-            border: 1px solid transparent; user-select: none;
+            border: 1px solid transparent; user-select: none; height: 32px;
         }
-        .btn-outline { background: white; border-color: var(--border-light); color: var(--text-main); }
-        .btn-outline:hover { background: var(--bg-body); border-color: var(--border-dark); }
-        .btn-primary { background: var(--text-main); color: white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .btn-primary:hover { background: #334155; transform: translateY(-1px); box-shadow: 0 6px 10px -1px rgba(0,0,0,0.15); }
-        .btn-danger { background: white; border-color: var(--accent-red); color: var(--accent-red); }
-        .btn-danger:hover { background: var(--accent-red); color: white; }
+        .btn-outline { background: transparent; border-color: #475569; color: #f8fafc; }
+        .btn-outline:hover { background: #334155; border-color: #94a3b8; }
+        
+        /* Controlli Audio Specifici per Toolbar scura */
+        .audio-controls { background: #1e293b; border: 1px solid #334155; padding: 0.2rem; border-radius: 6px; display: flex; align-items: center; gap: 0.25rem; }
+        .audio-select { background: #0f172a; color: #f8fafc; border: 1px solid #475569; font-family: var(--font-mono); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; outline: none; height: 28px;}
+        
+        .btn-primary { background: var(--brand-accent); color: white; }
+        .btn-primary:hover { background: #1d4ed8; box-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+        .btn-danger { background: transparent; border-color: var(--brand-danger); color: var(--brand-danger); }
+        .btn-danger:hover { background: var(--brand-danger); color: white; }
+        
+        /* Timer stile cruscotto */
+        .timer-display { background: #000; color: #10b981; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; padding: 0 0.5rem; border-radius: 4px; border: 1px solid #334155; height: 28px; display: flex; align-items: center; justify-content: center; width: 75px; letter-spacing: 1px;}
 
         .a4-page {
             background: var(--bg-paper); 
             width: 100%; max-width: 210mm; 
             min-height: 297mm;
-            margin: 0 auto 30px auto; padding: 15mm;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            margin: 0 auto 40px auto; padding: 20mm;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             position: relative; box-sizing: border-box;
             display: flex; flex-direction: column;
-            overflow: hidden; /* Prevent visual overflow */
+            overflow: hidden;
+            border: 1px solid var(--border-light);
         }
         
         .page-content { flex: 1; display: flex; flex-direction: column; width: 100%; }
         
         .print-footer { 
             margin-top: auto; padding-top: 15px; display: flex; justify-content: space-between; 
-            font-size: 0.75rem; line-height: 1rem; color: #94a3b8; font-family: monospace; text-transform: uppercase;
+            font-size: 0.65rem; line-height: 1rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; border-top: 1px solid var(--border-light); letter-spacing: 0.05em;
         }
 
         @media (max-width: 768px) {
             #toolbar { padding: 0.5rem; justify-content: center; }
             .toolbar-group { width: 100%; justify-content: center; gap: 0.5rem; }
-            #app-container { padding-top: 140px; } /* Space for stacked toolbar */
+            #app-container { padding-top: 140px; }
             .mobile-hide { display: none !important; }
-            .mobile-icon-only { font-size: 0; padding: 0.5rem; }
-            .mobile-icon-only::before { font-size: 1.2rem; content: attr(data-icon); }
             
-            /* Make A4 pages full width and fluid on mobile for better UX */
             .a4-page { 
-                padding: 1.25rem; min-height: auto; border-radius: 0; 
-                margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-                border-top: 1px solid var(--border-light);
-                border-bottom: 1px solid var(--border-light);
+                padding: 1.5rem; min-height: auto; border-radius: 0; 
+                margin-bottom: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+                border-left: none; border-right: none;
             }
         }
 
-        .doc-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 0.25rem;}
+        .doc-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-main); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: -0.02em;}
         .section-header { 
-            font-weight: 700; font-size: 0.85rem; text-transform: uppercase; 
+            font-weight: 700; font-size: 0.75rem; text-transform: uppercase; font-family: var(--font-mono);
             color: var(--text-main); border-bottom: 2px solid var(--text-main); 
-            padding-bottom: 4px; margin: 1.5rem 0 1rem 0; letter-spacing: 0.05em; 
+            padding-bottom: 4px; margin: 2rem 0 1rem 0; letter-spacing: 0.05em; 
         }
         
+        /* Form Inputs Altamente Professionali */
+        .input-group { position: relative; margin-bottom: 1rem; }
+        .input-label { display: block; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.05em;}
+        
         input[type="text"], textarea {
-            width: 100%; background: transparent; border: none; 
-            border-bottom: 1px dashed var(--border-dark);
-            color: var(--text-main); font-family: var(--font-sans); font-size: 1rem;
-            padding: 4px 0; transition: border-color 0.2s, background-color 0.2s; resize: none;
-            border-radius: 0;
+            width: 100%; background: #f8fafc; border: 1px solid var(--border-light); 
+            color: var(--text-main); font-family: var(--font-mono); font-size: 0.9rem;
+            padding: 8px 10px; transition: all 0.2s; resize: none;
+            border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
         }
-        textarea { border: 1px dashed var(--border-dark); border-radius: 6px; padding: 8px; background: rgba(248, 250, 252, 0.5); }
+        textarea { padding: 12px; line-height: 1.5; }
         input[type="text"]:focus, textarea:focus { 
-            outline: none; border-color: var(--accent-blue); 
-            border-bottom-style: solid; background: rgba(37, 99, 235, 0.03); 
+            outline: none; border-color: var(--brand-accent); background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-        .input-label { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.02em;}
+        /* Look per i campi in sola lettura (come il TRN) */
+        input[readonly] { background: transparent; border-color: transparent; border-bottom: 2px solid var(--text-main); border-radius: 0; padding: 4px 0; box-shadow: none; font-size: 1.25rem; font-weight: 700; color: var(--brand-accent); }
 
-        .chk-wrap { display: inline-flex; align-items: flex-start; gap: 8px; cursor: pointer; user-select: none; }
+        .chk-wrap { display: inline-flex; align-items: flex-start; gap: 10px; cursor: pointer; user-select: none; }
         .chk-wrap input { display: none; }
         .chk-box { 
-            flex-shrink: 0; width: 18px; height: 18px; 
-            border: 2px solid var(--border-dark); border-radius: 4px; 
-            background: white; transition: all 0.2s; position: relative; margin-top: 2px;
+            flex-shrink: 0; width: 20px; height: 20px; 
+            border: 2px solid var(--border-dark); border-radius: 3px; 
+            background: white; transition: all 0.2s; position: relative; margin-top: 1px;
         }
-        .chk-wrap input:checked + .chk-box { background: var(--accent-blue); border-color: var(--accent-blue); }
+        .chk-wrap input:checked + .chk-box { background: var(--text-main); border-color: var(--text-main); }
         .chk-wrap input:checked + .chk-box::after { 
-            content: ''; position: absolute; left: 5px; top: 2px; width: 5px; height: 10px; 
+            content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 11px; 
             border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); 
         }
-        .chk-title { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+        .chk-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        .chk-desc { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 2px; display: block; }
 
         .canvas-wrapper { 
-            position: relative; border: 1px solid var(--border-light); 
-            border-radius: 8px; background: #fafafa; overflow: hidden; 
+            position: relative; border: 1px solid var(--border-dark); 
+            border-radius: 4px; overflow: hidden; 
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-            /* Important for Flexbox to allow shrinking in A4 context */
-            min-height: 120px; 
+            min-height: 150px; 
+            /* Sfondo a griglia millimetrata tecnica */
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(#f1f5f9 1px, transparent 1px),
+                linear-gradient(90deg, #f1f5f9 1px, transparent 1px);
+            background-size: 20px 20px;
         }
         .drawing-board { display: block; width: 100%; touch-action: none; cursor: crosshair; }
         .canvas-tools { 
             position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; 
-            z-index: 10; background: rgba(255,255,255,0.9); padding: 4px; 
-            border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+            z-index: 10; background: rgba(255,255,255,0.95); padding: 4px; 
+            border-radius: 4px; border: 1px solid var(--border-light);
             backdrop-filter: blur(4px);
         }
         .tool-btn { 
-            font-size: 0.75rem; padding: 4px 10px; background: transparent; 
-            border: 1px solid transparent; border-radius: 4px; cursor: pointer; 
-            color: var(--text-muted); font-weight: 600; transition: all 0.2s;
+            font-size: 0.65rem; font-family: var(--font-mono); padding: 4px 8px; background: transparent; 
+            border: 1px solid transparent; border-radius: 3px; cursor: pointer; 
+            color: var(--text-muted); font-weight: 700; transition: all 0.2s; text-transform: uppercase;
         }
-        .tool-btn.active { background: white; color: var(--text-main); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tool-btn:hover:not(.active) { color: var(--text-main); background: rgba(0,0,0,0.05); }
+        .tool-btn.active { background: var(--text-main); color: white; }
+        .tool-btn:hover:not(.active) { background: #f1f5f9; color: var(--text-main); }
 
-        #sys-modal, #dialog-modal { backdrop-filter: blur(5px); }
-        
-        .print-avoid-break { page-break-inside: avoid; break-inside: avoid; }
+        #sys-modal, #dialog-modal { backdrop-filter: blur(8px); }
+
+        /* Stili per la Matrice di Verifica dell'ultima pagina */
+        .matrix-card-wrap { user-select: none; }
+        .matrix-card { transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .matrix-card:hover { transform: translateY(-3px); }
+        .matrix-card.selected { transform: translateY(-3px); }
 
         @media print {
             @page { size: A4 portrait; margin: 0 !important; }
-            body, html { background: white !important; padding: 0 !important; margin: 0 !important; font-size: 12pt !important; }
+            body, html { background: white !important; padding: 0 !important; margin: 0 !important; font-size: 11pt !important; }
             #toolbar, .canvas-tools, #sys-modal, #dialog-modal, .view-screen { display: none !important; }
             #app-container { display: block !important; padding: 0 !important; }
             
+            /* Costringi rigorosamente i limiti del foglio A4 per evitare l'overflow e la pagina bianca */
             .a4-page { 
                 box-shadow: none !important; margin: 0 !important; border: none !important; border-radius: 0 !important;
                 page-break-after: always; break-after: page; 
                 width: 210mm !important; 
-                height: 297mm !important; max-height: 297mm !important; /* Force exact height */
-                padding: 12mm 15mm !important; /* Safe print margins */
+                height: 297mm !important; max-height: 297mm !important;
+                padding: 15mm 20mm !important;
                 box-sizing: border-box !important; display: flex !important; flex-direction: column !important;
-                overflow: hidden !important; /* Cut off any extra pixel preventing blank pages */
+                overflow: hidden !important;
             }
             
-            /* BLANK PAGE FIX: Remove page break from the absolute last page */
+            /* Rimuove l'interruzione sull'ultima pagina eliminando il foglio bianco finale */
             .a4-page:last-of-type { 
                 page-break-after: auto !important; 
                 break-after: auto !important; 
             }
             
             input::placeholder, textarea::placeholder { color: transparent !important; }
-            input[type="text"], textarea { border-bottom: 1px dashed #000 !important; color: black !important; background: transparent !important; }
-            .chk-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; border-color: #000 !important; }
+            input[type="text"], textarea { border: none !important; border-bottom: 1px dotted #000 !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important; color: black !important; padding: 2px 0 !important; font-size: 10pt !important;}
+            .chk-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; border-color: #000 !important; border-radius: 0 !important;}
             .canvas-wrapper { border: 1px solid #000 !important; background: white !important; box-shadow: none !important; }
             .chk-wrap input:checked + .chk-box { background: #000 !important; border-color: #000 !important; }
+
+            .matrix-card { border-color: #000 !important; box-shadow: none !important;}
+            .matrix-card.selected { border-width: 3px !important; background: #e2e8f0 !important; }
+            .matrix-chk-checked { border-color: #000 !important; background: #000 !important; color: #fff !important; }
+            .matrix-check-mark:not(.hidden) { display: inline-block !important; font-weight: bold !important; }
+            
+            /* Assicurati che i canvas non forzino l'altezza in stampa */
+            .canvas-wrapper.flex-1 { flex: 1 1 auto !important; min-height: 100px !important; }
         }
     </style>
 </head>
@@ -283,50 +328,41 @@
     <div id="view-action" class="view-screen">
         <div class="flex flex-col items-center w-full max-w-5xl mx-auto px-4">
             <h1 class="brand-title">MAKE IT MATTER</h1>
-            <p class="brand-subtitle">Quantum Zener Protocol</p>
+            <p class="brand-subtitle">Quantum Zener Protocol &middot; SRI Adaptation</p>
             
-            <!-- Standard Zener Cards Display -->
-            <div class="zener-display" id="zener-landing-display">
-                <!-- Injected via JS -->
-            </div>
+            <div class="zener-display" id="zener-landing-display"></div>
             
             <div class="action-grid">
                 <button class="action-card group" onclick="executeAction('print')">
                     <div class="action-icon">
-                        <svg class="w-12 h-12 opacity-80 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <svg class="w-10 h-10 opacity-80 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     </div>
-                    <h3 class="action-title">Print Empty Module</h3>
-                    <p class="action-desc">Generate a clean, unformatted A4 PDF for physical archiving and manual compilation.</p>
+                    <h3 class="action-title">Print Empty Form</h3>
+                    <p class="action-desc">Generate a clean, unformatted A4 PDF for physical archiving and manual session recording.</p>
                 </button>
 
                 <button class="action-card group" onclick="executeAction('start')">
                     <div class="action-icon">
-                        <svg class="w-12 h-12 opacity-80 group-hover:opacity-100 transition-opacity text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <svg class="w-10 h-10 opacity-80 group-hover:opacity-100 transition-opacity text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     </div>
-                    <h3 class="action-title">Start Practice Session</h3>
-                    <p class="action-desc">Generate a randomized hidden target. Use the built-in Binaural audio engine and remote viewing canvas.</p>
+                    <h3 class="action-title">Initiate Protocol</h3>
+                    <p class="action-desc">Generate a cryptographically locked target. Launch the digital session interface with Hemi-Sync audio.</p>
                 </button>
             </div>
         </div>
     </div>
 
     <div id="app-container">
-        <!-- Toolbar -->
         <div id="toolbar">
             <div class="toolbar-group flex items-center gap-2">
-                <span class="font-serif font-bold text-xl text-slate-800 mr-2 md:mr-4 tracking-tighter">MIM.</span>
-                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="goBackToHome()" title="Home">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                </button>
-                <button class="btn btn-outline p-2 md:py-1.5 md:px-3" onclick="openModal('manual')" title="Manual">
-                    <span class="mobile-hide">OS Manual</span>
-                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </button>
+                <span class="font-sans font-bold text-lg text-white mr-2 tracking-tighter">MIM.</span>
+                <button class="btn btn-outline" onclick="goBackToHome()" title="Abort Session">ABORT</button>
+                <button class="btn btn-outline" onclick="openModal('manual')" title="Protocol Manual">MANUAL</button>
             </div>
 
-            <div class="toolbar-group flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200">
-                <span class="text-[10px] font-bold text-slate-500 px-2 mobile-hide tracking-widest font-mono">SYNC</span>
-                <select id="audio-preset" class="bg-white border border-slate-300 text-sm font-semibold rounded px-2 py-1 outline-none w-[120px] md:w-auto shadow-sm">
+            <div class="toolbar-group audio-controls">
+                <span class="text-[9px] font-bold text-slate-400 px-2 mobile-hide tracking-widest font-mono">HEMI-SYNC</span>
+                <select id="audio-preset" class="audio-select">
                     <optgroup label="Frequencies">
                         <option value="delta">Delta (2.5Hz)</option>
                         <option value="theta">Theta (5Hz)</option>
@@ -334,117 +370,115 @@
                         <option value="beta">Beta (20Hz)</option>
                         <option value="gamma">Gamma (40Hz)</option>
                     </optgroup>
-                    <optgroup label="Autopilot">
+                    <optgroup label="Autopilot Vector">
                         <option value="f10">Focus 10 (Awake)</option>
                         <option value="f12">Focus 12 (Expanded)</option>
                         <option value="f15">Focus 15 (Void)</option>
                     </optgroup>
                 </select>
-                <button class="btn btn-primary py-1 px-3 shadow-sm text-sm" id="btn-play-audio" onclick="playSelectedAudio()">Play</button>
-                <button class="btn btn-outline py-1 px-2 text-sm border-transparent" onclick="stopAudio()" title="Stop Audio">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg>
-                </button>
-                <span id="audio-status-indicator" class="w-2 h-2 rounded-full bg-slate-300 mx-1"></span>
-                <div class="w-px h-5 bg-slate-300 mx-1"></div>
-                <button class="btn btn-outline py-1 px-2 border-transparent hover:bg-blue-50 transition-colors" id="btn-waves" onclick="toggleWaves()" title="Ocean Waves">🌊</button>
+                <button class="btn btn-primary" id="btn-play-audio" onclick="playSelectedAudio()">INIT</button>
+                <button class="btn btn-outline border-transparent text-slate-300" onclick="stopAudio()" title="Halt Audio">HALT</button>
+                <span id="audio-status-indicator" class="w-2 h-2 rounded-full bg-slate-600 mx-1"></span>
+                <div class="w-px h-4 bg-slate-600 mx-1"></div>
+                <button class="btn btn-outline border-transparent text-slate-300 hover:text-white" id="btn-waves" onclick="toggleWaves()" title="White Noise / Ocean">WVS</button>
             </div>
 
             <div class="toolbar-group flex items-center gap-2">
-                <div class="font-mono text-sm md:text-base font-bold w-16 md:w-20 text-center text-slate-700 bg-slate-100 rounded py-1 px-2" id="timer-display">00:00</div>
-                <button class="btn btn-outline py-1 md:py-1.5 px-2 md:px-3 text-sm" onclick="toggleTimer()" id="timer-btn">Timer</button>
-                <div class="h-6 w-px bg-slate-200 mx-1 mobile-hide"></div>
-                <button class="btn btn-danger py-1.5 px-3 mobile-hide" onclick="clearData(true)">Clear</button>
-                <button class="btn btn-primary py-1.5 px-3 shadow-md" onclick="window.print()">
-                    <span class="mobile-hide">Print / PDF</span>
-                    <svg class="w-5 h-5 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                </button>
+                <div class="timer-display" id="timer-display">00:00</div>
+                <button class="btn btn-outline" onclick="toggleTimer()" id="timer-btn">TMR</button>
+                <div class="h-5 w-px bg-slate-600 mx-1 mobile-hide"></div>
+                <button class="btn btn-danger mobile-hide" onclick="clearData(true)">ERASE</button>
+                <button class="btn btn-primary" style="background-color: white; color: #0f172a;" onclick="window.print()">PRINT DOC</button>
             </div>
         </div>
 
         <main class="w-full">
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
-                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
+                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Setup & Parameters</div>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Setup & Vector Parameters</div>
                             <h1 class="doc-title">Quantum Protocol Log</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 mt-1 font-mono">PAGE 1 / 5</div>
                     </header>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 shrink-0">
-                        <div><span class="input-label">Target Reference Number (TRN)</span><input type="text" id="f_trn" class="text-xl tracking-widest font-mono font-bold text-blue-700" placeholder="AUTO-GENERATED" readonly></div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div><span class="input-label">T-Start</span><input type="text" id="f_start" placeholder="00:00"></div>
-                            <div><span class="input-label">T-End</span><input type="text" id="f_end" placeholder="00:00"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 shrink-0">
+                        <div class="input-group">
+                            <span class="input-label">Target Reference Number (TRN)</span>
+                            <input type="text" id="f_trn" placeholder="AWAITING INITIALIZATION" readonly>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group"><span class="input-label">T-Start (Zulu)</span><input type="text" id="f_start" placeholder="00:00"></div>
+                            <div class="input-group"><span class="input-label">T-End (Zulu)</span><input type="text" id="f_end" placeholder="00:00"></div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 mb-4 shrink-0">
-                        <div><span class="input-label">Location / Coordinates</span><input type="text" id="f_loc" placeholder="City / Lat Long"></div>
+                    <div class="grid grid-cols-1 gap-6 mb-6 shrink-0">
+                        <div class="input-group"><span class="input-label">Geographic Coordinates / Facility</span><input type="text" id="f_loc" placeholder="Lat, Long or Facility Name"></div>
                         
                         <div>
                             <span class="input-label">Physical Posture</span>
-                            <div class="flex flex-wrap gap-4 mt-2 items-center">
-                                <label class="chk-wrap"><input type="checkbox" id="c_pos_supine"><span class="chk-box"></span><span class="chk-title text-sm">Supine</span></label>
-                                <label class="chk-wrap"><input type="checkbox" id="c_pos_seated"><span class="chk-box"></span><span class="chk-title text-sm">Seated</span></label>
-                                <div class="flex-1 min-w-[120px]"><input type="text" id="f_pos_other" class="w-full text-sm font-sans" placeholder="Other..."></div>
+                            <div class="flex flex-wrap gap-5 mt-2 items-center">
+                                <label class="chk-wrap"><input type="checkbox" id="c_pos_supine"><span class="chk-box"></span><span class="chk-title">Supine</span></label>
+                                <label class="chk-wrap"><input type="checkbox" id="c_pos_seated"><span class="chk-box"></span><span class="chk-title">Seated</span></label>
+                                <div class="flex-1 min-w-[150px]"><input type="text" id="f_pos_other" placeholder="Other Configuration..."></div>
                             </div>
                         </div>
                         
                         <div>
-                            <span class="input-label">Baseline State</span>
-                            <div class="flex flex-wrap gap-4 mt-2 items-center">
-                                <label class="chk-wrap"><input type="checkbox" id="c_mood_calm"><span class="chk-box"></span><span class="chk-title text-sm">Calm</span></label>
-                                <label class="chk-wrap"><input type="checkbox" id="c_mood_tired"><span class="chk-box"></span><span class="chk-title text-sm">Tired</span></label>
-                                <div class="flex-1 min-w-[120px]"><input type="text" id="f_mood_other" class="w-full text-sm font-sans" placeholder="Other..."></div>
+                            <span class="input-label">Baseline State / Noise</span>
+                            <div class="flex flex-wrap gap-5 mt-2 items-center">
+                                <label class="chk-wrap"><input type="checkbox" id="c_mood_calm"><span class="chk-box"></span><span class="chk-title">Nominal (Calm)</span></label>
+                                <label class="chk-wrap"><input type="checkbox" id="c_mood_tired"><span class="chk-box"></span><span class="chk-title">Fatigue</span></label>
+                                <div class="flex-1 min-w-[150px]"><input type="text" id="f_mood_other" placeholder="Other Interfering Variables..."></div>
                             </div>
                         </div>
                     </div>
 
-                    <h2 class="section-header mt-2 mb-2 shrink-0">Frequency Parameters</h2>
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 flex flex-wrap gap-4 mb-4 shrink-0">
-                        <label class="chk-wrap"><input type="checkbox" id="c_freq_delta"><span class="chk-box"></span><span class="chk-title text-sm">DELTA</span></label>
-                        <label class="chk-wrap"><input type="checkbox" id="c_freq_theta"><span class="chk-box"></span><span class="chk-title text-sm">THETA</span></label>
-                        <label class="chk-wrap"><input type="checkbox" id="c_freq_alpha"><span class="chk-box"></span><span class="chk-title text-sm">ALPHA</span></label>
-                        <label class="chk-wrap"><input type="checkbox" id="c_freq_beta"><span class="chk-box"></span><span class="chk-title text-sm">BETA</span></label>
-                        <label class="chk-wrap"><input type="checkbox" id="c_freq_gamma"><span class="chk-box"></span><span class="chk-title text-sm">GAMMA</span></label>
+                    <h2 class="section-header shrink-0">Frequency Parameters (Hemi-Sync)</h2>
+                    <div class="border border-slate-200 rounded p-4 flex flex-wrap gap-5 mb-6 shrink-0">
+                        <label class="chk-wrap"><input type="checkbox" id="c_freq_delta"><span class="chk-box"></span><span class="chk-title">DELTA</span></label>
+                        <label class="chk-wrap"><input type="checkbox" id="c_freq_theta"><span class="chk-box"></span><span class="chk-title">THETA</span></label>
+                        <label class="chk-wrap"><input type="checkbox" id="c_freq_alpha"><span class="chk-box"></span><span class="chk-title">ALPHA</span></label>
+                        <label class="chk-wrap"><input type="checkbox" id="c_freq_beta"><span class="chk-box"></span><span class="chk-title">BETA</span></label>
+                        <label class="chk-wrap"><input type="checkbox" id="c_freq_gamma"><span class="chk-box"></span><span class="chk-title">GAMMA</span></label>
                     </div>
 
-                    <h2 class="section-header mb-2 shrink-0">Target Vector (Focus Level)</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 shrink-0">
-                        <label class="chk-wrap border border-slate-200 rounded-lg p-2 hover:bg-slate-50 transition-colors bg-white">
+                    <h2 class="section-header shrink-0">Target Vector (Monroe Focus Level)</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 shrink-0">
+                        <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f10"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 10</span><span class="text-[10px] text-slate-500 mt-1">Mind Awake</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 10</span><span class="chk-desc">Mind Awake, Body Asleep</span></div>
                         </label>
-                        <label class="chk-wrap border border-slate-200 rounded-lg p-2 hover:bg-slate-50 transition-colors bg-white">
+                        <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f12"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 12</span><span class="text-[10px] text-slate-500 mt-1">Expanded</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 12</span><span class="chk-desc">Expanded Awareness</span></div>
                         </label>
-                        <label class="chk-wrap border border-slate-200 rounded-lg p-2 hover:bg-slate-50 transition-colors bg-white">
+                        <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f15"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 15</span><span class="text-[10px] text-slate-500 mt-1">Void State</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 15</span><span class="chk-desc">Void State / No Time</span></div>
                         </label>
-                        <label class="chk-wrap border border-slate-200 rounded-lg p-2 hover:bg-slate-50 transition-colors bg-white">
+                        <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f21"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title font-bold text-sm leading-none mt-0.5">Focus 21</span><span class="text-[10px] text-slate-500 mt-1">Bridge</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 21</span><span class="chk-desc">Bridge / Edge</span></div>
                         </label>
                     </div>
 
-                    <div class="mt-auto shrink-0 bg-red-50/50 border border-red-200 rounded-lg p-3">
-                        <p class="text-sm text-slate-800 font-semibold mb-2">Click-Out / Amnesia Anomaly Recorded?</p>
+                    <div class="mt-auto shrink-0 bg-red-50 border border-red-200 rounded p-4">
+                        <p class="text-xs font-mono text-red-800 font-bold mb-3 uppercase tracking-wider">Amnesia / "Click-Out" Anomaly Recorded?</p>
                         <div class="flex flex-wrap items-center gap-6">
-                            <label class="chk-wrap text-red-700"><input type="checkbox" id="c_click_no" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-300"></span><span class="chk-title text-sm font-bold tracking-wide">NEGATIVE</span></label>
-                            <label class="chk-wrap text-red-700"><input type="checkbox" id="c_click_yes" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-300"></span><span class="chk-title text-sm font-bold tracking-wide">POSITIVE</span></label>
-                            <div class="flex items-center gap-3 text-sm text-slate-600 font-mono w-full sm:w-auto">
-                                <span>T-Start:</span> <input type="text" id="f_click_s" class="w-16 border-b border-red-300 bg-transparent text-center" placeholder="--:--">
-                                <span>T-End:</span> <input type="text" id="f_click_e" class="w-16 border-b border-red-300 bg-transparent text-center" placeholder="--:--">
+                            <label class="chk-wrap text-red-900"><input type="checkbox" id="c_click_no" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-400"></span><span class="chk-title uppercase tracking-wide">NEGATIVE</span></label>
+                            <label class="chk-wrap text-red-900"><input type="checkbox" id="c_click_yes" onclick="uncheckGroup('click', this)"><span class="chk-box border-red-400"></span><span class="chk-title uppercase tracking-wide">POSITIVE</span></label>
+                            <div class="flex items-center gap-3 text-sm font-mono w-full sm:w-auto text-red-900">
+                                <span>EST. START:</span> <input type="text" id="f_click_s" class="w-16 border-none border-b-2 border-red-300 bg-transparent text-center p-0 h-6" placeholder="--:--">
+                                <span>EST. END:</span> <input type="text" id="f_click_e" class="w-16 border-none border-b-2 border-red-300 bg-transparent text-center p-0 h-6" placeholder="--:--">
                             </div>
                         </div>
                     </div>
                 </div> 
                 <div class="print-footer">
-                    <span>Session Log</span><span>FORM-QCS-01</span>
+                    <span>Session Initialization Log</span><span>FORM-QCS-01</span>
                 </div>
             </div>
 
@@ -452,42 +486,41 @@
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-4 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Non-Local Data Acquisition</div>
-                            <h1 class="doc-title">Remote Viewing</h1>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Non-Local Data Acquisition Phase</div>
+                            <h1 class="doc-title">Remote Viewing Map</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 mt-1 font-mono">PAGE 2 / 5</div>
                     </header>
 
                     <h2 class="section-header shrink-0">Stage 1: Ideogram / Gestalt</h2>
-                    <!-- Flex-1 allows the container to fill space without overflowing the A4 boundaries -->
-                    <div class="canvas-wrapper min-h-[120px] h-[25%] mb-4 shrink-0">
-                        <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">INITIAL SKETCH / ENERGY LINES</div>
+                    <!-- Il flex-1 permette al canvas di adattarsi allo spazio senza sbordare dal foglio -->
+                    <div class="canvas-wrapper flex-1 min-h-[120px] mb-4 shrink-0">
+                        <div class="absolute top-2 left-2 text-[9px] font-mono text-slate-400 pointer-events-none tracking-widest">INITIAL SKETCH / ENERGY LINES</div>
                         <div class="canvas-tools">
-                            <button class="tool-btn active" onclick="setTool('canvas-gestalt', 'pen', this)">Pen</button>
-                            <button class="tool-btn" onclick="setTool('canvas-gestalt', 'eraser', this)">Erase</button>
-                            <button class="tool-btn" onclick="undoCanvas('canvas-gestalt')">Undo</button>
-                            <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-gestalt', true)">Clear</button>
+                            <button class="tool-btn active" onclick="setTool('canvas-gestalt', 'pen', this)">PEN</button>
+                            <button class="tool-btn" onclick="setTool('canvas-gestalt', 'eraser', this)">ERASE</button>
+                            <button class="tool-btn" onclick="undoCanvas('canvas-gestalt')">UNDO</button>
+                            <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-gestalt', true)">CLR</button>
                         </div>
                         <canvas id="canvas-gestalt" class="drawing-board h-full w-full"></canvas>
                     </div>
 
-                    <h2 class="section-header shrink-0">Stage 2: Sensory Decoding</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 shrink-0">
-                        <div><span class="input-label">VISUALS</span><textarea id="t_visuals" class="h-12 w-full"></textarea></div>
-                        <div><span class="input-label">AUDITORY</span><textarea id="t_auditory" class="h-12 w-full"></textarea></div>
-                        <div><span class="input-label">TACTILE/THERMAL</span><textarea id="t_tactile" class="h-12 w-full"></textarea></div>
-                        <div><span class="input-label">OLFACTORY/GUSTATORY</span><textarea id="t_olfactory" class="h-12 w-full"></textarea></div>
+                    <h2 class="section-header shrink-0">Stage 2: Sensory Decoding Data</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 shrink-0">
+                        <div class="input-group"><span class="input-label">VISUALS (Luminescence, Colors, Geometry)</span><textarea id="t_visuals" class="h-16 w-full"></textarea></div>
+                        <div class="input-group"><span class="input-label">AUDITORY (Acoustics, Resonance)</span><textarea id="t_auditory" class="h-16 w-full"></textarea></div>
+                        <div class="input-group"><span class="input-label">TACTILE/THERMAL (Textures, Gradients)</span><textarea id="t_tactile" class="h-16 w-full"></textarea></div>
+                        <div class="input-group"><span class="input-label">OLFACTORY/GUSTATORY (Chemistry)</span><textarea id="t_olfactory" class="h-16 w-full"></textarea></div>
                     </div>
 
                     <h2 class="section-header shrink-0">Stage 3: Analytical Sketch</h2>
-                    <!-- Flex-1 expands this canvas to fill exactly the remaining A4 space dynamically -->
                     <div class="canvas-wrapper flex-1 min-h-[150px]">
-                        <div class="absolute top-2 left-2 text-[10px] font-mono text-slate-400 pointer-events-none tracking-widest">DIMENSIONAL MAPPING</div>
+                        <div class="absolute top-2 left-2 text-[9px] font-mono text-slate-400 pointer-events-none tracking-widest">DIMENSIONAL MAPPING</div>
                         <div class="canvas-tools">
-                            <button class="tool-btn active" onclick="setTool('canvas-analytical', 'pen', this)">Pen</button>
-                            <button class="tool-btn" onclick="setTool('canvas-analytical', 'eraser', this)">Erase</button>
-                            <button class="tool-btn" onclick="undoCanvas('canvas-analytical')">Undo</button>
-                            <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-analytical', true)">Clear</button>
+                            <button class="tool-btn active" onclick="setTool('canvas-analytical', 'pen', this)">PEN</button>
+                            <button class="tool-btn" onclick="setTool('canvas-analytical', 'eraser', this)">ERASE</button>
+                            <button class="tool-btn" onclick="undoCanvas('canvas-analytical')">UNDO</button>
+                            <button class="tool-btn text-red-600" onclick="clearCanvas('canvas-analytical', true)">CLR</button>
                         </div>
                         <canvas id="canvas-analytical" class="drawing-board h-full w-full"></canvas>
                     </div>
@@ -502,33 +535,29 @@
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Termination</div>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Termination & Data Lock</div>
                             <h1 class="doc-title">Target Resolution</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 font-mono mt-1">PAGE 3 / 5</div>
                     </header>
 
-                    <h2 class="section-header shrink-0">Stage 4: Final Guess & Reveal</h2>
-                    <p class="text-sm text-slate-600 mb-6 shrink-0">Based on your sensory data and ideograms, commit to a final symbol choice before decrypting the target.</p>
+                    <h2 class="section-header shrink-0">Stage 4: Final Receiver Call & Reveal</h2>
+                    <p class="text-sm text-slate-600 mb-6 shrink-0">Review the Stage 2 and 3 analytical data. Commit to a final perceptual impression (symbol choice) prior to executing target decryption.</p>
                     
-                    <div class="mb-8 shrink-0">
-                        <span class="input-label mb-3">1. Select Your Impression</span>
-                        <div class="flex flex-wrap gap-4 mt-3 justify-center md:justify-start" id="guess-selection-area">
-                            <!-- Populated dynamically by JS -->
-                        </div>
+                    <div class="mb-8 shrink-0 bg-slate-50 border border-slate-200 p-6 rounded-lg">
+                        <span class="input-label mb-4 text-slate-800">1. Commit Perceptual Impression</span>
+                        <div class="flex flex-wrap gap-4 justify-center md:justify-start" id="guess-selection-area"></div>
                     </div>
 
-                    <div class="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm mb-6 relative overflow-hidden shrink-0">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-10 opacity-50"></div>
-                        
-                        <span class="input-label mb-4">2. Decrypt Session Target</span>
+                    <div class="border border-slate-300 rounded-lg p-6 md:p-8 shadow-sm mb-6 relative overflow-hidden shrink-0">
+                        <span class="input-label mb-4 text-slate-800">2. Execute Target Decryption</span>
                         <div class="flex flex-col md:flex-row items-center gap-6">
-                            <button class="btn btn-primary py-4 px-8 text-lg w-full md:w-1/3 font-bold rounded-xl" onclick="revealTarget()">REVEAL TARGET</button>
+                            <button class="btn btn-primary py-4 px-8 text-lg w-full md:w-1/3 font-sans font-bold rounded" style="height: auto;" onclick="revealTarget()">DECRYPT TARGET</button>
                             
-                            <div class="flex-1 flex flex-row items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-4 w-full h-full">
-                                <div class="font-serif font-bold text-slate-500 text-lg mr-4 uppercase tracking-widest">Target:</div>
-                                <div id="target-reveal-display" class="w-20 h-28 border-2 border-dashed border-slate-300 rounded-lg flex justify-center items-center bg-white text-slate-300 shadow-inner transition-all duration-500">
-                                    <span class="text-5xl font-serif">?</span>
+                            <div class="flex-1 flex flex-row items-center justify-between bg-slate-50 border border-slate-200 rounded p-4 w-full h-full">
+                                <div class="font-mono font-bold text-slate-500 text-sm mr-4 uppercase tracking-widest">Ground Truth:</div>
+                                <div id="target-reveal-display" class="w-20 h-28 border-2 border-dashed border-slate-300 rounded flex justify-center items-center bg-white text-slate-300 transition-all duration-500">
+                                    <span class="text-4xl font-serif">?</span>
                                 </div>
                             </div>
                         </div>
@@ -537,8 +566,8 @@
                     </div>
                     
                     <div class="flex-1 flex flex-col mt-4">
-                        <h2 class="section-header shrink-0">Post-Session Notes</h2>
-                        <textarea id="t_post_notes" class="flex-1 w-full min-h-[100px]" placeholder="Log any physical resonance, click-outs, or relevant reflections here..."></textarea>
+                        <h2 class="section-header shrink-0">Post-Session Evaluation Notes</h2>
+                        <textarea id="t_post_notes" class="flex-1 w-full min-h-[100px]" placeholder="Log physical resonance, mental noise, or analytical overlay (AOL) reflections here..."></textarea>
                     </div>
                 </div> 
 
@@ -551,27 +580,28 @@
                 <div class="page-content flex flex-col h-full">
                     <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Session Integrity Verification</div>
-                            <h1 class="doc-title text-slate-700">Blind Target Authentication</h1>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">System Verification Protocol</div>
+                            <h1 class="doc-title text-slate-800">Blind Target Authentication</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 mt-1 font-mono">PAGE 4 / 5</div>
                     </header>
 
-                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 text-sm text-slate-700 leading-relaxed shrink-0">
-                        <p><strong>Strict Blind Protocol:</strong> This section provides cryptographic proof that the target was generated before the session began. The target is permanently bound to your TRN (Target Reference Number) the exact millisecond you initiate the practice. You may decrypt the original target here at any time to independently verify that the system did not alter or generate the target after you submitted your final guess.</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded p-6 mb-8 text-sm text-slate-800 leading-relaxed shrink-0 shadow-sm">
+                        <p class="font-mono text-xs uppercase tracking-widest font-bold mb-2 text-blue-900">Strict Blind Protocol Enforced</p>
+                        <p>This module provides verifiable proof that the session target was established and locked in memory prior to the initialization of the Remote Viewing phase. The target data is cryptographically bound to the Session TRN (Target Reference Number) at T-0. The operator may manually decrypt the locked target below to authenticate that the system did not dynamically alter the ground truth post-session.</p>
                     </div>
 
                     <div class="flex flex-col items-center justify-center flex-1">
-                        <div class="text-xs font-bold text-slate-500 tracking-widest uppercase mb-2">Session TRN Code</div>
-                        <div id="verify-trn" class="text-3xl md:text-4xl font-mono font-bold text-blue-800 tracking-[0.2em] bg-white py-4 px-8 rounded-xl border border-slate-200 shadow-sm mb-12">
+                        <div class="text-xs font-bold font-mono text-slate-500 tracking-widest uppercase mb-2">Session TRN Code</div>
+                        <div id="verify-trn" class="text-3xl md:text-4xl font-mono font-bold text-blue-900 tracking-[0.25em] bg-white py-4 px-8 rounded border border-slate-300 shadow-inner mb-12">
                             XXXX-XXXX
                         </div>
 
-                        <button id="btn-verify-early" class="action-card w-full max-w-sm group relative overflow-hidden" onclick="revealVerificationEarly()">
+                        <button id="btn-verify-early" class="action-card w-full max-w-sm group relative overflow-hidden border-2 border-dashed border-slate-300" onclick="revealVerificationEarly()">
                             <div id="verify-display" class="flex flex-col items-center relative z-10">
-                                <svg class="w-12 h-12 text-slate-400 mb-3 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                                <span class="font-bold text-slate-700 uppercase tracking-wide">Decrypt Original Target</span>
-                                <span class="text-xs text-slate-500 mt-2 font-mono">Warning: Spoils the session</span>
+                                <svg class="w-10 h-10 text-slate-400 mb-4 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <span class="font-bold font-mono text-sm text-slate-800 uppercase tracking-widest">Authenticate Original TRN Target</span>
+                                <span class="text-[10px] text-red-600 mt-2 font-mono uppercase tracking-wider font-bold">Warning: Spoils active session</span>
                             </div>
                         </button>
                     </div>
@@ -584,66 +614,80 @@
 
             <div class="a4-page">
                 <div class="page-content flex flex-col h-full">
-                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-8 shrink-0">
+                    <header class="flex justify-between items-end border-b-2 border-slate-800 pb-2 mb-6 shrink-0">
                         <div>
-                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Physical Archive Protocol</div>
-                            <h1 class="doc-title text-slate-700">Pineal Resolution Log</h1>
+                            <div class="font-mono text-[10px] text-slate-500 tracking-widest uppercase mb-1">Double-Blind Verification Matrix</div>
+                            <h1 class="doc-title text-slate-800">Anomalous Cognition (AC) Matrix</h1>
                         </div>
                         <div class="text-right text-xs text-slate-500 mt-1 font-mono">PAGE 5 / 5</div>
                     </header>
 
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-8 text-sm text-slate-700 leading-relaxed print:bg-transparent print:border-none print:p-0 shrink-0">
-                        <p><strong>Physical Target Verification:</strong> Use this section exclusively for physical record-keeping. Manually check the actual target generated by the system, and compare it with the target perceived through non-local consciousness (Pineal Gland activation / Remote Viewing).</p>
+                    <div class="bg-slate-50 border border-slate-200 rounded p-5 mb-8 text-sm text-slate-700 leading-relaxed print:bg-transparent print:border-none print:p-0 shrink-0">
+                        <p class="font-mono text-xs uppercase tracking-widest font-bold mb-2">Evaluation Protocol</p>
+                        <p>In accordance with standard laboratory parapsychology frameworks (e.g., SRI, Rhine), target verification compares the <em>Receiver Call (Perceptual Impression)</em> established via anomalous cognition against the verified <em>Target Ground Truth</em>. Tap the respective symbols or checkboxes below to log the correlation data digitally, or utilize ink when evaluating hard copies.</p>
                     </div>
 
-                    <div class="mb-12 print:mb-8 shrink-0">
-                        <h2 class="section-header">1. Perceived Target (Pineal Gland / Remote Viewing)</h2>
-                        <div class="flex flex-wrap gap-4 mt-6 justify-around" id="print-row-perceived">
-                            <!-- Injected via JS -->
+                    <div class="mb-8 print:mb-6 shrink-0">
+                        <div class="flex items-center justify-between border-b border-slate-400 pb-2 mb-4">
+                            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">1. Receiver Call (Perceptual Impression)</h2>
+                            <span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Anomalous Cognition Data</span>
+                        </div>
+                        <div class="flex flex-wrap gap-4 justify-around" id="matrix-row-perceived">
+                            <!-- Injected interactively via JS -->
                         </div>
                     </div>
 
-                    <div class="mb-12 print:mb-8 shrink-0">
-                        <h2 class="section-header">2. Actual Target (System Generated)</h2>
-                        <div class="flex flex-wrap gap-4 mt-6 justify-around" id="print-row-actual">
-                            <!-- Injected via JS -->
+                    <div class="mb-8 print:mb-6 shrink-0">
+                        <div class="flex items-center justify-between border-b border-slate-400 pb-2 mb-4">
+                            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 font-mono">2. Target Ground Truth</h2>
+                            <span class="text-[9px] font-mono text-slate-500 uppercase tracking-widest">System Decrypted Key</span>
                         </div>
+                        <div class="flex flex-wrap gap-4 justify-around" id="matrix-row-actual">
+                            <!-- Injected interactively via JS -->
+                        </div>
+                    </div>
+
+                    <div class="mt-auto p-4 border-2 border-slate-800 rounded bg-slate-50 flex flex-wrap justify-between items-center text-xs font-mono text-slate-600 shrink-0 print:border-solid">
+                        <div>CORRELATION STATUS: <span id="matrix-status-text" class="font-bold text-slate-800">AWAITING EVALUATION</span></div>
+                        <div class="font-bold">METHOD: DOUBLE-BLIND FORCED-CHOICE</div>
                     </div>
                 </div> 
 
                 <div class="print-footer">
-                    <span>Physical Resolution Log</span><span>FORM-QCS-05</span>
+                    <span>Anomalous Cognition Matrix</span><span>FORM-QCS-05</span>
                 </div>
             </div>
 
         </main>
     </div>
 
-    <div id="dialog-modal" class="hidden fixed inset-0 z-[250] bg-slate-900/40 backdrop-blur-sm flex justify-center items-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all border border-slate-100">
+    <div id="dialog-modal" class="hidden fixed inset-0 z-[250] bg-slate-900/60 backdrop-blur-md flex justify-center items-center p-4">
+        <div class="bg-white rounded shadow-2xl w-full max-w-sm overflow-hidden border border-slate-300">
+            <div class="bg-slate-50 border-b border-slate-200 p-3">
+                <h3 id="dialog-title" class="text-sm font-bold text-slate-900 font-mono uppercase tracking-widest">System Alert</h3>
+            </div>
             <div class="p-6 text-center">
-                <h3 id="dialog-title" class="text-xl font-bold text-slate-900 mb-2 font-serif">Message</h3>
-                <p id="dialog-message" class="text-sm text-slate-600 mb-8 leading-relaxed">...</p>
+                <p id="dialog-message" class="text-sm text-slate-700 mb-6 leading-relaxed font-sans">...</p>
                 <div class="flex justify-center gap-3">
-                    <button id="dialog-cancel" class="btn btn-outline hidden w-full">Cancel</button>
-                    <button id="dialog-confirm" class="btn btn-primary w-full">OK</button>
+                    <button id="dialog-cancel" class="btn btn-outline border-slate-300 text-slate-600 hover:bg-slate-50 hidden w-full">CANCEL</button>
+                    <button id="dialog-confirm" class="btn btn-primary w-full">ACKNOWLEDGE</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="sys-modal" class="hidden fixed inset-0 z-[150] bg-slate-900/50 flex justify-center items-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-200">
-            <div class="flex justify-between items-center p-5 border-b border-slate-200 bg-slate-50">
-                <h2 id="modal-title" class="font-serif font-bold text-xl md:text-2xl text-slate-800 tracking-wide">TITLE</h2>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-800 text-3xl leading-none transition-colors">&times;</button>
+    <div id="sys-modal" class="hidden fixed inset-0 z-[150] bg-slate-900/60 flex justify-center items-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden border border-slate-300">
+            <div class="flex justify-between items-center p-4 border-b border-slate-200 bg-slate-50">
+                <h2 id="modal-title" class="font-mono font-bold text-lg text-slate-800 tracking-widest uppercase">TITLE</h2>
+                <button onclick="closeModal()" class="text-slate-500 hover:text-slate-900 text-2xl leading-none transition-colors">&times;</button>
             </div>
-            <div id="modal-body" class="p-6 overflow-y-auto text-slate-700 text-sm leading-relaxed modal-content-area bg-white"></div>
+            <div id="modal-body" class="p-6 overflow-y-auto text-slate-800 text-sm leading-relaxed modal-content-area bg-white font-sans"></div>
         </div>
     </div>
 
     <script>
-        // --- Zener Card Definitions ---
+        // --- Definizione Carte Zener ---
         const zenerCards = {
             'circle': `<svg class="zener-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>`,
             'cross': `<svg class="zener-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>`,
@@ -656,51 +700,139 @@
         let currentGuess = '';
         let hasRevealed = false;
 
-        // Inject standard cards into landing, guess, and print areas
+        let matrixPerceived = '';
+        let matrixActual = '';
+
+        // Inizializzazione Interfaccia Zener
         function initZenerUI() {
             const landingContainer = document.getElementById('zener-landing-display');
             const guessContainer = document.getElementById('guess-selection-area');
-            const printPerceived = document.getElementById('print-row-perceived');
-            const printActual = document.getElementById('print-row-actual');
+            const matrixPerceivedContainer = document.getElementById('matrix-row-perceived');
+            const matrixActualContainer = document.getElementById('matrix-row-actual');
             
             if(landingContainer) landingContainer.innerHTML = '';
             if(guessContainer) guessContainer.innerHTML = '';
-            if(printPerceived) printPerceived.innerHTML = '';
-            if(printActual) printActual.innerHTML = '';
+            if(matrixPerceivedContainer) matrixPerceivedContainer.innerHTML = '';
+            if(matrixActualContainer) matrixActualContainer.innerHTML = '';
 
             for (const [key, svg] of Object.entries(zenerCards)) {
                 if(landingContainer) landingContainer.innerHTML += `<div class="zener-card">${svg}</div>`;
                 if(guessContainer) guessContainer.innerHTML += `<div id="guess-${key}" class="zener-card guess-card selectable" onclick="selectGuess('${key}')">${svg}</div>`;
                 
-                // Layout for physical printing (checkbox included)
-                const printCardHtml = `
-                    <div class="flex flex-col items-center gap-4">
-                        <div class="w-[60px] h-[90px] md:w-[80px] md:h-[120px] border-2 border-slate-200 rounded-xl flex justify-center items-center bg-white shadow-sm print:border-slate-800 print:shadow-none">
-                            ${svg}
+                // Pagina 5: Carte e Caselle Interattive sia per Schermo che per Stampa
+                if(matrixPerceivedContainer) {
+                    matrixPerceivedContainer.innerHTML += `
+                        <div class="matrix-card-wrap flex flex-col items-center gap-3 cursor-pointer group" onclick="setMatrixSelection('perceived', '${key}')">
+                            <div id="matrix-perceived-card-${key}" class="matrix-card w-[60px] h-[90px] sm:w-[70px] sm:h-[105px] md:w-[80px] md:h-[120px] border-2 border-slate-200 rounded flex justify-center items-center bg-white shadow-sm print:border-slate-800 print:shadow-none relative">
+                                ${svg}
+                            </div>
+                            <div id="matrix-perceived-chk-${key}" class="w-6 h-6 border-2 border-slate-400 rounded-sm bg-white flex items-center justify-center print:border-slate-800 transition-colors">
+                                <span class="matrix-check-mark hidden text-blue-600 font-bold text-lg leading-none mb-1">✓</span>
+                            </div>
                         </div>
-                        <div class="w-6 h-6 border-2 border-slate-300 rounded-md bg-white print:border-slate-800"></div>
-                    </div>
-                `;
-                if(printPerceived) printPerceived.innerHTML += printCardHtml;
-                if(printActual) printActual.innerHTML += printCardHtml;
+                    `;
+                }
+
+                if(matrixActualContainer) {
+                    matrixActualContainer.innerHTML += `
+                        <div class="matrix-card-wrap flex flex-col items-center gap-3 cursor-pointer group" onclick="setMatrixSelection('actual', '${key}')">
+                            <div id="matrix-actual-card-${key}" class="matrix-card w-[60px] h-[90px] sm:w-[70px] sm:h-[105px] md:w-[80px] md:h-[120px] border-2 border-slate-200 rounded flex justify-center items-center bg-white shadow-sm print:border-slate-800 print:shadow-none relative">
+                                ${svg}
+                            </div>
+                            <div id="matrix-actual-chk-${key}" class="w-6 h-6 border-2 border-slate-400 rounded-sm bg-white flex items-center justify-center print:border-slate-800 transition-colors">
+                                <span class="matrix-check-mark hidden text-slate-900 font-bold text-lg leading-none mb-1">✓</span>
+                            </div>
+                        </div>
+                    `;
+                }
             }
         }
         window.addEventListener('DOMContentLoaded', initZenerUI);
 
-        function selectGuess(key) {
-            if(hasRevealed) return; // Prevent changing guess after reveal
+        // Selezione ed interattività della Matrice di Verifica (Pagina 5)
+        function setMatrixSelection(type, key) {
+            if (type === 'perceived') {
+                matrixPerceived = (matrixPerceived === key) ? '' : key;
+                localStorage.setItem('qcs5_matrix_perceived', matrixPerceived);
+                updateMatrixUI('perceived', matrixPerceived);
+                
+                // Sincronizzazione con il guess di pagina 3
+                if (matrixPerceived) {
+                    selectGuess(matrixPerceived, true); // true = skip loop
+                } else {
+                    currentGuess = '';
+                    document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
+                }
+            } else if (type === 'actual') {
+                matrixActual = (matrixActual === key) ? '' : key;
+                localStorage.setItem('qcs5_matrix_actual', matrixActual);
+                updateMatrixUI('actual', matrixActual);
+            }
+            updateCorrelationStatus();
+        }
+
+        function updateMatrixUI(type, selectedKey) {
+            const keys = Object.keys(zenerCards);
+            keys.forEach(k => {
+                const cardEl = document.getElementById(`matrix-${type}-card-${k}`);
+                const chkEl = document.getElementById(`matrix-${type}-chk-${k}`);
+                if (!cardEl || !chkEl) return;
+                const mark = chkEl.querySelector('.matrix-check-mark');
+                
+                if (k === selectedKey) {
+                    cardEl.classList.add('selected', type === 'perceived' ? 'border-blue-600' : 'border-slate-800', type === 'perceived' ? 'bg-blue-50' : 'bg-slate-100');
+                    cardEl.classList.remove('border-slate-200', 'bg-white');
+                    chkEl.classList.add(type === 'perceived' ? 'border-blue-600' : 'border-slate-800', type === 'perceived' ? 'bg-blue-50' : 'bg-slate-100', 'matrix-chk-checked');
+                    chkEl.classList.remove('border-slate-400', 'bg-white');
+                    if (mark) mark.classList.remove('hidden');
+                } else {
+                    cardEl.classList.remove('selected', 'border-blue-600', 'border-slate-800', 'bg-blue-50', 'bg-slate-100');
+                    cardEl.classList.add('border-slate-200', 'bg-white');
+                    chkEl.classList.remove('border-blue-600', 'border-slate-800', 'bg-blue-50', 'bg-slate-100', 'matrix-chk-checked');
+                    chkEl.classList.add('border-slate-400', 'bg-white');
+                    if (mark) mark.classList.add('hidden');
+                }
+            });
+        }
+
+        function updateCorrelationStatus() {
+            const statusEl = document.getElementById('matrix-status-text');
+            if(!statusEl) return;
+            if(!matrixPerceived || !matrixActual) {
+                statusEl.innerText = "AWAITING EVALUATION";
+                statusEl.className = "font-bold text-slate-800";
+            } else if (matrixPerceived === matrixActual) {
+                statusEl.innerText = "CORRELATION HIT (+1.0)";
+                statusEl.className = "font-bold text-green-600";
+            } else {
+                statusEl.innerText = "NULL CORRELATION (0.0)";
+                statusEl.className = "font-bold text-red-600";
+            }
+        }
+
+        function selectGuess(key, skipMatrixSync = false) {
+            if(hasRevealed) return;
             currentGuess = key;
             document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
-            document.getElementById('guess-' + key).classList.add('selected');
+            const selectedCard = document.getElementById('guess-' + key);
+            if(selectedCard) selectedCard.classList.add('selected');
+            
+            // Sincronizza anche sulla matrice di pagina 5
+            if (!skipMatrixSync && matrixPerceived !== key) {
+                matrixPerceived = key;
+                localStorage.setItem('qcs5_matrix_perceived', matrixPerceived);
+                updateMatrixUI('perceived', matrixPerceived);
+                updateCorrelationStatus();
+            }
         }
 
         function revealTarget() {
             if (!currentTarget) {
-                showAlert("Target system not initialized. Return Home and Start a new session.");
+                showAlert("Target system not initialized. Return Home and Initiate Protocol.", "SYSTEM ERROR");
                 return;
             }
             if (currentGuess === '') {
-                showAlert("Please commit to a final impression (Select a card) before decrypting the target.");
+                showAlert("Protocol constraint: Commit to a Perceptual Impression before executing target decryption.", "PROTOCOL CONSTRAINT");
                 return;
             }
             
@@ -708,13 +840,19 @@
             const display = document.getElementById('target-reveal-display');
             display.innerHTML = zenerCards[currentTarget];
             display.classList.remove('text-slate-300', 'border-dashed', 'bg-white');
-            display.classList.add('border-solid', 'border-blue-600', 'bg-blue-50');
+            display.classList.add('border-solid', 'border-slate-800', 'bg-slate-100');
+            
+            const icon = display.querySelector('.zener-icon');
+            if(icon) { icon.style.width = '60%'; icon.style.height = '60%'; }
+
+            // Sincronizza automaticamente la matrice Ground Truth su Pagina 5
+            setMatrixSelection('actual', currentTarget);
 
             const resText = document.getElementById('resolution-result');
             if (currentGuess === currentTarget) {
                 resText.innerHTML = '<span class="text-green-600">HIT: Resonance Confirmed</span>';
             } else {
-                resText.innerHTML = '<span class="text-red-500">MISS: Cognitive Divergence</span>';
+                resText.innerHTML = '<span class="text-red-600">MISS: Cognitive Divergence</span>';
             }
         }
 
@@ -723,23 +861,23 @@
             currentTarget = keys[Math.floor(Math.random() * keys.length)];
             hasRevealed = false;
             
-            // Generate and assign TRN (Target Reference Number)
+            // Genera TRN (Target Reference Number)
             const trn = 'ZN-' + Math.floor(Math.random()*9000 + 1000) + '-' + Math.floor(Math.random()*9000 + 1000);
             document.getElementById('f_trn').value = trn;
             document.getElementById('verify-trn').innerText = trn;
             
-            // Reset Reveal UI (Page 3)
+            // Reset UI Pagina 3
             const display = document.getElementById('target-reveal-display');
-            display.innerHTML = '<span class="text-5xl font-serif">?</span>';
+            display.innerHTML = '<span class="text-4xl font-serif">?</span>';
             display.classList.add('text-slate-300', 'border-dashed', 'bg-white');
-            display.classList.remove('border-solid', 'border-blue-600', 'bg-blue-50');
+            display.classList.remove('border-solid', 'border-slate-800', 'bg-slate-100');
             
-            // Reset Blind Auth UI (Page 4)
+            // Reset UI Pagina 4
             const verifyDisplay = document.getElementById('verify-display');
             verifyDisplay.innerHTML = `
-                <svg class="w-12 h-12 text-slate-400 mb-3 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                <span class="font-bold text-slate-700 uppercase tracking-wide">Decrypt Original Target</span>
-                <span class="text-xs text-slate-500 mt-2 font-mono">Warning: Spoils the session</span>
+                <svg class="w-10 h-10 text-slate-400 mb-4 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <span class="font-bold font-mono text-sm text-slate-800 uppercase tracking-widest">Authenticate Original TRN Target</span>
+                <span class="text-[10px] text-red-600 mt-2 font-mono uppercase tracking-wider font-bold">Warning: Spoils active session</span>
             `;
             const btnVerify = document.getElementById('btn-verify-early');
             btnVerify.classList.remove('border-red-300', 'bg-red-50');
@@ -747,6 +885,15 @@
             document.getElementById('resolution-result').innerHTML = '';
             currentGuess = '';
             document.querySelectorAll('.guess-card').forEach(el => el.classList.remove('selected'));
+
+            // Reset Matrice Pagina 5
+            matrixPerceived = '';
+            matrixActual = '';
+            localStorage.removeItem('qcs5_matrix_perceived');
+            localStorage.removeItem('qcs5_matrix_actual');
+            updateMatrixUI('perceived', '');
+            updateMatrixUI('actual', '');
+            updateCorrelationStatus();
         }
 
         function revealVerificationEarly() {
@@ -755,18 +902,17 @@
             const btnVerify = document.getElementById('btn-verify-early');
             const verifyDisplay = document.getElementById('verify-display');
             
-            // Show verification card
-            verifyDisplay.innerHTML = zenerCards[currentTarget] + '<span class="text-xs font-bold text-red-600 mt-4 uppercase tracking-widest">Decrypted</span>';
-            
-            // Change button style to indicate it's been revealed
+            verifyDisplay.innerHTML = zenerCards[currentTarget] + '<span class="text-[10px] font-bold text-red-600 mt-4 font-mono uppercase tracking-widest">DECRYPTED</span>';
             btnVerify.classList.add('border-red-300', 'bg-red-50');
             
             const svgIcon = verifyDisplay.querySelector('.zener-icon');
             if(svgIcon) {
-                svgIcon.classList.remove('w-32', 'h-32');
-                svgIcon.style.width = '80px';
-                svgIcon.style.height = '80px';
+                svgIcon.style.width = '60px';
+                svgIcon.style.height = '60px';
             }
+
+            // Sincronizza anche la riga del target effettivo nella matrice
+            setMatrixSelection('actual', currentTarget);
         }
 
         function goBackToHome() {
@@ -793,7 +939,7 @@
                     loadData();
                     generateTarget(); 
                 }
-            }, 300); // Wait for transition
+            }, 300);
         }
 
         function showConfirm(msg, onConfirm, title="System Message") {
@@ -823,18 +969,11 @@
             if (type === 'manual') {
                 title.innerText = "OPERATIONAL MANUAL";
                 body.innerHTML = `
+                    <p class="mb-4 text-xs font-mono text-slate-500 tracking-wide uppercase">Standard Operating Procedure</p>
                     <p><strong>1. AUDIO SYNC:</strong> Use the top toolbar to synthesize binaural beats. Stereo headphones are mandatory. <em>Autopilot</em> mode uses frequency ramping: it starts at a waking frequency and slowly guides your brainwaves down to the target state over several minutes to avoid acoustic shock.</p>
-                    <p><strong>2. DIGITAL CANVAS (REMOTE VIEWING):</strong> The Gestalt and Dimensional Sketch areas are fully interactive. Use a finger or stylus to map targets. Sketches are optimized for high-contrast A4 printing.</p>
-                    <p><strong>3. AUTO-SAVE & PERSISTENCE:</strong> Every keystroke and sketch is continuously saved to your device's local memory.</p>
-                    <p><strong>4. ZENER TARGET:</strong> A hidden target is generated automatically when you start a session. Use your protocol to tune in, select your guess on Page 3, and reveal the result.</p>
-                `;
-            } else if (type === 'gateway') {
-                title.innerText = "THE GATEWAY PROCESS (CIA REPORT)";
-                body.innerHTML = `
-                    <p class="mb-4 text-xs font-mono text-slate-500 tracking-wide uppercase">REF: CIA-RDP96-00788R001700210016-5</p>
-                    <p class="mb-6">In 1983, US Army Intelligence commissioned an analysis of the Gateway Experience. The goal was to construct a scientifically valid framework for understanding altered states of consciousness.</p>
-                    <p>By introducing slightly different audio frequencies into the left and right ears, the brain is forced to "hear" the difference between them, creating a third phantom frequency called a <em>binaural beat</em>. This forces the normally uncoordinated left and right hemispheres of the brain to synchronize, a state known as Hemi-Sync.</p>
-                    <p>As the brain's hemispheres synchronize and consciousness frequency rises, the energy field of the mind can shift, allowing for accurate non-local data acquisition (Remote Viewing).</p>
+                    <p><strong>2. DIGITAL CANVAS:</strong> The Gestalt and Dimensional Sketch areas are fully interactive. Use a finger or stylus to map targets. Sketches are optimized for high-contrast A4 printing.</p>
+                    <p><strong>3. AUTO-SAVE & PERSISTENCE:</strong> Every keystroke, matrix checkmark, and sketch is continuously saved to local memory.</p>
+                    <p><strong>4. ANOMALOUS COGNITION MATRIX:</strong> Tap symbols on Page 5 to log the Receiver Call and verify target correlation statistically.</p>
                 `;
             }
             modal.classList.remove('hidden');
@@ -852,6 +991,12 @@
             });
             loadCanvasData('canvas-gestalt', localStorage.getItem('qcs5_img_canvas-gestalt'));
             loadCanvasData('canvas-analytical', localStorage.getItem('qcs5_img_canvas-analytical'));
+
+            matrixPerceived = localStorage.getItem('qcs5_matrix_perceived') || '';
+            matrixActual = localStorage.getItem('qcs5_matrix_actual') || '';
+            updateMatrixUI('perceived', matrixPerceived);
+            updateMatrixUI('actual', matrixActual);
+            updateCorrelationStatus();
         }
         
         function saveData() {
@@ -876,7 +1021,7 @@
                 generateTarget(); 
             };
             
-            if(ask) showConfirm("Erase all data from the interactive session? This cannot be undone.", executeClear, "Clear Data");
+            if(ask) showConfirm("Erase all data from the interactive session? This cannot be undone.", executeClear, "PURGE DATA");
             else executeClear();
         }
 
@@ -904,16 +1049,17 @@
                 isTimerRunning = false;
                 seconds = 0;
                 document.getElementById('timer-display').innerText = "00:00";
-                btn.innerText = "Timer"; 
+                btn.innerText = "TMR"; 
                 btn.classList.remove('btn-danger'); btn.classList.add('btn-outline');
             } else {
                 timerInterval = setInterval(() => { seconds++; updateTimerDisplay(); }, 1000);
                 isTimerRunning = true; 
-                btn.innerText = "Reset"; 
+                btn.innerText = "RST"; 
                 btn.classList.remove('btn-outline'); btn.classList.add('btn-danger');
             }
         }
 
+        // --- Motore Audio Binaurale ---
         let synthLeft, synthRight, waveNoise, waveFilter, stereoMerger; 
         let isAudioPlaying = false; let isWavesPlaying = false;
         
@@ -957,7 +1103,7 @@
                 if (isAutopilot) {
                     synthRight.frequency.value = baseFreq + 10; 
                     synthRight.frequency.rampTo(baseFreq + targetFreq, rampTime);
-                    if(!isAudioPlaying) showAlert("Autopilot Initiated. Executing gradual frequency ramp down to Target Focus state. Ensure headphones are active.", "Autopilot Sync");
+                    if(!isAudioPlaying) showAlert("Autopilot Initiated. Executing gradual frequency ramp down to Target Focus state. Ensure headphones are active.", "HEMI-SYNC AUTOPILOT");
                 } else {
                     synthRight.frequency.value = baseFreq + diffFreq;
                 }
@@ -965,10 +1111,10 @@
                 if(!isAudioPlaying) {
                     synthLeft.volume.rampTo(-20, 2); synthRight.volume.rampTo(-20, 2);
                     isAudioPlaying = true;
-                    indicator.classList.replace('bg-slate-300', 'bg-green-500'); indicator.classList.add('animate-pulse');
-                    btnPlay.classList.replace('btn-primary', 'btn-outline'); btnPlay.innerText = "Playing";
+                    indicator.classList.replace('bg-slate-600', 'bg-green-500'); indicator.classList.add('animate-pulse');
+                    btnPlay.classList.replace('btn-primary', 'btn-outline'); btnPlay.innerText = "ACTV";
                 }
-            } catch (e) { showAlert("Tap anywhere on the screen first to enable the audio engine.", "Audio Engine Off"); }
+            } catch (e) { showAlert("Tap anywhere on the screen first to enable the audio engine.", "AUDIO ENGINE HALTED"); }
         }
 
         function stopAudio() {
@@ -979,8 +1125,8 @@
             isAudioPlaying = false;
             const btnPlay = document.getElementById('btn-play-audio');
             const indicator = document.getElementById('audio-status-indicator');
-            indicator.classList.replace('bg-green-500', 'bg-slate-300'); indicator.classList.remove('animate-pulse');
-            btnPlay.classList.replace('btn-outline', 'btn-primary'); btnPlay.innerText = "Play";
+            indicator.classList.replace('bg-green-500', 'bg-slate-600'); indicator.classList.remove('animate-pulse');
+            btnPlay.classList.replace('btn-outline', 'btn-primary'); btnPlay.innerText = "INIT";
         }
 
         async function toggleWaves() {
@@ -991,14 +1137,15 @@
                 
                 if (isWavesPlaying) {
                     waveNoise.volume.rampTo(-Infinity, 1); isWavesPlaying = false;
-                    btnWaves.classList.remove('bg-blue-100', 'shadow-inner');
+                    btnWaves.classList.remove('text-white');
                 } else {
                     waveNoise.volume.rampTo(0, 2); isWavesPlaying = true;
-                    btnWaves.classList.add('bg-blue-100', 'shadow-inner');
+                    btnWaves.classList.add('text-white');
                 }
-            } catch (e) { showAlert("Tap anywhere to enable audio.", "System"); }
+            } catch (e) { showAlert("Tap anywhere to enable audio.", "SYSTEM ERROR"); }
         }
 
+        // --- Canvas Drawing Logic ---
         const canvasState = {}; 
         
         function resizeAllCanvases() {
@@ -1124,7 +1271,7 @@
                 saveCanvasState(canvasId);
             };
             if(!ask) executeClear();
-            else { showConfirm("Clear this sketch?", executeClear); }
+            else { showConfirm("Clear this sketch matrix?", executeClear, "PURGE SKETCH"); }
         }
         
         function loadCanvasData(canvasId, dataUrl, addToHistory=true) {
@@ -1146,7 +1293,6 @@
             setupCanvas('canvas-gestalt'); 
             setupCanvas('canvas-analytical');
             
-            // Automatically initialize target if page loaded directly into app view
             if(document.getElementById('app-container').classList.contains('active')) {
                 generateTarget();
                 resizeAllCanvases();
