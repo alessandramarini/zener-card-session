@@ -330,24 +330,24 @@
             .a4-page { 
                 box-shadow: none !important; margin: 0 !important; 
                 border: none !important; border-radius: 0 !important;
-                page-break-after: always; break-after: page; 
-                width: 210mm !important; height: 297mm !important; max-height: 297mm !important;
-                padding: 20mm !important; box-sizing: border-box !important; 
-                display: flex !important; flex-direction: column !important;
-                overflow: hidden !important; background: white !important; position: relative !important;
+            .a4-page:last-of-type { 
+                page-break-after: auto !important; 
+                break-after: auto !important; 
             }
             
-            .a4-page:last-of-type, .print-bleed-page { 
-                page-break-after: auto !important; break-after: auto !important; 
-            }
-
             /* Rules for the specific full bleed page in print */
             .print-bleed-page {
                 padding: 0 !important; /* Force edge to edge */
                 width: 210mm !important; height: 297mm !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                grid-template-rows: repeat(3, 1fr) !important;
             }
             .cutout-card {
                 border-color: #94a3b8 !important; /* Darker dashed lines for scissors */
+                width: 100% !important;
+                height: 99mm !important;
+                box-sizing: border-box !important;
             }
             
             input::placeholder, textarea::placeholder { color: transparent !important; }
@@ -438,7 +438,7 @@
                             <option value="f10">Focus 10 (Body Asleep)</option>
                             <option value="f12">Focus 12 (Expanded Mind)</option>
                             <option value="f15">Focus 15 (Total Void)</option>
-                            <option value="f21">Focus 21 (F10 to F21 Bridge)</option>
+                            <option value="f21">Focus 21 (Bridge / Edge)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -544,11 +544,11 @@
                         </label>
                         <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f15"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 15</span><span class="chk-desc">Void State (Low Theta/Delta)</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 15</span><span class="chk-desc">Void State / No Time (Deep Theta)</span></div>
                         </label>
                         <label class="chk-wrap border border-slate-200 rounded p-3 hover:bg-slate-50 transition-colors">
                             <input type="checkbox" id="c_f21"><span class="chk-box mt-0.5"></span>
-                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 21</span><span class="chk-desc">Bridge / Edge (Deep Delta)</span></div>
+                            <div class="flex flex-col ml-1"><span class="chk-title">Focus 21</span><span class="chk-desc">Bridge / Edge (Delta)</span></div>
                         </label>
                     </div>
 
